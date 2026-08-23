@@ -23,6 +23,7 @@ import {
   User,
   Shield,
   LogOut,
+  Globe,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -35,6 +36,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
+  { name: 'Landing Page', href: '/landing', icon: Globe, badge: 'Live' },
   { name: 'Stores', href: '/stores', icon: Store },
   { name: 'Products', href: '/products', icon: Package },
   { name: 'Orders', href: '/orders', icon: ShoppingBag },

@@ -42,6 +42,7 @@ const pageTitles: Record<string, { title: string; subtitle: string }> = {
   '/marketing': { title: 'Marketing', subtitle: 'Channel & creator ROI' },
   '/reports': { title: 'P&L Reports', subtitle: 'GAAP statements & exports' },
   '/settings': { title: 'Settings', subtitle: 'API tokens & webhooks' },
+  '/landing': { title: 'RushNshop Platform', subtitle: 'AI Operating System for TikTok Shop' },
 };
 
 export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () => void }) {
