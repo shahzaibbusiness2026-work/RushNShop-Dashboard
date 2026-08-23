@@ -24,7 +24,7 @@ export default function OrdersOverviewChart() {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-2xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] p-5 shadow-sm transition-colors">
+    <div className="flex h-full flex-col justify-between rounded-2xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] p-5 shadow-sm transition-colors overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-bold text-gray-900 dark:text-white">Orders Overview</h3>
@@ -33,10 +33,10 @@ export default function OrdersOverviewChart() {
         </Link>
       </div>
 
-      {/* Donut & Legend */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 my-auto py-2">
+      {/* Donut Chart & Legend Stacked Cleanly */}
+      <div className="flex flex-col items-center justify-center my-auto py-2 w-full">
         {/* Donut */}
-        <div className="relative h-40 w-40 shrink-0">
+        <div className="relative h-36 w-36 shrink-0 mx-auto">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Tooltip content={<CustomTooltip />} />
@@ -44,8 +44,8 @@ export default function OrdersOverviewChart() {
                 data={orderStatusCounts}
                 dataKey="count"
                 nameKey="name"
-                innerRadius={50}
-                outerRadius={70}
+                innerRadius={46}
+                outerRadius={64}
                 paddingAngle={3}
               >
                 {orderStatusCounts.map((entry, index) => (
@@ -55,27 +55,29 @@ export default function OrdersOverviewChart() {
             </PieChart>
           </ResponsiveContainer>
 
-          {/* Center */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-base font-black text-gray-900 dark:text-white">{totalOrders}</span>
-            <span className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">
-              {selectedStore ? `${selectedStore.countryCode} Orders` : 'Total Orders'}
+          {/* Center Text */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+            <span className="text-base font-black text-gray-900 dark:text-white leading-none">{totalOrders}</span>
+            <span className="text-[9px] font-semibold text-gray-400 dark:text-gray-500 mt-0.5">
+              {selectedStore ? `${selectedStore.countryCode}` : 'Total'}
             </span>
           </div>
         </div>
 
-        {/* Legend */}
-        <div className="flex-1 space-y-2 w-full">
+        {/* Legend Grid - 2 columns for neat, zero-overflow compact fit */}
+        <div className="grid grid-cols-2 gap-2 mt-3 w-full pt-1 border-t border-gray-100 dark:border-gray-800/80">
           {orderStatusCounts.map((item) => (
-            <div key={item.name} className="flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-sm shrink-0" style={{ backgroundColor: item.color }} />
-                <span className="font-semibold text-gray-700 dark:text-gray-300">{item.name}</span>
+            <div
+              key={item.name}
+              className="flex items-center justify-between rounded-lg bg-gray-50/70 dark:bg-[#0f1117]/60 px-2 py-1.5 text-[11px]"
+            >
+              <div className="flex items-center gap-1.5 overflow-hidden">
+                <span className="h-2 w-2 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                <span className="font-semibold text-gray-700 dark:text-gray-300 truncate">{item.name}</span>
               </div>
-              <div className="flex items-center gap-1.5 font-bold text-gray-900 dark:text-white">
-                <span>{item.count}</span>
-                <span className="text-gray-400 dark:text-gray-500 font-normal">({item.percentage}%)</span>
-              </div>
+              <span className="font-bold text-gray-900 dark:text-white shrink-0 ml-1">
+                {item.count}
+              </span>
             </div>
           ))}
         </div>
