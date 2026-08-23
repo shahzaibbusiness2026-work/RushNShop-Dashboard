@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import './globals.css';
 import { StoreProvider } from '../context/StoreContext';
 import Sidebar from '../components/layout/Sidebar';
@@ -9,6 +10,8 @@ import MobileNavBar from '../components/layout/MobileNavBar';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isLandingPage = pathname === '/landing';
 
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
@@ -26,20 +29,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 antialiased selection:bg-lime-400 selection:text-black min-h-screen">
         <StoreProvider>
-          <div className="flex min-h-screen bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100">
-            {/* Sidebar */}
-            <Sidebar mobileOpen={mobileMenuOpen} setMobileOpen={setMobileMenuOpen} />
+          {isLandingPage ? (
+            /* Standalone Full-Width Landing Page (No Sidebar, No TopHeader) */
+            <main className="min-h-screen w-full bg-slate-50 dark:bg-[#0b0e14] overflow-x-hidden">
+              {children}
+            </main>
+          ) : (
+            /* Main Dashboard App Layout with Sidebar & Header */
+            <div className="flex min-h-screen bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100">
+              {/* Sidebar */}
+              <Sidebar mobileOpen={mobileMenuOpen} setMobileOpen={setMobileMenuOpen} />
 
-            {/* Main Area */}
-            <div className="flex flex-1 flex-col overflow-x-hidden min-w-0">
-              <TopHeader onOpenMobileMenu={() => setMobileMenuOpen(true)} />
-              <main className="flex-1 p-3.5 sm:p-6 lg:p-8 pb-20 lg:pb-8 bg-slate-50 dark:bg-[#0b0e14]">
-                {children}
-              </main>
-              {/* Mobile Bottom Navigation */}
-              <MobileNavBar onOpenMenu={() => setMobileMenuOpen(true)} />
+              {/* Main Area */}
+              <div className="flex flex-1 flex-col overflow-x-hidden min-w-0">
+                <TopHeader onOpenMobileMenu={() => setMobileMenuOpen(true)} />
+                <main className="flex-1 p-3.5 sm:p-6 lg:p-8 pb-20 lg:pb-8 bg-slate-50 dark:bg-[#0b0e14]">
+                  {children}
+                </main>
+                {/* Mobile Bottom Navigation */}
+                <MobileNavBar onOpenMenu={() => setMobileMenuOpen(true)} />
+              </div>
             </div>
-          </div>
+          )}
         </StoreProvider>
       </body>
     </html>
