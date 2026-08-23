@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"
         />
       </head>
-      <body className="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 antialiased selection:bg-lime-400 selection:text-black min-h-screen transition-colors duration-200">
+      <body className="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 antialiased selection:bg-lime-400 selection:text-black min-h-screen">
         <StoreProvider>
           <div className="flex min-h-screen bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100">
             {/* Sidebar */}
@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/* Main Area */}
             <div className="flex flex-1 flex-col overflow-x-hidden min-w-0">
               <TopHeader onOpenMobileMenu={() => setMobileMenuOpen(true)} />
-              <main className="flex-1 p-3.5 sm:p-6 lg:p-8 pb-20 lg:pb-8 bg-slate-50 dark:bg-[#0b0e14] transition-colors">
+              <main className="flex-1 p-3.5 sm:p-6 lg:p-8 pb-20 lg:pb-8 bg-slate-50 dark:bg-[#0b0e14]">
                 {children}
               </main>
               {/* Mobile Bottom Navigation */}

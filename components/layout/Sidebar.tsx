@@ -23,8 +23,6 @@ import {
   User,
   Shield,
   LogOut,
-  ExternalLink,
-  Check,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -80,12 +78,12 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-[#0f1117] text-gray-300 transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 border-r border-gray-800/60',
+          'fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-[#0f1117] text-slate-300 transition-transform duration-200 ease-in-out lg:static lg:translate-x-0 border-r border-slate-800/60 select-none',
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {/* Brand Logo Header */}
-        <div className="flex items-center gap-3 px-6 pt-6 pb-4">
+        <div className="flex items-center gap-3 px-6 pt-6 pb-4 shrink-0">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-lime-500 to-green-400 text-black shadow-lg shadow-green-500/20">
             <Zap className="h-6 w-6 fill-current text-black font-black" />
           </div>
@@ -93,7 +91,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
             <div className="flex items-center gap-1.5">
               <span className="text-xl font-bold tracking-tight text-white">RushNshop</span>
             </div>
-            <p className="text-[11px] font-medium tracking-wider text-gray-400">AI Operating System</p>
+            <p className="text-[11px] font-medium tracking-wider text-slate-400">AI Operating System</p>
           </div>
         </div>
 
@@ -109,17 +107,17 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
                 href={item.href}
                 onClick={() => setMobileOpen && setMobileOpen(false)}
                 className={cn(
-                  'group flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all duration-150',
+                  'group flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-medium border transition-colors duration-100 outline-none',
                   isActive
-                    ? 'bg-[#223b28]/80 text-[#4ade80] border border-[#22c55e]/30 shadow-sm shadow-[#22c55e]/10'
-                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                    ? 'bg-[#182b20] text-[#4ade80] border-[#22c55e]/35 shadow-xs shadow-[#22c55e]/10'
+                    : 'border-transparent text-slate-400 hover:bg-white/5 hover:text-white'
                 )}
               >
                 <div className="flex items-center gap-3">
                   <Icon
                     className={cn(
-                      'h-4 w-4 transition-colors',
-                      isActive ? 'text-[#4ade80]' : 'text-gray-400 group-hover:text-white'
+                      'h-4 w-4 transition-colors duration-100',
+                      isActive ? 'text-[#4ade80]' : 'text-slate-400 group-hover:text-white'
                     )}
                   />
                   <span>{item.name}</span>
@@ -128,7 +126,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
                   <span
                     className={cn(
                       'rounded-md px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider',
-                      isActive ? 'bg-[#22c55e]/20 text-[#4ade80]' : 'bg-white/10 text-gray-400'
+                      isActive ? 'bg-[#22c55e]/20 text-[#4ade80]' : 'bg-white/10 text-slate-400'
                     )}
                   >
                     {item.badge}
@@ -140,11 +138,11 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
         </nav>
 
         {/* Bottom Profile & AI Assistant Widget */}
-        <div className="p-3 space-y-2 border-t border-gray-800/80 relative" ref={userMenuRef}>
+        <div className="p-3 space-y-2 border-t border-slate-800/80 relative shrink-0" ref={userMenuRef}>
           {/* User Dropdown Modal / Popover */}
           {showUserMenu && (
-            <div className="absolute bottom-full left-3 right-3 mb-2 rounded-2xl border border-gray-700/80 bg-[#161a23] p-2.5 shadow-2xl z-50 animate-in fade-in slide-in-from-bottom-2 text-xs">
-              <div className="flex items-center gap-2.5 p-2 border-b border-gray-800">
+            <div className="absolute bottom-full left-3 right-3 mb-2 rounded-2xl border border-slate-700/80 bg-[#161a23] p-2.5 shadow-2xl z-50 animate-in fade-in slide-in-from-bottom-2 text-xs">
+              <div className="flex items-center gap-2.5 p-2 border-b border-slate-800">
                 <img
                   src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
                   alt="John Doe"
@@ -152,7 +150,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
                 />
                 <div>
                   <p className="font-bold text-white text-xs">John Doe</p>
-                  <p className="text-[10px] text-gray-400">john@rushnshop.com</p>
+                  <p className="text-[10px] text-slate-400">john@rushnshop.com</p>
                 </div>
               </div>
 
@@ -163,9 +161,9 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
                     setShowUserMenu(false);
                     if (setMobileOpen) setMobileOpen(false);
                   }}
-                  className="flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-gray-300 hover:bg-white/5 hover:text-white text-left transition-colors"
+                  className="flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-slate-300 hover:bg-white/5 hover:text-white text-left transition-colors"
                 >
-                  <User className="h-3.5 w-3.5 text-gray-400" />
+                  <User className="h-3.5 w-3.5 text-slate-400" />
                   <span>Account & Profile</span>
                 </button>
 
@@ -175,7 +173,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
                     setShowUserMenu(false);
                     if (setMobileOpen) setMobileOpen(false);
                   }}
-                  className="flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-gray-300 hover:bg-white/5 hover:text-white text-left transition-colors"
+                  className="flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-slate-300 hover:bg-white/5 hover:text-white text-left transition-colors"
                 >
                   <Shield className="h-3.5 w-3.5 text-emerald-400" />
                   <span>Staff Roles & Permissions</span>
@@ -187,14 +185,14 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
                     setShowUserMenu(false);
                     if (setMobileOpen) setMobileOpen(false);
                   }}
-                  className="flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-gray-300 hover:bg-white/5 hover:text-white text-left transition-colors"
+                  className="flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-slate-300 hover:bg-white/5 hover:text-white text-left transition-colors"
                 >
                   <FileText className="h-3.5 w-3.5 text-blue-400" />
                   <span>Billing & P&L Statement</span>
                 </button>
               </div>
 
-              <div className="border-t border-gray-800 pt-1">
+              <div className="border-t border-slate-800 pt-1">
                 <button
                   onClick={() => {
                     alert('Signed out of RushNshop OS session.');
@@ -213,7 +211,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
           <button
             type="button"
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="flex w-full items-center justify-between rounded-xl bg-[#161a23] p-2.5 hover:bg-[#1c2230] transition-colors border border-gray-800/50 text-left"
+            className="flex w-full items-center justify-between rounded-xl bg-[#161a23] p-2.5 hover:bg-[#1c2230] transition-colors border border-slate-800/50 text-left"
           >
             <div className="flex items-center gap-2.5">
               <div className="relative">
@@ -226,18 +224,18 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
               </div>
               <div className="text-left">
                 <p className="text-xs font-semibold text-white">John Doe</p>
-                <p className="text-[11px] text-gray-400">Owner</p>
+                <p className="text-[11px] text-slate-400">Owner</p>
               </div>
             </div>
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-gray-400 transition-transform duration-200',
+                'h-4 w-4 text-slate-400 transition-transform duration-200',
                 showUserMenu ? 'rotate-180 text-white' : ''
               )}
             />
           </button>
 
-          {/* AI Assistant Quick Card matching Image */}
+          {/* AI Assistant Quick Card */}
           <div className="relative overflow-hidden rounded-2xl bg-[#121620] p-3.5 border border-emerald-900/40">
             <div className="flex items-start justify-between">
               <div>
@@ -245,7 +243,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
                   <Bot className="h-3.5 w-3.5 text-[#4ade80]" />
                   AI Assistant
                 </p>
-                <p className="mt-1 text-[11px] text-gray-400 leading-snug">
+                <p className="mt-1 text-[11px] text-slate-400 leading-snug">
                   Ask anything about your business.
                 </p>
               </div>
@@ -258,7 +256,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
                 router.push('/ai-assistant');
                 if (setMobileOpen) setMobileOpen(false);
               }}
-              className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#84cc16] py-2 text-xs font-bold text-black shadow-md hover:bg-[#65a30d] transition-all"
+              className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#84cc16] py-2 text-xs font-bold text-black shadow-xs hover:bg-[#65a30d] transition-colors"
             >
               <Zap className="h-3.5 w-3.5 fill-current" />
               Ask AI
