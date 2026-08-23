@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
@@ -20,6 +20,11 @@ import {
   Zap,
   ChevronDown,
   Bot,
+  User,
+  Shield,
+  LogOut,
+  ExternalLink,
+  Check,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -49,6 +54,19 @@ const navItems: NavItem[] = [
 export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: boolean; setMobileOpen?: (open: boolean) => void }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setShowUserMenu(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -122,9 +140,81 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
         </nav>
 
         {/* Bottom Profile & AI Assistant Widget */}
-        <div className="p-3 space-y-2 border-t border-gray-800/80">
+        <div className="p-3 space-y-2 border-t border-gray-800/80 relative" ref={userMenuRef}>
+          {/* User Dropdown Modal / Popover */}
+          {showUserMenu && (
+            <div className="absolute bottom-full left-3 right-3 mb-2 rounded-2xl border border-gray-700/80 bg-[#161a23] p-2.5 shadow-2xl z-50 animate-in fade-in slide-in-from-bottom-2 text-xs">
+              <div className="flex items-center gap-2.5 p-2 border-b border-gray-800">
+                <img
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+                  alt="John Doe"
+                  className="h-8 w-8 rounded-full object-cover ring-2 ring-emerald-500/40"
+                />
+                <div>
+                  <p className="font-bold text-white text-xs">John Doe</p>
+                  <p className="text-[10px] text-gray-400">john@rushnshop.com</p>
+                </div>
+              </div>
+
+              <div className="my-1.5 space-y-0.5">
+                <button
+                  onClick={() => {
+                    router.push('/settings');
+                    setShowUserMenu(false);
+                    if (setMobileOpen) setMobileOpen(false);
+                  }}
+                  className="flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-gray-300 hover:bg-white/5 hover:text-white text-left transition-colors"
+                >
+                  <User className="h-3.5 w-3.5 text-gray-400" />
+                  <span>Account & Profile</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    router.push('/stores');
+                    setShowUserMenu(false);
+                    if (setMobileOpen) setMobileOpen(false);
+                  }}
+                  className="flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-gray-300 hover:bg-white/5 hover:text-white text-left transition-colors"
+                >
+                  <Shield className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>Staff Roles & Permissions</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    router.push('/reports');
+                    setShowUserMenu(false);
+                    if (setMobileOpen) setMobileOpen(false);
+                  }}
+                  className="flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-gray-300 hover:bg-white/5 hover:text-white text-left transition-colors"
+                >
+                  <FileText className="h-3.5 w-3.5 text-blue-400" />
+                  <span>Billing & P&L Statement</span>
+                </button>
+              </div>
+
+              <div className="border-t border-gray-800 pt-1">
+                <button
+                  onClick={() => {
+                    alert('Signed out of RushNshop OS session.');
+                    setShowUserMenu(false);
+                  }}
+                  className="flex w-full items-center gap-2 rounded-xl px-2.5 py-1.5 text-rose-400 hover:bg-rose-950/40 text-left transition-colors font-medium"
+                >
+                  <LogOut className="h-3.5 w-3.5" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* User Card */}
-          <div className="flex items-center justify-between rounded-xl bg-[#161a23] p-2.5 hover:bg-[#1c2230] transition-colors cursor-pointer border border-gray-800/50">
+          <button
+            type="button"
+            onClick={() => setShowUserMenu(!showUserMenu)}
+            className="flex w-full items-center justify-between rounded-xl bg-[#161a23] p-2.5 hover:bg-[#1c2230] transition-colors border border-gray-800/50 text-left"
+          >
             <div className="flex items-center gap-2.5">
               <div className="relative">
                 <img
@@ -139,8 +229,13 @@ export default function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen?: bo
                 <p className="text-[11px] text-gray-400">Owner</p>
               </div>
             </div>
-            <ChevronDown className="h-4 w-4 text-gray-400" />
-          </div>
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-gray-400 transition-transform duration-200',
+                showUserMenu ? 'rotate-180 text-white' : ''
+              )}
+            />
+          </button>
 
           {/* AI Assistant Quick Card matching Image */}
           <div className="relative overflow-hidden rounded-2xl bg-[#121620] p-3.5 border border-emerald-900/40">
