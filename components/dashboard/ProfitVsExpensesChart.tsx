@@ -23,9 +23,9 @@ export default function ProfitVsExpensesChart() {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="rounded-xl border border-gray-100 dark:border-gray-800 bg-white/95 dark:bg-[#161b22]/95 p-3 shadow-xl backdrop-blur-sm text-xs">
-          <p className="font-bold text-gray-800 dark:text-gray-100">{label}</p>
-          <div className="mt-1.5 space-y-1">
+        <div className="rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-[#161b26]/95 p-3 shadow-xl backdrop-blur-md text-xs">
+          <p className="font-bold text-slate-800 dark:text-slate-100">{label}</p>
+          <div className="mt-1.5 space-y-1 font-mono-numeric">
             <p className="flex items-center gap-2 font-semibold text-emerald-600 dark:text-[#4ade80]">
               <span className="h-2 w-2 rounded-full bg-[#22c55e]" />
               <span>Profit: {formatCurrency(payload[0]?.value || 0, selectedStore?.currency)}</span>
@@ -42,21 +42,21 @@ export default function ProfitVsExpensesChart() {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-2xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] p-5 shadow-sm transition-colors">
+    <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs transition-colors overflow-hidden">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h3 className="text-sm font-bold text-gray-900 dark:text-white">Profit vs Expenses</h3>
+        <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Profit vs Expenses</h3>
 
         <div className="flex items-center gap-3 text-xs">
           {/* Legend */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-sm bg-[#22c55e]" />
-              <span className="font-medium text-gray-600 dark:text-gray-300">Profit</span>
+              <span className="font-medium text-slate-600 dark:text-slate-300">Profit</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-sm bg-[#fb7185]" />
-              <span className="font-medium text-gray-600 dark:text-gray-300">Expenses</span>
+              <span className="font-medium text-slate-600 dark:text-slate-300">Expenses</span>
             </div>
           </div>
 
@@ -65,11 +65,11 @@ export default function ProfitVsExpensesChart() {
             <select
               value={selectedStoreId}
               onChange={(e) => setSelectedStoreId(e.target.value)}
-              className="rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-white/5 px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-300 outline-none"
+              className="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-white/5 px-2 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300 outline-none transition-colors"
             >
-              <option value="all" className="dark:bg-[#161b22]">All Stores</option>
+              <option value="all" className="dark:bg-[#161b26]">All Stores</option>
               {stores.map((s) => (
-                <option key={s.id} value={s.id} className="dark:bg-[#161b22]">
+                <option key={s.id} value={s.id} className="dark:bg-[#161b26]">
                   {s.flag} {s.name}
                 </option>
               ))}
@@ -77,10 +77,10 @@ export default function ProfitVsExpensesChart() {
 
             <button
               onClick={() => setTimeframe(timeframe === 'Daily' ? 'Weekly' : 'Daily')}
-              className="flex items-center gap-1 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-white/5 px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
+              className="flex items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-white/5 px-2 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
             >
               <span>{timeframe}</span>
-              <ChevronDown className="h-3 w-3 text-gray-400" />
+              <ChevronDown className="h-3 w-3 text-slate-400" />
             </button>
           </div>
         </div>

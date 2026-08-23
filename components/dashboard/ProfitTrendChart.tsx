@@ -15,7 +15,7 @@ import { formatCurrency } from '../../lib/utils';
 import { ChevronDown } from 'lucide-react';
 
 export default function ProfitTrendChart() {
-  const { profitTrend, selectedStore, theme, selectedStoreId } = useStore();
+  const { profitTrend, selectedStore, theme } = useStore();
   const [timeframe, setTimeframe] = useState<'Daily' | 'Weekly' | 'Monthly'>('Daily');
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -52,15 +52,15 @@ export default function ProfitTrendChart() {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="rounded-xl border border-gray-100 dark:border-gray-800 bg-white/95 dark:bg-[#161b22]/95 p-3 shadow-xl backdrop-blur-sm text-xs">
-          <p className="font-bold text-gray-800 dark:text-gray-100">{label}</p>
-          <div className="mt-1.5 space-y-1">
+        <div className="rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-[#161b26]/95 p-3 shadow-xl backdrop-blur-md text-xs">
+          <p className="font-bold text-slate-800 dark:text-slate-100">{label}</p>
+          <div className="mt-1.5 space-y-1 font-mono-numeric">
             <p className="flex items-center gap-2 font-semibold text-emerald-600 dark:text-[#4ade80]">
               <span className="h-2 w-2 rounded-full bg-emerald-500" />
               <span>Net Profit: {formatCurrency(payload[0]?.value || 0, selectedStore?.currency)}</span>
             </p>
-            <p className="flex items-center gap-2 font-semibold text-gray-500 dark:text-gray-400">
-              <span className="h-2 w-2 rounded-full bg-gray-400" />
+            <p className="flex items-center gap-2 font-semibold text-slate-500 dark:text-slate-400">
+              <span className="h-2 w-2 rounded-full bg-slate-400" />
               <span>Revenue: {formatCurrency(payload[1]?.value || 0, selectedStore?.currency)}</span>
             </p>
           </div>
@@ -71,11 +71,11 @@ export default function ProfitTrendChart() {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-2xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] p-5 shadow-sm transition-colors">
+    <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs transition-colors overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-sm font-bold text-gray-900 dark:text-white">Profit Trend</h3>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Profit Trend</h3>
         </div>
 
         <div className="flex items-center gap-4">
@@ -83,11 +83,11 @@ export default function ProfitTrendChart() {
           <div className="flex items-center gap-3 text-xs">
             <div className="flex items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-sm bg-[#22c55e]" />
-              <span className="font-medium text-gray-600 dark:text-gray-300">Net Profit</span>
+              <span className="font-medium text-slate-600 dark:text-slate-300">Net Profit</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-sm bg-[#94a3b8] dark:bg-[#475569]" />
-              <span className="font-medium text-gray-600 dark:text-gray-300">Revenue</span>
+              <span className="h-2.5 w-2.5 rounded-sm bg-slate-300 dark:bg-slate-700" />
+              <span className="font-medium text-slate-600 dark:text-slate-300">Revenue</span>
             </div>
           </div>
 
@@ -95,14 +95,14 @@ export default function ProfitTrendChart() {
           <div className="relative">
             <button
               onClick={() => setShowDropdown(!showDropdown)}
-              className="flex items-center gap-1 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-white/5 px-2.5 py-1 text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
+              className="flex items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-white/5 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
             >
               <span>{timeframe}</span>
-              <ChevronDown className="h-3 w-3 text-gray-400" />
+              <ChevronDown className="h-3 w-3 text-slate-400" />
             </button>
 
             {showDropdown && (
-              <div className="absolute right-0 top-full mt-1.5 w-32 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#161b22] p-1.5 shadow-xl z-20">
+              <div className="absolute right-0 top-full mt-1.5 w-32 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] p-1.5 shadow-xl z-20">
                 {(['Daily', 'Weekly', 'Monthly'] as const).map((t) => (
                   <button
                     key={t}
@@ -110,10 +110,10 @@ export default function ProfitTrendChart() {
                       setTimeframe(t);
                       setShowDropdown(false);
                     }}
-                    className={`flex w-full items-center rounded-lg px-2.5 py-1 text-xs font-medium text-left ${
+                    className={`flex w-full items-center rounded-lg px-2.5 py-1 text-xs font-medium text-left transition-colors ${
                       timeframe === t
                         ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-[#4ade80] font-bold'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5'
+                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
                     }`}
                   >
                     {t}
@@ -144,7 +144,7 @@ export default function ProfitTrendChart() {
             />
             <Tooltip content={<CustomTooltip />} />
             <Bar dataKey="profit" name="Net Profit" fill="#22c55e" radius={[4, 4, 0, 0]} maxBarSize={28} />
-            <Bar dataKey="revenue" name="Revenue" fill={isDark ? '#475569' : '#cbd5e1'} radius={[4, 4, 0, 0]} maxBarSize={28} />
+            <Bar dataKey="revenue" name="Revenue" fill={isDark ? '#334155' : '#cbd5e1'} radius={[4, 4, 0, 0]} maxBarSize={28} />
           </BarChart>
         </ResponsiveContainer>
       </div>

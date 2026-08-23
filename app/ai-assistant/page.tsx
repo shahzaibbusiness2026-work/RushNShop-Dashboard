@@ -18,9 +18,10 @@ import {
   ArrowRight,
   RefreshCw,
   Sliders,
+  User,
 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
-import { formatCurrency, formatPercent } from '../../lib/utils';
+import { formatCurrency, formatPercent, cn } from '../../lib/utils';
 
 interface ChatMessage {
   id: string;
@@ -120,7 +121,6 @@ export default function AIAssistantPage() {
 
       setMessages((prev) => [...prev, aiResponse]);
     } catch (err) {
-      // Fallback
       setMessages((prev) => [
         ...prev,
         {
@@ -206,33 +206,35 @@ export default function AIAssistantPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header Tabs */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 dark:border-gray-800 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
         <div>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">RushNshop AI Intelligence Hub</h2>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">RushNshop AI Intelligence Hub</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Real-time business data analytics and viral TikTok Shop content generation engine.
           </p>
         </div>
 
-        <div className="flex items-center gap-1 rounded-2xl bg-gray-100 dark:bg-white/5 p-1 self-start sm:self-auto">
+        <div className="flex items-center gap-1 rounded-2xl bg-slate-100 dark:bg-white/5 p-1 self-start sm:self-auto">
           <button
             onClick={() => setActiveTab('advisor')}
-            className={`flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all ${
+            className={cn(
+              'flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all',
               activeTab === 'advisor'
-                ? 'bg-white dark:bg-[#151b26] text-gray-900 dark:text-white shadow-sm'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-            }`}
+                ? 'bg-white dark:bg-[#151b26] text-slate-900 dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            )}
           >
             <Bot className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
             <span>AI Business Advisor</span>
           </button>
           <button
             onClick={() => setActiveTab('listing')}
-            className={`flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all ${
+            className={cn(
+              'flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all',
               activeTab === 'listing'
-                ? 'bg-white dark:bg-[#151b26] text-gray-900 dark:text-white shadow-sm'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-            }`}
+                ? 'bg-white dark:bg-[#151b26] text-slate-900 dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            )}
           >
             <Video className="h-4 w-4 text-purple-600 dark:text-purple-400" />
             <span>AI Listing & Video Scripts</span>
@@ -244,7 +246,7 @@ export default function AIAssistantPage() {
         /* TAB 1: Conversational AI Business Advisor */
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           {/* Main Chat Stream (8 cols) */}
-          <div className="lg:col-span-8 flex flex-col h-[650px] rounded-3xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] shadow-sm overflow-hidden">
+          <div className="lg:col-span-8 flex flex-col h-[650px] rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] shadow-xs overflow-hidden">
             {/* Chat Messages */}
             <div className="flex-1 overflow-y-auto p-5 space-y-4">
               {messages.map((msg) => {
@@ -252,34 +254,35 @@ export default function AIAssistantPage() {
                 return (
                   <div key={msg.id} className={`flex gap-3 ${isAi ? 'items-start' : 'items-end justify-end'}`}>
                     {isAi && (
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-lime-100 dark:bg-lime-950/50 text-lime-800 dark:text-[#4ade80]">
-                        <Bot className="h-4 w-4" />
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-[#4ade80] border border-emerald-200/60 dark:border-emerald-800/40">
+                        <Bot className="h-4 w-4 stroke-[2.2]" />
                       </div>
                     )}
                     <div
-                      className={`max-w-xl rounded-2xl p-4 text-xs leading-relaxed ${
+                      className={cn(
+                        'max-w-xl rounded-2xl p-4 text-xs leading-relaxed',
                         isAi
-                          ? 'bg-gray-50 dark:bg-[#0f1117]/70 border border-gray-100 dark:border-gray-800 text-gray-800 dark:text-gray-200'
-                          : 'bg-[#0f1117] dark:bg-emerald-900/60 text-white shadow-md'
-                      }`}
+                          ? 'bg-slate-50/80 dark:bg-[#0f1117]/70 border border-slate-200/60 dark:border-slate-800 text-slate-800 dark:text-slate-200'
+                          : 'bg-[#0f1117] dark:bg-emerald-900/60 text-white shadow-sm'
+                      )}
                     >
                       <p className="whitespace-pre-line">{msg.text}</p>
 
                       {/* Embedded Metrics if returned */}
                       {msg.metrics && (
-                        <div className="mt-3 grid grid-cols-3 gap-2 border-t border-gray-200/60 dark:border-gray-800 pt-2.5">
+                        <div className="mt-3 grid grid-cols-3 gap-2 border-t border-slate-200/60 dark:border-slate-800 pt-2.5">
                           {msg.metrics.map((m, idx) => (
-                            <div key={idx} className="rounded-xl bg-white dark:bg-[#161b22] p-2 border border-gray-100 dark:border-gray-800">
-                              <p className="text-[10px] text-gray-400 dark:text-gray-500 font-semibold">{m.label}</p>
-                              <p className="text-sm font-black text-gray-900 dark:text-white mt-0.5">{m.value}</p>
+                            <div key={idx} className="rounded-xl bg-white dark:bg-[#161b26] p-2 border border-slate-100 dark:border-slate-800 font-mono-numeric">
+                              <p className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold">{m.label}</p>
+                              <p className="text-sm font-black text-slate-900 dark:text-white mt-0.5">{m.value}</p>
                             </div>
                           ))}
                         </div>
                       )}
 
                       {msg.actionSuggestion && (
-                        <div className="mt-3 flex items-center justify-between rounded-xl bg-lime-50 dark:bg-lime-950/40 p-2.5 border border-lime-200/80 dark:border-lime-900/50">
-                          <span className="text-[11px] font-bold text-lime-900 dark:text-lime-200">
+                        <div className="mt-3 flex items-center justify-between rounded-xl bg-emerald-50 dark:bg-emerald-950/40 p-2.5 border border-emerald-200/80 dark:border-emerald-900/50">
+                          <span className="text-[11px] font-bold text-emerald-900 dark:text-emerald-200">
                             ⚡ Action: {msg.actionSuggestion}
                           </span>
                           <button className="rounded-lg bg-[#84cc16] px-2.5 py-1 text-[10px] font-bold text-black hover:bg-[#72b012]">
@@ -288,7 +291,7 @@ export default function AIAssistantPage() {
                         </div>
                       )}
 
-                      <span className="mt-1.5 block text-[10px] text-gray-400 dark:text-gray-500 text-right">{msg.timestamp}</span>
+                      <span className="mt-1.5 block text-[10px] text-slate-400 dark:text-slate-500 text-right">{msg.timestamp}</span>
                     </div>
                   </div>
                 );
@@ -296,28 +299,28 @@ export default function AIAssistantPage() {
 
               {isThinking && (
                 <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-lime-100 dark:bg-lime-950/50 text-lime-800 dark:text-[#4ade80]">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-[#4ade80]">
                     <Bot className="h-4 w-4" />
                   </div>
-                  <div className="flex items-center gap-1.5 rounded-2xl bg-gray-50 dark:bg-[#0f1117] px-4 py-3 border border-gray-100 dark:border-gray-800">
-                    <span className="h-2 w-2 rounded-full bg-lime-500 animate-bounce" />
-                    <span className="h-2 w-2 rounded-full bg-lime-500 animate-bounce [animation-delay:0.2s]" />
-                    <span className="h-2 w-2 rounded-full bg-lime-500 animate-bounce [animation-delay:0.4s]" />
-                    <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">Analyzing cross-store analytics API...</span>
+                  <div className="flex items-center gap-1.5 rounded-2xl bg-slate-50 dark:bg-[#0f1117] px-4 py-3 border border-slate-100 dark:border-slate-800">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-bounce" />
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-bounce [animation-delay:0.2s]" />
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-bounce [animation-delay:0.4s]" />
+                    <span className="text-xs text-slate-500 dark:text-slate-400 ml-1">Analyzing cross-store analytics API...</span>
                   </div>
                 </div>
               )}
             </div>
 
             {/* Prompt Input & Chips */}
-            <div className="border-t border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-[#0f1117]/50 p-4 space-y-3">
+            <div className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-[#0f1117]/50 p-4 space-y-3">
               {/* Quick Query Chips */}
               <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
                 {quickPrompts.map((prompt, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleSendMessage(prompt)}
-                    className="whitespace-nowrap rounded-xl bg-white dark:bg-[#161b22] border border-gray-200/80 dark:border-gray-800 px-3 py-1.5 text-[11px] font-semibold text-gray-700 dark:text-gray-300 hover:border-lime-500 hover:text-gray-900 dark:hover:text-white transition-all shadow-2xs"
+                    className="whitespace-nowrap rounded-xl bg-white dark:bg-[#161b26] border border-slate-200/80 dark:border-slate-800 px-3 py-1.5 text-[11px] font-semibold text-slate-700 dark:text-slate-300 hover:border-lime-500 hover:text-slate-900 dark:hover:text-white transition-all shadow-2xs"
                   >
                     {prompt}
                   </button>
@@ -337,12 +340,12 @@ export default function AIAssistantPage() {
                   placeholder="Ask a question about your revenue, ads, COGS, or inventory..."
                   value={inputQuery}
                   onChange={(e) => setInputQuery(e.target.value)}
-                  className="flex-1 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0f1117] px-4 py-2.5 text-xs font-medium text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-600 focus:border-lime-500 focus:outline-none"
+                  className="flex-1 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] px-4 py-2.5 text-xs font-medium text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:border-lime-500 focus:outline-none"
                 />
                 <button
                   type="submit"
                   disabled={!inputQuery.trim() || isThinking}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#84cc16] text-black hover:bg-[#72b012] disabled:opacity-50 transition-all shadow-sm"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#84cc16] text-black hover:bg-[#72b012] disabled:opacity-50 transition-all shadow-xs"
                 >
                   <Send className="h-4 w-4" />
                 </button>
@@ -352,58 +355,58 @@ export default function AIAssistantPage() {
 
           {/* Right Live Context Summary (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
-            <div className="rounded-3xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] p-5 shadow-sm space-y-3">
+            <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs space-y-3">
               <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-lime-600 dark:text-[#4ade80]" />
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white">Live AI System Context</h3>
+                <Zap className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
+                <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Live AI System Context</h3>
               </div>
 
               <div className="space-y-2 text-xs">
-                <div className="flex justify-between rounded-xl bg-gray-50 dark:bg-[#0f1117] p-2.5">
-                  <span className="text-gray-500 dark:text-gray-400">Connected Accounts:</span>
-                  <span className="font-bold text-gray-900 dark:text-white">4 Active Shops</span>
+                <div className="flex justify-between rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2.5">
+                  <span className="text-slate-500 dark:text-slate-400">Connected Accounts:</span>
+                  <span className="font-bold text-slate-900 dark:text-white">4 Active Shops</span>
                 </div>
-                <div className="flex justify-between rounded-xl bg-gray-50 dark:bg-[#0f1117] p-2.5">
-                  <span className="text-gray-500 dark:text-gray-400">Total Tracked Revenue:</span>
-                  <span className="font-bold text-gray-900 dark:text-white">{formatCurrency(totalRevenue)}</span>
+                <div className="flex justify-between rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2.5 font-mono-numeric">
+                  <span className="text-slate-500 dark:text-slate-400">Total Tracked Revenue:</span>
+                  <span className="font-bold text-slate-900 dark:text-white">{formatCurrency(totalRevenue)}</span>
                 </div>
-                <div className="flex justify-between rounded-xl bg-gray-50 dark:bg-[#0f1117] p-2.5">
-                  <span className="text-gray-500 dark:text-gray-400">Blended Profit Margin:</span>
-                  <span className="font-bold text-[#22c55e] dark:text-[#4ade80]">{formatPercent(profitMargin)}</span>
+                <div className="flex justify-between rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2.5 font-mono-numeric">
+                  <span className="text-slate-500 dark:text-slate-400">Blended Profit Margin:</span>
+                  <span className="font-bold text-emerald-600 dark:text-[#4ade80]">{formatPercent(profitMargin)}</span>
                 </div>
-                <div className="flex justify-between rounded-xl bg-gray-50 dark:bg-[#0f1117] p-2.5">
-                  <span className="text-gray-500 dark:text-gray-400">Active TikTok Ad Campaigns:</span>
-                  <span className="font-bold text-purple-700 dark:text-purple-300">{campaigns.filter((c) => c.status === 'Active').length} Active</span>
+                <div className="flex justify-between rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2.5">
+                  <span className="text-slate-500 dark:text-slate-400">Active TikTok Campaigns:</span>
+                  <span className="font-bold text-purple-600 dark:text-[#c084fc]">{campaigns.filter((c) => c.status === 'Active').length} Active</span>
                 </div>
               </div>
             </div>
 
             {/* Quick AI Presets */}
-            <div className="rounded-3xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] p-5 shadow-sm space-y-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+            <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs space-y-3">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                 1-Click AI Audits
               </h3>
               <div className="space-y-2">
                 <button
                   onClick={() => handleSendMessage('Audit all product margins and flag losing SKUs')}
-                  className="flex w-full items-center justify-between rounded-2xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-[#0f1117] p-3 text-left hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                  className="flex w-full items-center justify-between rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-[#0f1117] p-3 text-left hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
                 >
                   <div>
-                    <p className="text-xs font-bold text-gray-900 dark:text-white">Audit Margin Leakage</p>
-                    <p className="text-[11px] text-gray-500 dark:text-gray-400">Find hidden shipping and fee drains</p>
+                    <p className="text-xs font-bold text-slate-900 dark:text-white">Audit Margin Leakage</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400">Find hidden shipping and fee drains</p>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-gray-400" />
+                  <ArrowRight className="h-4 w-4 text-slate-400" />
                 </button>
 
                 <button
                   onClick={() => handleSendMessage('Which ad creative angle is performing best?')}
-                  className="flex w-full items-center justify-between rounded-2xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-[#0f1117] p-3 text-left hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                  className="flex w-full items-center justify-between rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-[#0f1117] p-3 text-left hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
                 >
                   <div>
-                    <p className="text-xs font-bold text-gray-900 dark:text-white">Attribution Deep-Dive</p>
-                    <p className="text-[11px] text-gray-500 dark:text-gray-400">Rank ROAS by TikTok ad creative</p>
+                    <p className="text-xs font-bold text-slate-900 dark:text-white">Attribution Deep-Dive</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400">Rank ROAS by TikTok ad creative</p>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-gray-400" />
+                  <ArrowRight className="h-4 w-4 text-slate-400" />
                 </button>
               </div>
             </div>
@@ -414,48 +417,48 @@ export default function AIAssistantPage() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           {/* Controls & Prompt Specs (5 cols) */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="rounded-3xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] p-6 shadow-sm space-y-4">
+            <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-6 shadow-xs space-y-4">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white">Listing & Script Generator</h3>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">Listing & Script Generator</h3>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">Product Title</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Product Title</label>
                 <input
                   type="text"
                   value={prodTitle}
                   onChange={(e) => setProdTitle(e.target.value)}
-                  className="w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold text-gray-900 dark:text-white"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold text-slate-900 dark:text-white"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">Target Audience</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Target Audience</label>
                 <input
                   type="text"
                   value={targetAudience}
                   onChange={(e) => setTargetAudience(e.target.value)}
-                  className="w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold text-gray-900 dark:text-white"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold text-slate-900 dark:text-white"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">Selling Price</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Selling Price</label>
                   <input
                     type="text"
                     value={pricePoint}
                     onChange={(e) => setPricePoint(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold text-gray-900 dark:text-white"
+                    className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold text-slate-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">Viral Angle</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Viral Angle</label>
                   <select
                     value={selectedAngle}
                     onChange={(e) => setSelectedAngle(e.target.value as any)}
-                    className="w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold text-gray-900 dark:text-white"
+                    className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold text-slate-900 dark:text-white"
                   >
                     <option value="Problem-Agitation">Problem-Agitation</option>
                     <option value="UGC-Review">UGC Customer Review</option>
@@ -468,7 +471,7 @@ export default function AIAssistantPage() {
               <button
                 onClick={handleGenerateListing}
                 disabled={isGenerating}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#84cc16] py-3 text-xs font-bold text-black shadow-md hover:bg-[#72b012] disabled:opacity-50 transition-all"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#84cc16] py-3 text-xs font-bold text-black shadow-xs hover:bg-[#72b012] disabled:opacity-50 transition-all hover:scale-[1.01]"
               >
                 {isGenerating ? (
                   <>
@@ -490,9 +493,9 @@ export default function AIAssistantPage() {
             {generatedOutput ? (
               <div className="space-y-4">
                 {/* 1. SEO Titles */}
-                <div className="rounded-3xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] p-5 shadow-sm space-y-2.5">
+                <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs space-y-2.5">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
                       <FileText className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
                       Optimized TikTok Shop Titles
                     </h4>
@@ -501,12 +504,12 @@ export default function AIAssistantPage() {
                     {generatedOutput.titles.map((t, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center justify-between rounded-xl bg-gray-50 dark:bg-[#0f1117] p-2.5 text-xs font-medium text-gray-800 dark:text-gray-200 border border-gray-100 dark:border-gray-800"
+                        className="flex items-center justify-between rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2.5 text-xs font-medium text-slate-800 dark:text-slate-200 border border-slate-100 dark:border-slate-800"
                       >
                         <span>{t}</span>
                         <button
                           onClick={() => copyToClipboard(t, `title-${idx}`)}
-                          className="ml-2 rounded-lg p-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                          className="ml-2 rounded-lg p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
                         >
                           {copiedKey === `title-${idx}` ? <Check className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" /> : <Copy className="h-4 w-4" />}
                         </button>
@@ -516,8 +519,8 @@ export default function AIAssistantPage() {
                 </div>
 
                 {/* 2. Viral Hooks */}
-                <div className="rounded-3xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] p-5 shadow-sm space-y-2.5">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+                <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs space-y-2.5">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
                     <Flame className="h-4 w-4 text-rose-500" />
                     First 3-Second Viral Video Hooks
                   </h4>
@@ -540,29 +543,29 @@ export default function AIAssistantPage() {
                 </div>
 
                 {/* 3. TikTok Video Script */}
-                <div className="rounded-3xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] p-5 shadow-sm space-y-3">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+                <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs space-y-3">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
                     <Video className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                     30-Second Video Script (Visuals + Voiceover)
                   </h4>
-                  <div className="space-y-2.5 divide-y divide-gray-100 dark:divide-gray-800">
+                  <div className="space-y-2.5 divide-y divide-slate-100 dark:divide-slate-800">
                     {generatedOutput.videoScript.map((scene, idx) => (
                       <div key={idx} className="pt-2.5 first:pt-0 text-xs">
-                        <p className="font-bold text-gray-900 dark:text-white">{scene.scene}</p>
-                        <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5"><span className="font-semibold text-purple-700 dark:text-purple-300">🎬 Visual:</span> {scene.visual}</p>
-                        <p className="text-xs font-medium text-gray-800 dark:text-gray-200 mt-0.5"><span className="font-semibold text-emerald-700 dark:text-[#4ade80]">🎙️ Audio:</span> {scene.audio}</p>
+                        <p className="font-bold text-slate-900 dark:text-white">{scene.scene}</p>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5"><span className="font-semibold text-purple-600 dark:text-[#c084fc]">🎬 Visual:</span> {scene.visual}</p>
+                        <p className="text-xs font-medium text-slate-800 dark:text-slate-200 mt-0.5"><span className="font-semibold text-emerald-600 dark:text-[#4ade80]">🎙️ Audio:</span> {scene.audio}</p>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* 4. Description Bullets & Hashtags */}
-                <div className="rounded-3xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] p-5 shadow-sm space-y-3">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+                <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs space-y-3">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
                     <Hash className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                     Bulleted Specs & Viral Hashtags
                   </h4>
-                  <div className="rounded-2xl bg-gray-50 dark:bg-[#0f1117] p-3 text-xs space-y-1.5 text-gray-700 dark:text-gray-300 border border-gray-100 dark:border-gray-800">
+                  <div className="rounded-2xl bg-slate-50 dark:bg-[#0f1117] p-3 text-xs space-y-1.5 text-slate-700 dark:text-slate-300 border border-slate-100 dark:border-slate-800">
                     {generatedOutput.description.map((d, idx) => (
                       <p key={idx}>{d}</p>
                     ))}
@@ -577,10 +580,10 @@ export default function AIAssistantPage() {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center h-96 rounded-3xl border border-dashed border-gray-300 dark:border-gray-800 bg-white dark:bg-[#151b26] p-6 text-center">
-                <Sparkles className="h-10 w-10 text-gray-300 dark:text-gray-600 mb-2" />
-                <h4 className="text-sm font-bold text-gray-700 dark:text-gray-300">Ready to Generate Viral TikTok Assets</h4>
-                <p className="text-xs text-gray-400 dark:text-gray-500 mt-1 max-w-sm">
+              <div className="flex flex-col items-center justify-center h-96 rounded-3xl border border-dashed border-slate-300 dark:border-slate-800 bg-white dark:bg-[#121620] p-6 text-center">
+                <Sparkles className="h-10 w-10 text-slate-300 dark:text-slate-600 mb-2" />
+                <h4 className="text-sm font-bold text-slate-700 dark:text-slate-300">Ready to Generate Viral TikTok Assets</h4>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 max-w-sm">
                   Click the button on the left to generate high-converting SEO product titles, TikTok video hooks, voiceover scripts, and bulleted descriptions.
                 </p>
               </div>
