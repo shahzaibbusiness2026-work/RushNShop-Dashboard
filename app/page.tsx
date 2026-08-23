@@ -32,6 +32,8 @@ export default function DashboardPage() {
     avgOrderValue,
     avgProfitPerOrder,
     selectedStore,
+    growthRates,
+    sparklines,
   } = useStore();
 
   return (
@@ -41,50 +43,50 @@ export default function DashboardPage() {
         <StatCard
           title="Total Revenue"
           value={formatCurrency(totalRevenue, selectedStore?.currency)}
-          growth={18.6}
+          growth={growthRates.revenue}
           icon={DollarSign}
           themeColor="green"
-          sparklinePoints={[18, 22, 19, 28, 26, 35, 32, 42, 48]}
+          sparklinePoints={sparklines.revenue}
         />
         <StatCard
           title="Net Profit"
           value={formatCurrency(netProfit, selectedStore?.currency)}
-          growth={20.4}
+          growth={growthRates.profit}
           icon={TrendingUp}
           themeColor="emerald"
-          sparklinePoints={[12, 15, 14, 22, 20, 29, 27, 36, 42]}
+          sparklinePoints={sparklines.profit}
         />
         <StatCard
           title="Profit Margin"
           value={formatPercent(profitMargin)}
-          growth={2.1}
+          growth={growthRates.margin}
           icon={Percent}
           themeColor="amber"
-          sparklinePoints={[48, 49, 48.5, 50, 50.5, 51.2, 51.5, 52.0]}
+          sparklinePoints={sparklines.margin}
         />
         <StatCard
           title="Orders"
           value={formatNumber(totalOrders)}
-          growth={15.3}
+          growth={growthRates.orders}
           icon={ShoppingBag}
           themeColor="blue"
-          sparklinePoints={[550, 600, 580, 680, 650, 740, 780, 840]}
+          sparklinePoints={sparklines.orders}
         />
         <StatCard
           title="Avg. Order Value"
           value={formatCurrency(avgOrderValue, selectedStore?.currency)}
-          growth={3.2}
+          growth={growthRates.aov}
           icon={CreditCard}
           themeColor="purple"
-          sparklinePoints={[28.5, 29.0, 28.8, 29.5, 29.2, 30.0, 30.27]}
+          sparklinePoints={sparklines.aov}
         />
         <StatCard
           title="Avg. Profit / Order"
           value={formatCurrency(avgProfitPerOrder, selectedStore?.currency)}
-          growth={4.7}
+          growth={growthRates.appo}
           icon={HeartHandshake}
           themeColor="pink"
-          sparklinePoints={[14.2, 14.8, 14.5, 15.1, 15.0, 15.5, 15.75]}
+          sparklinePoints={sparklines.appo}
         />
       </div>
 

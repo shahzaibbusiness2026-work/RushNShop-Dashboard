@@ -15,7 +15,7 @@ import { formatCurrency } from '../../lib/utils';
 import { ChevronDown } from 'lucide-react';
 
 export default function ProfitVsExpensesChart() {
-  const { profitTrend, stores, selectedStoreId, setSelectedStoreId, theme } = useStore();
+  const { profitTrend, stores, selectedStoreId, setSelectedStoreId, selectedStore, theme } = useStore();
   const [timeframe, setTimeframe] = useState<'Daily' | 'Weekly'>('Daily');
 
   const isDark = theme === 'dark';
@@ -28,11 +28,11 @@ export default function ProfitVsExpensesChart() {
           <div className="mt-1.5 space-y-1">
             <p className="flex items-center gap-2 font-semibold text-emerald-600 dark:text-[#4ade80]">
               <span className="h-2 w-2 rounded-full bg-[#22c55e]" />
-              <span>Profit: {formatCurrency(payload[0]?.value || 0)}</span>
+              <span>Profit: {formatCurrency(payload[0]?.value || 0, selectedStore?.currency)}</span>
             </p>
             <p className="flex items-center gap-2 font-semibold text-rose-500 dark:text-rose-400">
               <span className="h-2 w-2 rounded-full bg-[#fb7185]" />
-              <span>Expenses: {formatCurrency(payload[1]?.value || 0)}</span>
+              <span>Expenses: {formatCurrency(payload[1]?.value || 0, selectedStore?.currency)}</span>
             </p>
           </div>
         </div>
@@ -67,10 +67,10 @@ export default function ProfitVsExpensesChart() {
               onChange={(e) => setSelectedStoreId(e.target.value)}
               className="rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-white/5 px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-300 outline-none"
             >
-              <option value="all">All Stores</option>
+              <option value="all" className="dark:bg-[#161b22]">All Stores</option>
               {stores.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.name}
+                <option key={s.id} value={s.id} className="dark:bg-[#161b22]">
+                  {s.flag} {s.name}
                 </option>
               ))}
             </select>
@@ -102,8 +102,6 @@ export default function ProfitVsExpensesChart() {
               tickLine={false}
               tick={{ fill: isDark ? '#64748b' : '#94a3b8', fontSize: 11 }}
               tickFormatter={(val) => `$${val >= 1000 ? `${(val / 1000).toFixed(0)}K` : val}`}
-              domain={[0, 30000]}
-              ticks={[0, 10000, 20000, 30000]}
             />
             <Tooltip content={<CustomTooltip />} />
             <Bar dataKey="profit" name="Profit" fill="#22c55e" radius={[4, 4, 0, 0]} maxBarSize={20} />

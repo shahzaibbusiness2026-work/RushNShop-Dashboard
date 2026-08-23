@@ -5,15 +5,8 @@ import Link from 'next/link';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 import { useStore } from '../../context/StoreContext';
 
-const orderStatusData = [
-  { name: 'Completed', count: 688, percentage: 81.9, color: '#22c55e' },
-  { name: 'Processing', count: 102, percentage: 12.1, color: '#3b82f6' },
-  { name: 'Canceled', count: 30, percentage: 3.6, color: '#ef4444' },
-  { name: 'Refunded', count: 20, percentage: 2.4, color: '#94a3b8' },
-];
-
 export default function OrdersOverviewChart() {
-  const { totalOrders } = useStore();
+  const { totalOrders, orderStatusCounts, selectedStore } = useStore();
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
@@ -48,14 +41,14 @@ export default function OrdersOverviewChart() {
             <PieChart>
               <Tooltip content={<CustomTooltip />} />
               <Pie
-                data={orderStatusData}
+                data={orderStatusCounts}
                 dataKey="count"
                 nameKey="name"
                 innerRadius={50}
                 outerRadius={70}
                 paddingAngle={3}
               >
-                {orderStatusData.map((entry, index) => (
+                {orderStatusCounts.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
@@ -65,13 +58,15 @@ export default function OrdersOverviewChart() {
           {/* Center */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
             <span className="text-base font-black text-gray-900 dark:text-white">{totalOrders}</span>
-            <span className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">Total Orders</span>
+            <span className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">
+              {selectedStore ? `${selectedStore.countryCode} Orders` : 'Total Orders'}
+            </span>
           </div>
         </div>
 
         {/* Legend */}
         <div className="flex-1 space-y-2 w-full">
-          {orderStatusData.map((item) => (
+          {orderStatusCounts.map((item) => (
             <div key={item.name} className="flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
                 <span className="h-2.5 w-2.5 rounded-sm shrink-0" style={{ backgroundColor: item.color }} />

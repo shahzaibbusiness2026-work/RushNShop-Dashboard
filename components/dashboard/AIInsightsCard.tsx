@@ -7,7 +7,7 @@ import { useStore } from '../../context/StoreContext';
 import { cn } from '../../lib/utils';
 
 export default function AIInsightsCard() {
-  const { insights } = useStore();
+  const { storeInsights } = useStore();
 
   const getIcon = (type: string) => {
     switch (type) {
@@ -63,7 +63,7 @@ export default function AIInsightsCard() {
 
       {/* Insights List */}
       <div className="mt-3 space-y-2.5">
-        {insights.map((insight) => {
+        {storeInsights.map((insight) => {
           const style = getStyles(insight.type);
           return (
             <div
@@ -82,7 +82,12 @@ export default function AIInsightsCard() {
               >
                 {getIcon(insight.type)}
               </div>
-              <p className="text-xs font-semibold text-gray-800 dark:text-gray-200 leading-snug">{insight.text}</p>
+              <div>
+                <p className="text-xs font-semibold text-gray-800 dark:text-gray-200 leading-snug">{insight.text}</p>
+                {insight.detail && (
+                  <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">{insight.detail}</p>
+                )}
+              </div>
             </div>
           );
         })}

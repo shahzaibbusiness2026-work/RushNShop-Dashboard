@@ -18,14 +18,13 @@ import { cn } from '../../lib/utils';
 import AddStoreModal from './AddStoreModal';
 import NotificationsDrawer from './NotificationsDrawer';
 
-const datePresets = [
-  'Today',
-  'Yesterday',
-  'Last 7 Days (May 17 - May 23, 2024)',
-  'Last 14 Days',
-  'Last 30 Days',
-  'This Month',
-  'Custom Range...',
+const datePresetsList = [
+  { label: 'Today', range: 'Today (May 23, 2024)', presetKey: 'Today' },
+  { label: 'Yesterday', range: 'Yesterday (May 22, 2024)', presetKey: 'Yesterday' },
+  { label: 'Last 7 Days (Default)', range: 'May 17 - May 23, 2024', presetKey: 'Last 7 Days' },
+  { label: 'Last 14 Days', range: 'May 10 - May 23, 2024', presetKey: 'Last 14 Days' },
+  { label: 'Last 30 Days', range: 'Apr 24 - May 23, 2024', presetKey: 'Last 30 Days' },
+  { label: 'This Month (May 2024)', range: 'May 01 - May 23, 2024', presetKey: 'This Month' },
 ];
 
 const pageTitles: Record<string, { title: string; subtitle: string }> = {
@@ -47,7 +46,19 @@ const pageTitles: Record<string, { title: string; subtitle: string }> = {
 
 export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () => void }) {
   const pathname = usePathname();
-  const { selectedStoreId, setSelectedStoreId, stores, dateRange, setDateRange, theme, toggleTheme } = useStore();
+  const {
+    selectedStoreId,
+    setSelectedStoreId,
+    stores,
+    dateRange,
+    setDateRange,
+    datePreset,
+    setDatePreset,
+    theme,
+    toggleTheme,
+    storeInsights,
+  } = useStore();
+
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showStorePicker, setShowStorePicker] = useState(false);
   const [showAddStore, setShowAddStore] = useState(false);
@@ -105,7 +116,7 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
             >
               <StoreIcon className="h-3.5 w-3.5 text-gray-500 dark:text-gray-400" />
               <span className="hidden sm:inline">
-                {selectedStoreId === 'all' ? 'All Stores (4)' : `${selectedStoreObj?.flag} ${selectedStoreObj?.name}`}
+                {selectedStoreId === 'all' ? `All Stores (${stores.length})` : `${selectedStoreObj?.flag} ${selectedStoreObj?.name}`}
               </span>
               <ChevronDown className="h-3.5 w-3.5 text-gray-400" />
             </button>
@@ -174,28 +185,23 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
             {showDatePicker && (
               <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#161b22] p-2 shadow-xl z-50 animate-in fade-in slide-in-from-top-2">
                 <p className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">Date Presets</p>
-                {datePresets.map((preset) => (
+                {datePresetsList.map((item) => (
                   <button
-                    key={preset}
+                    key={item.presetKey}
                     onClick={() => {
-                      if (preset.includes('May 17')) {
-                        setDateRange('May 17 - May 23, 2024');
-                      } else if (preset === 'Today') {
-                        setDateRange('Today (May 23, 2024)');
-                      } else if (preset === 'Yesterday') {
-                        setDateRange('Yesterday (May 22, 2024)');
-                      } else if (preset === 'Last 30 Days') {
-                        setDateRange('Apr 24 - May 23, 2024');
-                      } else if (preset === 'This Month') {
-                        setDateRange('May 01 - May 23, 2024');
-                      } else {
-                        setDateRange(preset);
-                      }
+                      setDateRange(item.range);
+                      setDatePreset(item.presetKey);
                       setShowDatePicker(false);
                     }}
-                    className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors text-left"
+                    className={cn(
+                      'flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium transition-colors text-left',
+                      datePreset === item.presetKey
+                        ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-[#4ade80] font-bold'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5'
+                    )}
                   >
-                    <span>{preset}</span>
+                    <span>{item.label}</span>
+                    {datePreset === item.presetKey && <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-[#4ade80]" />}
                   </button>
                 ))}
               </div>
@@ -210,7 +216,7 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
           >
             <Bell className="h-4 w-4" />
             <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-lime-500 text-[9px] font-bold text-black ring-2 ring-white dark:ring-[#0f1117]">
-              0
+              {storeInsights.length}
             </span>
           </button>
 

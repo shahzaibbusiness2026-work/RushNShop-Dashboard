@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   ResponsiveContainer,
   BarChart,
@@ -15,10 +15,39 @@ import { formatCurrency } from '../../lib/utils';
 import { ChevronDown } from 'lucide-react';
 
 export default function ProfitTrendChart() {
-  const { profitTrend, selectedStore, theme } = useStore();
+  const { profitTrend, selectedStore, theme, selectedStoreId } = useStore();
   const [timeframe, setTimeframe] = useState<'Daily' | 'Weekly' | 'Monthly'>('Daily');
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const isDark = theme === 'dark';
+
+  // Transform data based on timeframe
+  const chartData = useMemo(() => {
+    if (timeframe === 'Daily') return profitTrend;
+
+    if (timeframe === 'Weekly') {
+      const w1Profit = profitTrend.slice(0, 3).reduce((a, b) => a + b.profit, 0);
+      const w1Rev = profitTrend.slice(0, 3).reduce((a, b) => a + b.revenue, 0);
+      const w2Profit = profitTrend.slice(3, 7).reduce((a, b) => a + b.profit, 0);
+      const w2Rev = profitTrend.slice(3, 7).reduce((a, b) => a + b.revenue, 0);
+
+      return [
+        { date: 'Week 1', profit: w1Profit, revenue: w1Rev },
+        { date: 'Week 2', profit: w2Profit, revenue: w2Rev },
+        { date: 'Week 3 (Est)', profit: Math.round(w2Profit * 1.15), revenue: Math.round(w2Rev * 1.15) },
+        { date: 'Week 4 (Est)', profit: Math.round(w2Profit * 1.25), revenue: Math.round(w2Rev * 1.25) },
+      ];
+    }
+
+    // Monthly
+    const totalP = profitTrend.reduce((a, b) => a + b.profit, 0);
+    const totalR = profitTrend.reduce((a, b) => a + b.revenue, 0);
+    return [
+      { date: 'Mar 2024', profit: Math.round(totalP * 0.72), revenue: Math.round(totalR * 0.72) },
+      { date: 'Apr 2024', profit: Math.round(totalP * 0.88), revenue: Math.round(totalR * 0.88) },
+      { date: 'May 2024 (MTD)', profit: totalP, revenue: totalR },
+    ];
+  }, [profitTrend, timeframe]);
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -65,12 +94,33 @@ export default function ProfitTrendChart() {
           {/* Timeframe Dropdown */}
           <div className="relative">
             <button
-              onClick={() => setTimeframe(timeframe === 'Daily' ? 'Weekly' : 'Daily')}
+              onClick={() => setShowDropdown(!showDropdown)}
               className="flex items-center gap-1 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-white/5 px-2.5 py-1 text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
             >
               <span>{timeframe}</span>
               <ChevronDown className="h-3 w-3 text-gray-400" />
             </button>
+
+            {showDropdown && (
+              <div className="absolute right-0 top-full mt-1.5 w-32 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#161b22] p-1.5 shadow-xl z-20">
+                {(['Daily', 'Weekly', 'Monthly'] as const).map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => {
+                      setTimeframe(t);
+                      setShowDropdown(false);
+                    }}
+                    className={`flex w-full items-center rounded-lg px-2.5 py-1 text-xs font-medium text-left ${
+                      timeframe === t
+                        ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-[#4ade80] font-bold'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5'
+                    }`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -78,7 +128,7 @@ export default function ProfitTrendChart() {
       {/* Chart */}
       <div className="mt-4 h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={profitTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }} barGap={6}>
+          <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }} barGap={6}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDark ? '#1e293b' : '#f1f5f9'} />
             <XAxis
               dataKey="date"
@@ -91,8 +141,6 @@ export default function ProfitTrendChart() {
               tickLine={false}
               tick={{ fill: isDark ? '#64748b' : '#94a3b8', fontSize: 11 }}
               tickFormatter={(val) => `$${val >= 1000 ? `${(val / 1000).toFixed(0)}K` : val}`}
-              domain={[0, 30000]}
-              ticks={[0, 10000, 20000, 30000]}
             />
             <Tooltip content={<CustomTooltip />} />
             <Bar dataKey="profit" name="Net Profit" fill="#22c55e" radius={[4, 4, 0, 0]} maxBarSize={28} />

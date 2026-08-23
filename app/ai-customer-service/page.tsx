@@ -15,6 +15,7 @@ import {
   Truck,
   RotateCcw,
   ShieldAlert,
+  Flag,
 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import { CustomerTicket } from '../../types';
@@ -24,19 +25,21 @@ export default function AICustomerServicePage() {
   const { tickets, replyToTicket, resolveTicket, escalateTicket } = useStore();
   const [selectedTicketId, setSelectedTicketId] = useState<string>(tickets[0]?.id || '');
   const [activeFilter, setActiveFilter] = useState<'All' | 'Open' | 'Pending AI' | 'Escalated' | 'Resolved'>('All');
+  const [priorityFilter, setPriorityFilter] = useState<'All' | 'High' | 'Medium' | 'Low'>('All');
   const [customReply, setCustomReply] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredTickets = tickets.filter((t) => {
-    const matchesFilter = activeFilter === 'All' || t.status === activeFilter;
+    const matchesStatus = activeFilter === 'All' || t.status === activeFilter;
+    const matchesPriority = priorityFilter === 'All' || t.priority === priorityFilter;
     const matchesSearch =
       t.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       t.orderNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
       t.subject.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesFilter && matchesSearch;
+    return matchesStatus && matchesPriority && matchesSearch;
   });
 
-  const selectedTicket = tickets.find((t) => t.id === selectedTicketId) || tickets[0];
+  const selectedTicket = tickets.find((t) => t.id === selectedTicketId) || filteredTickets[0] || tickets[0];
 
   const handleApproveAi = () => {
     if (!selectedTicket || !selectedTicket.suggestedAiReply) return;
@@ -86,7 +89,9 @@ export default function AICustomerServicePage() {
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
             </div>
 
+            {/* Status Pills */}
             <div className="flex items-center gap-1 overflow-x-auto pb-1">
+              <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase mr-1">Status:</span>
               {['All', 'Pending AI', 'Open', 'Escalated', 'Resolved'].map((tab) => (
                 <button
                   key={tab}
@@ -99,6 +104,25 @@ export default function AICustomerServicePage() {
                   )}
                 >
                   {tab}
+                </button>
+              ))}
+            </div>
+
+            {/* Priority Pills */}
+            <div className="flex items-center gap-1 overflow-x-auto pb-1">
+              <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase mr-1">Priority:</span>
+              {(['All', 'High', 'Medium', 'Low'] as const).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPriorityFilter(p)}
+                  className={cn(
+                    'whitespace-nowrap rounded-xl px-2 py-0.5 text-[11px] font-semibold transition-colors',
+                    priorityFilter === p
+                      ? 'bg-lime-500 text-black font-bold shadow-xs'
+                      : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10'
+                  )}
+                >
+                  {p}
                 </button>
               ))}
             </div>
@@ -125,7 +149,21 @@ export default function AICustomerServicePage() {
                   </div>
                   <p className="mt-1 font-semibold text-gray-800 dark:text-gray-200 text-xs line-clamp-1">{tkt.subject}</p>
                   <div className="mt-2 flex items-center justify-between">
-                    <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400">{tkt.category}</span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400">{tkt.category}</span>
+                      <span
+                        className={cn(
+                          'rounded-md px-1.5 py-0.2 text-[9px] font-bold',
+                          tkt.priority === 'High'
+                            ? 'bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300'
+                            : tkt.priority === 'Medium'
+                            ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300'
+                            : 'bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300'
+                        )}
+                      >
+                        {tkt.priority}
+                      </span>
+                    </div>
                     <span
                       className={cn(
                         'rounded-md px-1.5 py-0.5 text-[10px] font-bold',
@@ -157,6 +195,16 @@ export default function AICustomerServicePage() {
                   <h3 className="font-bold text-gray-900 dark:text-white text-sm">{selectedTicket.subject}</h3>
                   <span className="rounded-md bg-blue-50 dark:bg-blue-950/50 px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:text-blue-300">
                     {selectedTicket.storeName}
+                  </span>
+                  <span
+                    className={cn(
+                      'rounded-md px-1.5 py-0.5 text-[10px] font-bold',
+                      selectedTicket.priority === 'High'
+                        ? 'bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300'
+                        : 'bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300'
+                    )}
+                  >
+                    {selectedTicket.priority} Priority
                   </span>
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
@@ -274,7 +322,7 @@ export default function AICustomerServicePage() {
         ) : (
           <div className="lg:col-span-7 flex flex-col items-center justify-center rounded-3xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#151b26] p-6 text-center">
             <MessageCircle className="h-10 w-10 text-gray-300 dark:text-gray-600 mb-2" />
-            <p className="text-sm font-bold text-gray-700 dark:text-gray-300">No ticket selected</p>
+            <p className="text-sm font-bold text-gray-700 dark:text-gray-300">No ticket matching selected filter</p>
           </div>
         )}
       </div>
