@@ -174,25 +174,36 @@ export default function RootLandingPage() {
         </div>
       </nav>
 
-      {/* Hero Section with Interactive Spotlight & GPU Mesh Grid */}
+      {/* Hero Section with Cinematic Background Image & Interactive Spotlight */}
       <section
         ref={heroRef}
         onMouseMove={handleMouseMove}
-        className="relative overflow-hidden pt-14 pb-20 sm:pt-24 sm:pb-32 px-4 sm:px-6 max-w-7xl mx-auto text-center bg-linear-grid"
+        className="relative overflow-hidden pt-16 pb-20 sm:pt-24 sm:pb-32 px-4 sm:px-6 max-w-7xl mx-auto text-center"
       >
+        {/* Background Related Image Layer with Slow Pan & Luminosity Overlay */}
+        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none select-none">
+          <img
+            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&auto=format&fit=crop&q=80"
+            alt="TikTok Analytics Center"
+            className="w-full h-full object-cover opacity-10 dark:opacity-20 mix-blend-luminosity animate-slow-pan scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-50/80 via-slate-50/95 to-slate-50 dark:from-[#0b0e14]/75 dark:via-[#0b0e14]/90 dark:to-[#0b0e14]" />
+          <div className="absolute inset-0 bg-linear-grid opacity-60" />
+        </div>
+
         {/* Interactive Radial Spotlight Background */}
         <div
-          className="pointer-events-none absolute -inset-px opacity-50 transition-opacity duration-300 hidden md:block"
+          className="pointer-events-none absolute -inset-px opacity-60 transition-opacity duration-300 hidden md:block"
           style={{
-            background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(132, 204, 22, 0.12), transparent 80%)`,
+            background: `radial-gradient(650px circle at ${mousePos.x}px ${mousePos.y}px, rgba(132, 204, 22, 0.15), transparent 80%)`,
           }}
         />
 
         {/* Ambient Top Glow Orbs */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 sm:w-[650px] h-96 sm:h-[450px] bg-gradient-to-tr from-lime-500/20 via-emerald-500/10 to-teal-500/0 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 sm:w-[700px] h-96 sm:h-[450px] bg-gradient-to-tr from-lime-500/20 via-emerald-500/15 to-teal-500/0 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
 
         {/* Floating Interactive Badge 1 (Left) */}
-        <div className="hidden lg:flex items-center gap-2.5 absolute top-16 left-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-[#121620]/90 p-3 shadow-xl backdrop-blur-md animate-float text-left z-20 font-mono-numeric">
+        <div className="hidden lg:flex items-center gap-2.5 absolute top-20 left-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-[#121620]/90 p-3 shadow-xl backdrop-blur-md animate-float text-left z-20 font-mono-numeric card-hover-lift">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-[#4ade80]">
             <Flame className="h-5 w-5 fill-current" />
           </div>
@@ -203,7 +214,7 @@ export default function RootLandingPage() {
         </div>
 
         {/* Floating Interactive Badge 2 (Right) */}
-        <div className="hidden lg:flex items-center gap-2.5 absolute top-20 right-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-[#121620]/90 p-3 shadow-xl backdrop-blur-md animate-float-delayed text-left z-20 font-mono-numeric">
+        <div className="hidden lg:flex items-center gap-2.5 absolute top-24 right-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-[#121620]/90 p-3 shadow-xl backdrop-blur-md animate-float-delayed text-left z-20 font-mono-numeric card-hover-lift">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-[#c084fc]">
             <Megaphone className="h-5 w-5" />
           </div>
@@ -214,7 +225,7 @@ export default function RootLandingPage() {
         </div>
 
         {/* Floating Interactive Badge 3 (Bottom Left) */}
-        <div className="hidden xl:flex items-center gap-2.5 absolute bottom-16 left-12 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-[#121620]/90 p-3 shadow-xl backdrop-blur-md animate-float text-left z-20">
+        <div className="hidden xl:flex items-center gap-2.5 absolute bottom-16 left-12 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-[#121620]/90 p-3 shadow-xl backdrop-blur-md animate-float text-left z-20 card-hover-lift">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-[#38bdf8]">
             <Bot className="h-5 w-5" />
           </div>
@@ -226,7 +237,7 @@ export default function RootLandingPage() {
 
         {/* Main Hero Header */}
         <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/40 px-4 py-1.5 text-xs font-bold text-emerald-800 dark:text-[#4ade80] mb-6 shadow-xs animate-in fade-in slide-in-from-top-4">
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-50/90 dark:bg-emerald-950/50 px-4 py-1.5 text-xs font-bold text-emerald-800 dark:text-[#4ade80] mb-6 shadow-xs backdrop-blur-md animate-in fade-in slide-in-from-top-4">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>The All-In-One AI Operating System for TikTok Shop</span>
           </div>
@@ -253,15 +264,15 @@ export default function RootLandingPage() {
             </Link>
             <a
               href="#calculator"
-              className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] px-6 py-4 text-sm font-bold text-slate-800 dark:text-slate-200 shadow-xs hover:bg-slate-50 dark:hover:bg-white/5 transition-all"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#121620]/90 px-6 py-4 text-sm font-bold text-slate-800 dark:text-slate-200 shadow-xs hover:bg-slate-50 dark:hover:bg-white/5 backdrop-blur-md transition-all hover:scale-[1.01]"
             >
               <Calculator className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
               <span>Test Profit Simulator</span>
             </a>
           </div>
 
-          {/* Hero Interactive App Window Preview (0 Lag Hardware-Accelerated) */}
-          <div className="mt-14 max-w-5xl mx-auto rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#121620]/95 p-3 sm:p-4 shadow-2xl backdrop-blur-xl relative">
+          {/* Hero Interactive App Window Preview */}
+          <div className="mt-14 max-w-5xl mx-auto rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#121620]/95 p-3 sm:p-4 shadow-2xl backdrop-blur-xl relative card-hover-lift">
             {/* Window Top Controls */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800/80 px-2">
               <div className="flex items-center gap-2">
@@ -271,7 +282,7 @@ export default function RootLandingPage() {
                 <span className="text-[11px] font-semibold text-slate-400 ml-2">app.rushnshop.com/dashboard</span>
               </div>
               <span className="rounded-md bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 text-[10px] font-bold text-emerald-800 dark:text-[#4ade80]">
-                ● Live TikTok Sync
+                ● Live TikTok Sync Active
               </span>
             </div>
 
@@ -302,7 +313,7 @@ export default function RootLandingPage() {
             {/* Clickable Overlay to Open Real Dashboard */}
             <Link
               href="/dashboard"
-              className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-2.5 text-xs font-bold hover:bg-black dark:hover:bg-slate-200 transition-colors"
+              className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-2.5 text-xs font-bold hover:bg-black dark:hover:bg-slate-200 transition-all hover:scale-[1.01]"
             >
               <span>Click to Enter Interactive Dashboard</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -336,8 +347,17 @@ export default function RootLandingPage() {
         </div>
       </section>
 
-      {/* Problem vs Solution Comparison Section */}
-      <section className="py-20 px-4 sm:px-6 max-w-6xl mx-auto space-y-12">
+      {/* Problem vs Solution Comparison Section with Logistics Image Texture */}
+      <section className="relative py-20 px-4 sm:px-6 max-w-6xl mx-auto space-y-12 overflow-hidden">
+        {/* Subtle Logistics Background Image */}
+        <div className="absolute inset-0 -z-10 pointer-events-none opacity-5 dark:opacity-10 mix-blend-luminosity overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1400&auto=format&fit=crop&q=80"
+            alt="Logistics Background"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
         <div className="text-center max-w-2xl mx-auto">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">Why RushNshop?</span>
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-1">
@@ -350,7 +370,7 @@ export default function RootLandingPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* The Old Way */}
-          <div className="rounded-3xl border border-rose-200 dark:border-rose-900/40 bg-white dark:bg-[#121620] p-6 sm:p-8 shadow-xs space-y-4">
+          <div className="rounded-3xl border border-rose-200 dark:border-rose-900/40 bg-white/95 dark:bg-[#121620]/95 p-6 sm:p-8 shadow-xs space-y-4 card-hover-lift">
             <div className="flex items-center gap-2">
               <span className="rounded-lg bg-rose-100 dark:bg-rose-950/60 p-2 text-rose-700 dark:text-rose-400 font-bold text-xs">
                 ❌ The Old Chaotic Way
@@ -377,7 +397,7 @@ export default function RootLandingPage() {
           </div>
 
           {/* The RushNshop Way */}
-          <div className="rounded-3xl border-2 border-emerald-400 dark:border-emerald-700 bg-white dark:bg-[#121620] p-6 sm:p-8 shadow-xl space-y-4">
+          <div className="rounded-3xl border-2 border-emerald-400 dark:border-emerald-700 bg-white/95 dark:bg-[#121620]/95 p-6 sm:p-8 shadow-xl space-y-4 card-hover-lift">
             <div className="flex items-center gap-2">
               <span className="rounded-lg bg-emerald-100 dark:bg-emerald-950/60 p-2 text-emerald-800 dark:text-[#4ade80] font-bold text-xs">
                 ⚡ The RushNshop AI Operating System
@@ -405,8 +425,17 @@ export default function RootLandingPage() {
         </div>
       </section>
 
-      {/* Interactive Feature Deep-Dive Tabs */}
-      <section id="features" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto space-y-12 bg-grid-pattern">
+      {/* Interactive Feature Deep-Dive Tabs with AI Neural Network Texture */}
+      <section id="features" className="relative py-20 px-4 sm:px-6 max-w-7xl mx-auto space-y-12 overflow-hidden">
+        {/* Subtle AI Network Background Texture */}
+        <div className="absolute inset-0 -z-10 pointer-events-none opacity-5 dark:opacity-10 mix-blend-luminosity overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1400&auto=format&fit=crop&q=80"
+            alt="AI Network Background"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
         <div className="text-center max-w-3xl mx-auto">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">Feature Deep Dive</span>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mt-1">
@@ -447,7 +476,7 @@ export default function RootLandingPage() {
         </div>
 
         {/* Active Tab Preview Card */}
-        <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#121620] p-6 sm:p-10 shadow-xs max-w-5xl mx-auto">
+        <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-[#121620]/95 p-6 sm:p-10 shadow-xs max-w-5xl mx-auto backdrop-blur-sm card-hover-lift">
           {activeFeatureTab === 'profit' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <div className="space-y-4">
@@ -479,7 +508,7 @@ export default function RootLandingPage() {
                   </div>
                 </div>
                 <Link
-                  href="/profit-analytics"
+                  href="/dashboard"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-[#4ade80] hover:underline pt-2"
                 >
                   <span>Explore Profit Analytics Engine</span>
@@ -540,7 +569,7 @@ export default function RootLandingPage() {
                   Trained on millions of organic TikTok views. Generates scene-by-scene audio voiceovers, on-screen text overlays, and SEO product bullet points.
                 </p>
                 <Link
-                  href="/ai-assistant"
+                  href="/dashboard"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-pink-600 dark:text-[#f472b6] hover:underline pt-2"
                 >
                   <span>Open AI Video Studio</span>
@@ -574,7 +603,7 @@ export default function RootLandingPage() {
                   Track blended ROAS, individual creator affiliate performance, and receive automated budget scaling alerts when a campaign hits target CPA.
                 </p>
                 <Link
-                  href="/ads-analytics"
+                  href="/dashboard"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 dark:text-[#c084fc] hover:underline pt-2"
                 >
                   <span>View Ads Analytics</span>
@@ -620,7 +649,7 @@ export default function RootLandingPage() {
                   Manage accounts in USA, UK, Germany, and Canada from a single master dashboard. Grant team members store-level permissions.
                 </p>
                 <Link
-                  href="/stores"
+                  href="/dashboard"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-[#38bdf8] hover:underline pt-2"
                 >
                   <span>Manage Stores</span>
@@ -664,7 +693,7 @@ export default function RootLandingPage() {
                   AI scans customer inquiries, pulls live tracking coordinates, and drafts personalized replies ready for 1-click dispatch.
                 </p>
                 <Link
-                  href="/ai-customer-service"
+                  href="/dashboard"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-600 dark:text-[#2dd4bf] hover:underline pt-2"
                 >
                   <span>Open AI Customer Helpdesk</span>
@@ -688,8 +717,17 @@ export default function RootLandingPage() {
         </div>
       </section>
 
-      {/* Interactive Pre-Listing Calculator Section */}
-      <section id="calculator" className="py-20 bg-slate-100/60 dark:bg-[#0f1117] border-y border-slate-200 dark:border-slate-800 px-4 sm:px-6">
+      {/* Interactive Pre-Listing Calculator Section with Financial Chart Background */}
+      <section id="calculator" className="relative py-20 bg-slate-100/60 dark:bg-[#0f1117] border-y border-slate-200 dark:border-slate-800 px-4 sm:px-6 overflow-hidden">
+        {/* Financial Chart Background Texture */}
+        <div className="absolute inset-0 -z-10 pointer-events-none opacity-5 dark:opacity-10 mix-blend-luminosity overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=1400&auto=format&fit=crop&q=80"
+            alt="Trading Chart Background"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
         <div className="max-w-5xl mx-auto space-y-10">
           <div className="text-center max-w-2xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">Live Interactive Demo</span>
@@ -706,25 +744,25 @@ export default function RootLandingPage() {
             <span className="text-xs font-bold text-slate-400 mr-1">Product Presets:</span>
             <button
               onClick={() => applyPreset(34.99, 6.50, 3.80, 7.50)}
-              className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] px-3 py-1.5 text-xs font-semibold hover:border-lime-500 transition-colors"
+              className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] px-3 py-1.5 text-xs font-semibold hover:border-lime-500 hover:scale-[1.02] transition-all"
             >
               🌅 Sunset Lamp ($34.99)
             </button>
             <button
               onClick={() => applyPreset(49.99, 11.20, 4.20, 10.00)}
-              className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] px-3 py-1.5 text-xs font-semibold hover:border-lime-500 transition-colors"
+              className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] px-3 py-1.5 text-xs font-semibold hover:border-lime-500 hover:scale-[1.02] transition-all"
             >
               🎙️ Lavalier Mic ($49.99)
             </button>
             <button
               onClick={() => applyPreset(24.99, 3.90, 3.50, 5.00)}
-              className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] px-3 py-1.5 text-xs font-semibold hover:border-lime-500 transition-colors"
+              className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] px-3 py-1.5 text-xs font-semibold hover:border-lime-500 hover:scale-[1.02] transition-all"
             >
               ✨ Gua Sha Set ($24.99)
             </button>
           </div>
 
-          <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#121620] p-6 sm:p-8 shadow-xs grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-[#121620]/95 p-6 sm:p-8 shadow-xs grid grid-cols-1 md:grid-cols-2 gap-8 card-hover-lift">
             {/* Calculator Controls */}
             <div className="space-y-4">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Unit Cost Parameters</h3>
@@ -827,7 +865,7 @@ export default function RootLandingPage() {
 
               <Link
                 href="/calculator"
-                className="w-full flex items-center justify-center gap-1.5 rounded-xl bg-[#84cc16] py-2.5 text-xs font-bold text-black hover:bg-[#72b012] transition-all"
+                className="w-full flex items-center justify-center gap-1.5 rounded-xl bg-[#84cc16] py-2.5 text-xs font-bold text-black hover:bg-[#72b012] transition-all hover:scale-[1.01]"
               >
                 <span>Open Full Unit Economics Studio</span>
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -849,7 +887,7 @@ export default function RootLandingPage() {
           </p>
         </div>
 
-        <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#121620] p-6 sm:p-8 shadow-xs grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-[#121620]/95 p-6 sm:p-8 shadow-xs grid grid-cols-1 md:grid-cols-2 gap-8 items-center card-hover-lift">
           <div className="space-y-4">
             <div className="flex justify-between text-xs font-bold">
               <span>Monthly Order Volume:</span>
@@ -898,7 +936,7 @@ export default function RootLandingPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {/* Starter Plan */}
-          <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#121620] p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-6">
+          <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-[#121620]/95 p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-6 card-hover-lift">
             <div className="space-y-3">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Starter</span>
               <div className="flex items-baseline gap-1 font-mono-numeric">
@@ -936,7 +974,7 @@ export default function RootLandingPage() {
           </div>
 
           {/* Growth Plan (Featured) */}
-          <div className="relative rounded-3xl border-2 border-[#84cc16] bg-white dark:bg-[#121620] p-6 sm:p-8 shadow-xl flex flex-col justify-between space-y-6">
+          <div className="relative rounded-3xl border-2 border-[#84cc16] bg-white/95 dark:bg-[#121620]/95 p-6 sm:p-8 shadow-xl flex flex-col justify-between space-y-6 card-hover-lift">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#84cc16] px-3 py-0.5 text-[10px] font-black uppercase tracking-wider text-black">
               Most Popular
             </div>
@@ -978,7 +1016,7 @@ export default function RootLandingPage() {
           </div>
 
           {/* Scale & Agency Plan */}
-          <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#121620] p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-6">
+          <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-[#121620]/95 p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-6 card-hover-lift">
             <div className="space-y-3">
               <span className="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-[#c084fc]">Scale & Agency</span>
               <div className="flex items-baseline gap-1 font-mono-numeric">
@@ -1132,7 +1170,7 @@ export default function RootLandingPage() {
             <div className="space-y-3">
               <p className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">Product</p>
               <ul className="space-y-2 text-slate-500 dark:text-slate-400 font-medium">
-                <li><Link href="/profit-analytics" className="hover:text-slate-900 dark:hover:text-white transition-colors">TrueProfit Analytics</Link></li>
+                <li><Link href="/dashboard" className="hover:text-slate-900 dark:hover:text-white transition-colors">TrueProfit Analytics</Link></li>
                 <li><Link href="/stores" className="hover:text-slate-900 dark:hover:text-white transition-colors">Multi-Store Hub</Link></li>
                 <li><Link href="/calculator" className="hover:text-slate-900 dark:hover:text-white transition-colors">Unit Economics Calculator</Link></li>
                 <li><Link href="/ads-analytics" className="hover:text-slate-900 dark:hover:text-white transition-colors">TikTok Spark Ads API</Link></li>

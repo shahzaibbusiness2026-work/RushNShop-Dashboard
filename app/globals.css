@@ -90,7 +90,7 @@ h1, h2, h3, h4, h5, h6 {
   filter: drop-shadow(0 2px 4px rgba(34, 197, 94, 0.3));
 }
 
-/* Landing Page Grid & Background Styles (0ms Lag, Pure CSS) */
+/* Landing Page Grid & Background Styles */
 .bg-grid-pattern {
   background-image: radial-gradient(rgba(148, 163, 184, 0.15) 1px, transparent 0);
   background-size: 24px 24px;
@@ -136,12 +136,24 @@ h1, h2, h3, h4, h5, h6 {
 
 @keyframes pulse-glow {
   0%, 100% {
-    opacity: 0.4;
+    opacity: 0.35;
     transform: scale(1);
   }
   50% {
-    opacity: 0.8;
-    transform: scale(1.08);
+    opacity: 0.7;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes slow-pan {
+  0% {
+    transform: scale(1.02) translate(0px, 0px);
+  }
+  50% {
+    transform: scale(1.06) translate(-10px, -6px);
+  }
+  100% {
+    transform: scale(1.02) translate(0px, 0px);
   }
 }
 
@@ -151,6 +163,15 @@ h1, h2, h3, h4, h5, h6 {
   }
   100% {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
   }
 }
 
@@ -166,6 +187,10 @@ h1, h2, h3, h4, h5, h6 {
   animation: pulse-glow 4s ease-in-out infinite;
 }
 
+.animate-slow-pan {
+  animation: slow-pan 20s ease-in-out infinite;
+}
+
 .animate-marquee {
   display: flex;
   width: 200%;
@@ -174,4 +199,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+.card-hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-4px);
 }
