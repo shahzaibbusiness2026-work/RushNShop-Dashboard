@@ -11,7 +11,7 @@ import MobileNavBar from '../components/layout/MobileNavBar';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isLandingPage = pathname === '/landing';
+  const isLandingPage = pathname === '/' || pathname === '/landing';
 
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 antialiased selection:bg-lime-400 selection:text-black min-h-screen">
         <StoreProvider>
           {isLandingPage ? (
-            /* Standalone Full-Width Landing Page (No Sidebar, No TopHeader) */
+            /* Standalone Full-Width Landing Page (No Sidebar, No TopHeader) by default */
             <main className="min-h-screen w-full bg-slate-50 dark:bg-[#0b0e14] overflow-x-hidden">
               {children}
             </main>

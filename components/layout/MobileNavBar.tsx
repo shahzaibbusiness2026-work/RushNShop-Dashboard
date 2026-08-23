@@ -21,7 +21,7 @@ export default function MobileNavBar({ onOpenMenu }: MobileNavBarProps) {
   const pathname = usePathname();
 
   const navItems = [
-    { name: 'Home', href: '/', icon: LayoutDashboard },
+    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Orders', href: '/orders', icon: ShoppingBag },
     { name: 'Profit', href: '/profit-analytics', icon: TrendingUp },
     { name: 'AI Chat', href: '/ai-assistant', icon: Sparkles },

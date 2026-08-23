@@ -28,7 +28,8 @@ const datePresetsList = [
 ];
 
 const pageTitles: Record<string, { title: string; subtitle: string }> = {
-  '/': { title: 'Dashboard', subtitle: 'Real-time business performance' },
+  '/': { title: 'RushNshop Platform', subtitle: 'AI Operating System for TikTok Shop' },
+  '/dashboard': { title: 'Dashboard', subtitle: 'Real-time business performance' },
   '/stores': { title: 'Multi-Store', subtitle: 'Manage accounts & permissions' },
   '/products': { title: 'Products', subtitle: 'SKU profitability & COGS' },
   '/calculator': { title: 'Profit Calculator', subtitle: 'Unit economics simulator' },
