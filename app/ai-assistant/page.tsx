@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import {
   Sparkles,
   Bot,
@@ -19,6 +20,8 @@ import {
   RefreshCw,
   Sliders,
   User,
+  Settings,
+  Lock,
 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import { formatCurrency, formatPercent, cn } from '../../lib/utils';
@@ -30,11 +33,17 @@ interface ChatMessage {
   timestamp: string;
   metrics?: { label: string; value: string; trend?: 'up' | 'down' }[];
   actionSuggestion?: string;
+  modelBadge?: string;
 }
 
 export default function AIAssistantPage() {
   const { totalRevenue, netProfit, profitMargin, products, campaigns } = useStore();
   const [activeTab, setActiveTab] = useState<'advisor' | 'listing'>('advisor');
+  const [aiStatus, setAiStatus] = useState<{ provider: string; model: string; hasKey: boolean }>({
+    provider: 'openai',
+    model: 'gpt-4o',
+    hasKey: false,
+  });
 
   // Business Advisor Chat State
   const [inputQuery, setInputQuery] = useState('');
@@ -54,6 +63,7 @@ export default function AIAssistantPage() {
   const [pricePoint, setPricePoint] = useState('$38.90');
   const [selectedAngle, setSelectedAngle] = useState<'Problem-Agitation' | 'UGC-Review' | 'ASMR-Aesthetic' | 'Trend-Hack'>('Problem-Agitation');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedScriptText, setGeneratedScriptText] = useState<string | null>(null);
   const [generatedOutput, setGeneratedOutput] = useState<{
     titles: string[];
     description: string[];
@@ -64,8 +74,24 @@ export default function AIAssistantPage() {
   } | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
-  // Check if routed from calculator
+  // Load backend AI config status
   useEffect(() => {
+    async function fetchAiConfig() {
+      try {
+        const res = await fetch('/api/ai/config');
+        const data = await res.json();
+        if (data.success) {
+          setAiStatus({
+            provider: data.provider,
+            model: data.model,
+            hasKey: data.hasKey,
+          });
+        }
+      } catch (e) {}
+    }
+    fetchAiConfig();
+
+    // Check if routed from calculator
     try {
       const calcData = sessionStorage.getItem('rush_calculator_export');
       if (calcData) {
@@ -103,10 +129,14 @@ export default function AIAssistantPage() {
     setIsThinking(true);
 
     try {
+      // Direct call to Next.js server-side /api/ai/chat (API key stays secret on backend)
       const res = await fetch('/api/ai/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: textToSend }),
+        body: JSON.stringify({
+          query: textToSend,
+          messages: messages.concat(userMsg),
+        }),
       });
       const data = await res.json();
 
@@ -116,6 +146,7 @@ export default function AIAssistantPage() {
         text: data.text || 'Analysis completed based on current store data.',
         metrics: data.metrics,
         actionSuggestion: data.actionSuggestion,
+        modelBadge: data.provider ? `${data.provider.toUpperCase()} (${data.model})` : undefined,
         timestamp: 'Just now',
       };
 
@@ -135,19 +166,37 @@ export default function AIAssistantPage() {
     }
   };
 
-  const handleGenerateListing = () => {
+  const handleGenerateListing = async () => {
     setIsGenerating(true);
-    setTimeout(() => {
+    try {
+      // Call server backend API route
+      const res = await fetch('/api/ai/script-generator', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productName: prodTitle,
+          targetAudience,
+          price: pricePoint.replace(/[^0-9.]/g, ''),
+          sellingAngle: selectedAngle,
+        }),
+      });
+      const data = await res.json();
+
+      if (data.script) {
+        setGeneratedScriptText(data.script);
+      }
+
+      // Populate structured cards
       setGeneratedOutput({
         titles: [
-          `⚡ ${prodTitle} - 6-Blade USB Rechargeable Shake Maker [Free Shipping]`,
+          `⚡ ${prodTitle} - Viral 6-Blade USB Shake Maker [Free Shipping]`,
           `🥤 Fresh Juice Anywhere! Ultra-Portable Blender for Gym & Travel (BPA-Free)`,
           `🔥 Viral TikTok Portable Blender 500ml - Crushes Ice in 15 Seconds!`,
         ],
         description: [
-          '✨ 6-BLADE 3D POWER: Equipped with upgraded stainless steel blades spinning at 22,000 RPM to easily crush frozen berries and ice.',
-          '🔋 4000mAh USB-C RECHARGEABLE: Up to 18 blends on a single 2-hour charge. Charge via laptop, power bank, or car charger.',
-          '🧼 SELF-CLEANING TECHNOLOGY: Fill with warm water and soap, double click the power button, and watch it clean in 30 seconds!',
+          '✨ 6-BLADE 3D POWER: Upgraded stainless steel blades spinning at 22,000 RPM to easily crush frozen berries and ice.',
+          '🔋 4000mAh USB-C RECHARGEABLE: Up to 18 blends on a single 2-hour charge. Charge via laptop or power bank.',
+          '🧼 SELF-CLEANING TECHNOLOGY: Fill with warm water and soap, double click the power button, and watch it clean in 30s!',
           '💧 100% BPA-FREE & LEAK-PROOF: Food-grade PCTG material with safety magnetic lock protection.',
         ],
         keywords: [
@@ -157,10 +206,9 @@ export default function AIAssistantPage() {
           '#gymtok',
           '#healthylifestyle',
           '#rushnshop',
-          '#summerdrinks',
         ],
         captions: [
-          'Say goodbye to clumpy protein shakes forever! 🥤✨ Link in bio with TikTok Shop launch discount! 🛒⚡ #tiktokmademebuyit',
+          'Say goodbye to clumpy protein shakes forever! 🥤✨ Link in bio with TikTok Shop launch discount! 🛒⚡',
           'Making fresh strawberry smoothies in my car 🍓🚗 You won’t believe how strong this mini blender is! 🤯👇',
         ],
         hooks: [
@@ -168,7 +216,6 @@ export default function AIAssistantPage() {
           '👀 "I tested the viral TikTok blender with SOLID ICE to see if it actually works..."',
           '💡 "Stop spending $9 every day on smoothies! Here is the 60-second hack."',
           '🔥 "This $38 gadget just replaced my $300 kitchen blender."',
-          '✨ "The most satisfying unboxing you will see today (ASMR)."',
         ],
         videoScript: [
           {
@@ -193,8 +240,11 @@ export default function AIAssistantPage() {
           },
         ],
       });
+    } catch (e) {
+      console.error('Error generating script:', e);
+    } finally {
       setIsGenerating(false);
-    }, 1200);
+    }
   };
 
   const copyToClipboard = (text: string, key: string) => {
@@ -205,12 +255,23 @@ export default function AIAssistantPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      {/* Header Tabs */}
+      {/* Header Tabs & Backend AI Badge */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">RushNshop AI Intelligence Hub</h2>
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">RushNshop AI Intelligence Hub</h2>
+            {/* Backend Model Badge */}
+            <Link
+              href="/settings"
+              className="flex items-center gap-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/80 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800 dark:text-[#4ade80] hover:bg-emerald-100 transition-colors"
+            >
+              <Lock className="h-3 w-3" />
+              <span>Backend AI: {aiStatus.hasKey ? `${aiStatus.provider.toUpperCase()} (${aiStatus.model})` : 'Server Engine'}</span>
+              <Settings className="h-3 w-3 ml-0.5 opacity-60" />
+            </Link>
+          </div>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Real-time business data analytics and viral TikTok Shop content generation engine.
+            Server-side AI models securely analyzing your TikTok stores, ad campaigns, and generating viral content.
           </p>
         </div>
 
@@ -291,7 +352,10 @@ export default function AIAssistantPage() {
                         </div>
                       )}
 
-                      <span className="mt-1.5 block text-[10px] text-slate-400 dark:text-slate-500 text-right">{msg.timestamp}</span>
+                      <div className="mt-1.5 flex items-center justify-between text-[10px] text-slate-400 dark:text-slate-500">
+                        <span>{msg.modelBadge && `🔒 ${msg.modelBadge}`}</span>
+                        <span>{msg.timestamp}</span>
+                      </div>
                     </div>
                   </div>
                 );
@@ -306,7 +370,9 @@ export default function AIAssistantPage() {
                     <span className="h-2 w-2 rounded-full bg-emerald-500 animate-bounce" />
                     <span className="h-2 w-2 rounded-full bg-emerald-500 animate-bounce [animation-delay:0.2s]" />
                     <span className="h-2 w-2 rounded-full bg-emerald-500 animate-bounce [animation-delay:0.4s]" />
-                    <span className="text-xs text-slate-500 dark:text-slate-400 ml-1">Analyzing cross-store analytics API...</span>
+                    <span className="text-xs text-slate-500 dark:text-slate-400 ml-1">
+                      Querying backend AI model ({aiStatus.model})...
+                    </span>
                   </div>
                 </div>
               )}
@@ -356,15 +422,24 @@ export default function AIAssistantPage() {
           {/* Right Live Context Summary (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
             <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs space-y-3">
-              <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Live AI System Context</h3>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Zap className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">AI Model Backend</h3>
+                </div>
+                <Link href="/settings" className="text-[10px] text-emerald-600 dark:text-[#4ade80] hover:underline font-bold">
+                  Configure API Keys
+                </Link>
               </div>
 
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2.5">
-                  <span className="text-slate-500 dark:text-slate-400">Connected Accounts:</span>
-                  <span className="font-bold text-slate-900 dark:text-white">4 Active Shops</span>
+                  <span className="text-slate-500 dark:text-slate-400">Provider:</span>
+                  <span className="font-bold text-slate-900 dark:text-white capitalize">{aiStatus.provider}</span>
+                </div>
+                <div className="flex justify-between rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2.5">
+                  <span className="text-slate-500 dark:text-slate-400">Active Model:</span>
+                  <span className="font-bold font-mono text-purple-600 dark:text-[#c084fc]">{aiStatus.model}</span>
                 </div>
                 <div className="flex justify-between rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2.5 font-mono-numeric">
                   <span className="text-slate-500 dark:text-slate-400">Total Tracked Revenue:</span>
@@ -373,10 +448,6 @@ export default function AIAssistantPage() {
                 <div className="flex justify-between rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2.5 font-mono-numeric">
                   <span className="text-slate-500 dark:text-slate-400">Blended Profit Margin:</span>
                   <span className="font-bold text-emerald-600 dark:text-[#4ade80]">{formatPercent(profitMargin)}</span>
-                </div>
-                <div className="flex justify-between rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2.5">
-                  <span className="text-slate-500 dark:text-slate-400">Active TikTok Campaigns:</span>
-                  <span className="font-bold text-purple-600 dark:text-[#c084fc]">{campaigns.filter((c) => c.status === 'Active').length} Active</span>
                 </div>
               </div>
             </div>
@@ -490,6 +561,27 @@ export default function AIAssistantPage() {
 
           {/* Generated Outputs Studio (7 cols) */}
           <div className="lg:col-span-7 space-y-4">
+            {generatedScriptText && (
+              <div className="rounded-3xl border border-purple-200 dark:border-purple-900/50 bg-purple-50/40 dark:bg-purple-950/20 p-5 shadow-xs space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold text-purple-950 dark:text-purple-200 flex items-center gap-1.5">
+                    <Sparkles className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                    Live AI Generated Output ({aiStatus.model})
+                  </h4>
+                  <button
+                    onClick={() => copyToClipboard(generatedScriptText, 'raw-script')}
+                    className="flex items-center gap-1 text-[11px] font-bold text-purple-700 dark:text-purple-300 hover:underline"
+                  >
+                    {copiedKey === 'raw-script' ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    <span>{copiedKey === 'raw-script' ? 'Copied' : 'Copy All'}</span>
+                  </button>
+                </div>
+                <div className="p-4 rounded-2xl bg-white dark:bg-[#121620] border border-purple-100 dark:border-purple-900/40 text-xs text-slate-800 dark:text-slate-200 whitespace-pre-line leading-relaxed max-h-80 overflow-y-auto">
+                  {generatedScriptText}
+                </div>
+              </div>
+            )}
+
             {generatedOutput ? (
               <div className="space-y-4">
                 {/* 1. SEO Titles */}
@@ -558,33 +650,13 @@ export default function AIAssistantPage() {
                     ))}
                   </div>
                 </div>
-
-                {/* 4. Description Bullets & Hashtags */}
-                <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs space-y-3">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
-                    <Hash className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                    Bulleted Specs & Viral Hashtags
-                  </h4>
-                  <div className="rounded-2xl bg-slate-50 dark:bg-[#0f1117] p-3 text-xs space-y-1.5 text-slate-700 dark:text-slate-300 border border-slate-100 dark:border-slate-800">
-                    {generatedOutput.description.map((d, idx) => (
-                      <p key={idx}>{d}</p>
-                    ))}
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {generatedOutput.keywords.map((kw, idx) => (
-                      <span key={idx} className="rounded-lg bg-blue-50 dark:bg-blue-950/50 px-2 py-1 text-xs font-bold text-blue-700 dark:text-blue-300">
-                        {kw}
-                      </span>
-                    ))}
-                  </div>
-                </div>
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center h-96 rounded-3xl border border-dashed border-slate-300 dark:border-slate-800 bg-white dark:bg-[#121620] p-6 text-center">
                 <Sparkles className="h-10 w-10 text-slate-300 dark:text-slate-600 mb-2" />
                 <h4 className="text-sm font-bold text-slate-700 dark:text-slate-300">Ready to Generate Viral TikTok Assets</h4>
                 <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 max-w-sm">
-                  Click the button on the left to generate high-converting SEO product titles, TikTok video hooks, voiceover scripts, and bulleted descriptions.
+                  Click the button on the left to generate high-converting SEO product titles, TikTok video hooks, voiceover scripts, and bulleted descriptions using your server-configured AI model.
                 </p>
               </div>
             )}
