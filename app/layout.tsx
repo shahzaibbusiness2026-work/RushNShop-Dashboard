@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './globals.css';
 import { StoreProvider } from '../context/StoreContext';
 import Sidebar from '../components/layout/Sidebar';
 import TopHeader from '../components/layout/TopHeader';
+import MobileNavBar from '../components/layout/MobileNavBar';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           name="description"
           content="AI-powered TikTok Shop management dashboard for RushNshop with profit analytics, listing generator, customer service automation, and multi-store intelligence."
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
         <link
           rel="icon"
           href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"
@@ -31,9 +33,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/* Main Area */}
             <div className="flex flex-1 flex-col overflow-x-hidden min-w-0">
               <TopHeader onOpenMobileMenu={() => setMobileMenuOpen(true)} />
-              <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-slate-50 dark:bg-[#0b0e14] transition-colors">
+              <main className="flex-1 p-3.5 sm:p-6 lg:p-8 pb-20 lg:pb-8 bg-slate-50 dark:bg-[#0b0e14] transition-colors">
                 {children}
               </main>
+              {/* Mobile Bottom Navigation */}
+              <MobileNavBar onOpenMenu={() => setMobileMenuOpen(true)} />
             </div>
           </div>
         </StoreProvider>

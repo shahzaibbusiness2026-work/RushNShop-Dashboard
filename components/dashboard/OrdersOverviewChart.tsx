@@ -12,9 +12,9 @@ export default function OrdersOverviewChart() {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="rounded-xl border border-gray-100 dark:border-gray-800 bg-white/95 dark:bg-[#161b22]/95 p-2.5 shadow-xl backdrop-blur-sm text-xs">
-          <p className="font-bold text-gray-900 dark:text-white">{data.name}</p>
-          <p className="mt-0.5 font-semibold text-gray-700 dark:text-gray-300">
+        <div className="rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-[#161b26]/95 p-2.5 shadow-xl backdrop-blur-md text-xs">
+          <p className="font-bold text-slate-800 dark:text-slate-100">{data.name}</p>
+          <p className="mt-0.5 font-semibold text-slate-700 dark:text-slate-300 font-mono-numeric">
             {data.count} orders ({data.percentage}%)
           </p>
         </div>
@@ -24,11 +24,11 @@ export default function OrdersOverviewChart() {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-2xl border border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#151b26] p-5 shadow-sm transition-colors overflow-hidden">
+    <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-4 sm:p-5 shadow-xs transition-colors overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-bold text-gray-900 dark:text-white">Orders Overview</h3>
-        <Link href="/orders" className="text-xs font-bold text-[#22c55e] dark:text-[#4ade80] hover:underline">
+        <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">Orders Overview</h3>
+        <Link href="/orders" className="text-xs font-bold text-emerald-600 dark:text-[#4ade80] hover:underline">
           View all
         </Link>
       </div>
@@ -56,26 +56,26 @@ export default function OrdersOverviewChart() {
           </ResponsiveContainer>
 
           {/* Center Text */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
-            <span className="text-base font-black text-gray-900 dark:text-white leading-none">{totalOrders}</span>
-            <span className="text-[9px] font-semibold text-gray-400 dark:text-gray-500 mt-0.5">
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center font-mono-numeric">
+            <span className="text-base font-black text-slate-900 dark:text-slate-50 leading-none">{totalOrders}</span>
+            <span className="text-[9px] font-semibold text-slate-400 dark:text-slate-500 mt-0.5 font-sans">
               {selectedStore ? `${selectedStore.countryCode}` : 'Total'}
             </span>
           </div>
         </div>
 
         {/* Legend Grid - 2 columns for neat, zero-overflow compact fit */}
-        <div className="grid grid-cols-2 gap-2 mt-3 w-full pt-1 border-t border-gray-100 dark:border-gray-800/80">
+        <div className="grid grid-cols-2 gap-2 mt-3 w-full pt-1 border-t border-slate-100 dark:border-slate-800/80 font-mono-numeric">
           {orderStatusCounts.map((item) => (
             <div
               key={item.name}
-              className="flex items-center justify-between rounded-lg bg-gray-50/70 dark:bg-[#0f1117]/60 px-2 py-1.5 text-[11px]"
+              className="flex items-center justify-between rounded-lg bg-slate-50/70 dark:bg-[#0f1117]/60 px-2 py-1.5 text-[11px]"
             >
               <div className="flex items-center gap-1.5 overflow-hidden">
                 <span className="h-2 w-2 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                <span className="font-semibold text-gray-700 dark:text-gray-300 truncate">{item.name}</span>
+                <span className="font-semibold text-slate-700 dark:text-slate-300 truncate font-sans">{item.name}</span>
               </div>
-              <span className="font-bold text-gray-900 dark:text-white shrink-0 ml-1">
+              <span className="font-bold text-slate-900 dark:text-white shrink-0 ml-1">
                 {item.count}
               </span>
             </div>
