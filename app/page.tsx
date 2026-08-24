@@ -260,14 +260,9 @@ export default function RootLandingPage() {
         onMouseMove={handleMouseMove}
         className="relative overflow-hidden pt-16 pb-20 sm:pt-24 sm:pb-32 px-4 sm:px-6 max-w-7xl mx-auto text-center"
       >
-        {/* Background Related Image Layer with Slow Pan & Luminosity Overlay */}
+        {/* Lightweight High-Performance Gradient Layer */}
         <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none select-none">
-          <img
-            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&auto=format&fit=crop&q=80"
-            alt="TikTok Analytics Center"
-            className="w-full h-full object-cover opacity-10 dark:opacity-20 mix-blend-luminosity animate-slow-pan scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-50/80 via-slate-50/95 to-slate-50 dark:from-[#0b0e14]/75 dark:via-[#0b0e14]/90 dark:to-[#0b0e14]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-lime-500/10 via-slate-50/90 to-slate-50 dark:from-emerald-500/10 dark:via-[#0b0e14]/90 dark:to-[#0b0e14]" />
           <div className="absolute inset-0 bg-linear-grid opacity-60" />
         </div>
 
@@ -427,16 +422,10 @@ export default function RootLandingPage() {
         </div>
       </section>
 
-      {/* Problem vs Solution Comparison Section with Logistics Image Texture */}
+      {/* Problem vs Solution Comparison Section with High-Performance Grid */}
       <section id="trueprofit" className="relative py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto space-y-12 overflow-hidden scroll-mt-24">
-        {/* Subtle Logistics Background Image */}
-        <div className="absolute inset-0 -z-10 pointer-events-none opacity-5 dark:opacity-10 mix-blend-luminosity overflow-hidden">
-          <img
-            src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1400&auto=format&fit=crop&q=80"
-            alt="Logistics Background"
-            className="w-full h-full object-cover"
-          />
-        </div>
+        {/* Subtle Background Grid Texture */}
+        <div className="absolute inset-0 -z-10 pointer-events-none bg-linear-grid opacity-30 overflow-hidden" />
 
         <div className="text-center max-w-2xl mx-auto">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">Why RushNshop?</span>
@@ -505,16 +494,10 @@ export default function RootLandingPage() {
         </div>
       </section>
 
-      {/* Interactive Feature Deep-Dive Tabs with AI Neural Network Texture */}
+      {/* Interactive Feature Deep-Dive Tabs with High-Performance Grid Texture */}
       <section id="features" className="relative py-20 px-4 sm:px-6 max-w-7xl mx-auto space-y-12 overflow-hidden scroll-mt-24">
         {/* Subtle AI Network Background Texture */}
-        <div className="absolute inset-0 -z-10 pointer-events-none opacity-5 dark:opacity-10 mix-blend-luminosity overflow-hidden">
-          <img
-            src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1400&auto=format&fit=crop&q=80"
-            alt="AI Network Background"
-            className="w-full h-full object-cover"
-          />
-        </div>
+        <div className="absolute inset-0 -z-10 pointer-events-none bg-linear-grid opacity-30 overflow-hidden" />
 
         <div className="text-center max-w-3xl mx-auto">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">Feature Deep Dive</span>
@@ -797,16 +780,10 @@ export default function RootLandingPage() {
         </div>
       </section>
 
-      {/* Interactive Pre-Listing Calculator Section with Financial Chart Background */}
+      {/* Interactive Pre-Listing Calculator Section with High-Performance Background */}
       <section id="calculator" className="relative py-20 bg-slate-100/60 dark:bg-[#0f1117] border-y border-slate-200 dark:border-slate-800 px-4 sm:px-6 overflow-hidden scroll-mt-24">
-        {/* Financial Chart Background Texture */}
-        <div className="absolute inset-0 -z-10 pointer-events-none opacity-5 dark:opacity-10 mix-blend-luminosity overflow-hidden">
-          <img
-            src="https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=1400&auto=format&fit=crop&q=80"
-            alt="Trading Chart Background"
-            className="w-full h-full object-cover"
-          />
-        </div>
+        {/* Subtle Financial Chart Gradient Texture */}
+        <div className="absolute inset-0 -z-10 pointer-events-none bg-linear-grid opacity-25 overflow-hidden" />
 
         <div className="max-w-5xl mx-auto space-y-10">
           <div className="text-center max-w-2xl mx-auto">
