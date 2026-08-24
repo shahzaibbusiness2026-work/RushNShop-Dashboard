@@ -135,24 +135,24 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                 setShowStorePicker(!showStorePicker);
                 setShowDatePicker(false);
               }}
-              className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-colors cursor-pointer"
+              className="flex items-center gap-1 sm:gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] px-2 sm:px-3 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-colors cursor-pointer"
             >
               <StoreIcon className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400 hidden xs:inline" />
-              <span>
+              <span className="truncate max-w-[65px] xs:max-w-[90px] sm:max-w-none">
                 {selectedStoreId === 'all' ? (
                   <>
-                    <span className="xs:hidden">🌐</span>
+                    <span className="xs:hidden">🌐 All</span>
                     <span className="hidden xs:inline sm:hidden">All</span>
                     <span className="hidden sm:inline">All Stores ({stores.length})</span>
                   </>
                 ) : (
                   <>
                     <span>{selectedStoreObj?.flag}</span>
-                    <span className="hidden sm:inline ml-1">{selectedStoreObj?.name}</span>
+                    <span className="hidden xs:inline ml-1">{selectedStoreObj?.name}</span>
                   </>
                 )}
               </span>
-              <ChevronDown className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-slate-400" />
+              <ChevronDown className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-slate-400 shrink-0" />
             </button>
 
             {showStorePicker && (
@@ -209,12 +209,12 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                 setShowDatePicker(!showDatePicker);
                 setShowStorePicker(false);
               }}
-              className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-all cursor-pointer"
+              className="flex items-center gap-1 sm:gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] px-2 sm:px-3.5 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-all cursor-pointer"
             >
               <Calendar className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400" />
-              <span className="hidden sm:inline">{dateRange}</span>
-              <span className="sm:hidden font-bold">{selectedPresetObj.short}</span>
-              <ChevronDown className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-slate-400" />
+              <span className="hidden md:inline">{dateRange}</span>
+              <span className="md:hidden font-bold text-[11px]">{selectedPresetObj.short}</span>
+              <ChevronDown className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-slate-400 shrink-0" />
             </button>
 
             {showDatePicker && (
@@ -246,10 +246,10 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
           {/* Notifications Bell */}
           <button
             onClick={() => setShowNotifications(true)}
-            className="relative flex h-8.5 w-8.5 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/10 shadow-2xs transition-all cursor-pointer"
+            className="relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/10 shadow-2xs transition-all cursor-pointer"
             title="Notifications & Insights"
           >
-            <Bell className="h-4 w-4" />
+            <Bell className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-lime-500 text-[9px] font-bold text-black ring-2 ring-white dark:ring-[#0f1117]">
               {storeInsights.length}
             </span>
@@ -258,9 +258,9 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
           {/* Add Store Button */}
           <button
             onClick={() => setShowAddStore(true)}
-            className="flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-bold text-black shadow-2xs hover:bg-[#72b012] transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            className="hidden xs:flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-bold text-black shadow-2xs hover:bg-[#72b012] transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
-            <Plus className="h-4 w-4 stroke-[2.5]" />
+            <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4 stroke-[2.5]" />
             <span className="hidden sm:inline">Add Store</span>
           </button>
         </div>

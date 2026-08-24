@@ -137,7 +137,7 @@ export default function RootLandingPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 selection:bg-lime-400 selection:text-black overflow-x-hidden">
       {/* Navigation Bar */}
-      <nav className="sticky top-0 z-50 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#0b0e14]/95 backdrop-blur-md px-3 sm:px-8 py-2.5 sm:py-3 transition-colors">
+      <nav className="sticky top-0 z-50 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#0b0e14]/95 backdrop-blur-md px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 transition-colors">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0 hover:opacity-90 transition-opacity">
@@ -152,11 +152,11 @@ export default function RootLandingPage() {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center gap-5 xl:gap-6 text-xs font-semibold text-slate-600 dark:text-slate-300">
+          {/* Desktop & Tablet Navigation Links */}
+          <div className="hidden md:flex items-center gap-4 lg:gap-6 text-xs font-semibold text-slate-600 dark:text-slate-300">
             <a href="#features" className="hover:text-slate-900 dark:hover:text-white transition-colors">Features</a>
             <a href="#trueprofit" className="hover:text-slate-900 dark:hover:text-white transition-colors">TrueProfit</a>
-            <a href="#calculator" className="hover:text-slate-900 dark:hover:text-white transition-colors">Profit Calculator</a>
+            <a href="#calculator" className="hover:text-slate-900 dark:hover:text-white transition-colors">Calculator</a>
             <a href="#roi" className="hover:text-slate-900 dark:hover:text-white transition-colors">ROI Estimator</a>
             <a href="#pricing" className="hover:text-slate-900 dark:hover:text-white transition-colors">Pricing</a>
             <a href="#faq" className="hover:text-slate-900 dark:hover:text-white transition-colors">FAQ</a>
@@ -176,7 +176,7 @@ export default function RootLandingPage() {
               href="/dashboard"
               className="flex items-center gap-1 sm:gap-1.5 rounded-xl bg-[#84cc16] px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold text-black shadow-xs hover:bg-[#72b012] transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
             >
-              <span className="hidden xs:inline">Dashboard</span>
+              <span>Dashboard</span>
               <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
             </Link>
 
@@ -185,7 +185,7 @@ export default function RootLandingPage() {
               type="button"
               onClick={() => setMobileNavOpen(!mobileNavOpen)}
               aria-label="Toggle mobile navigation menu"
-              className="flex lg:hidden h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
+              className="flex md:hidden h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
             >
               {mobileNavOpen ? <X className="h-4 w-4 sm:h-5 sm:w-5" /> : <Menu className="h-4 w-4 sm:h-5 sm:w-5" />}
             </button>
@@ -194,68 +194,74 @@ export default function RootLandingPage() {
 
         {/* Mobile Navigation Dropdown Drawer */}
         {mobileNavOpen && (
-          <div className="lg:hidden mt-2.5 pt-3 border-t border-slate-200/80 dark:border-slate-800/80 space-y-2.5 animate-in fade-in slide-in-from-top-2">
-            <div className="grid grid-cols-2 gap-1 text-xs font-semibold text-slate-700 dark:text-slate-200">
-              <a
-                href="#features"
-                onClick={() => setMobileNavOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
-              >
-                <span>Features</span>
-                <ArrowRight className="h-3 w-3 text-slate-400" />
-              </a>
-              <a
-                href="#trueprofit"
-                onClick={() => setMobileNavOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
-              >
-                <span>TrueProfit</span>
-                <ArrowRight className="h-3 w-3 text-slate-400" />
-              </a>
-              <a
-                href="#calculator"
-                onClick={() => setMobileNavOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
-              >
-                <span>Calculator</span>
-                <ArrowRight className="h-3 w-3 text-slate-400" />
-              </a>
-              <a
-                href="#roi"
-                onClick={() => setMobileNavOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
-              >
-                <span>ROI Estimator</span>
-                <ArrowRight className="h-3 w-3 text-slate-400" />
-              </a>
-              <a
-                href="#pricing"
-                onClick={() => setMobileNavOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
-              >
-                <span>Pricing</span>
-                <ArrowRight className="h-3 w-3 text-slate-400" />
-              </a>
-              <a
-                href="#faq"
-                onClick={() => setMobileNavOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
-              >
-                <span>FAQ</span>
-                <ArrowRight className="h-3 w-3 text-slate-400" />
-              </a>
+          <>
+            <div
+              className="fixed inset-0 top-[53px] z-40 bg-black/50 backdrop-blur-xs md:hidden"
+              onClick={() => setMobileNavOpen(false)}
+            />
+            <div className="relative z-50 md:hidden mt-2.5 pt-3 border-t border-slate-200/80 dark:border-slate-800/80 space-y-2.5 animate-in fade-in slide-in-from-top-2">
+              <div className="grid grid-cols-2 gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                <a
+                  href="#features"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors flex items-center justify-between"
+                >
+                  <span>⚡ Features</span>
+                  <ArrowRight className="h-3 w-3 text-slate-400" />
+                </a>
+                <a
+                  href="#trueprofit"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors flex items-center justify-between"
+                >
+                  <span>📊 TrueProfit</span>
+                  <ArrowRight className="h-3 w-3 text-slate-400" />
+                </a>
+                <a
+                  href="#calculator"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors flex items-center justify-between"
+                >
+                  <span>🧮 Calculator</span>
+                  <ArrowRight className="h-3 w-3 text-slate-400" />
+                </a>
+                <a
+                  href="#roi"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors flex items-center justify-between"
+                >
+                  <span>💰 ROI Estimator</span>
+                  <ArrowRight className="h-3 w-3 text-slate-400" />
+                </a>
+                <a
+                  href="#pricing"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors flex items-center justify-between"
+                >
+                  <span>🏷️ Pricing</span>
+                  <ArrowRight className="h-3 w-3 text-slate-400" />
+                </a>
+                <a
+                  href="#faq"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors flex items-center justify-between"
+                >
+                  <span>❓ FAQ</span>
+                  <ArrowRight className="h-3 w-3 text-slate-400" />
+                </a>
+              </div>
+              <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
+                <Link
+                  href="/dashboard"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="w-full flex items-center justify-center gap-1.5 rounded-xl bg-[#84cc16] py-3 text-xs font-bold text-black shadow-xs hover:bg-[#72b012] transition-colors cursor-pointer"
+                >
+                  <span>Launch Live Dashboard Demo</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
             </div>
-            <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
-              <Link
-                href="/dashboard"
-                onClick={() => setMobileNavOpen(false)}
-                className="w-full flex items-center justify-center gap-1.5 rounded-xl bg-[#84cc16] py-2.5 text-xs font-bold text-black shadow-xs hover:bg-[#72b012] transition-colors"
-              >
-                <span>Launch Live Dashboard Demo</span>
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-          </div>
+          </>
         )}
       </nav>
 
