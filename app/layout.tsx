@@ -23,7 +23,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 antialiased selection:bg-lime-400 selection:text-black min-h-screen">
+      <body
+        className="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 antialiased selection:bg-lime-400 selection:text-black min-h-screen"
+        suppressHydrationWarning
+      >
         <StoreProvider>
           <AppShell>{children}</AppShell>
         </StoreProvider>
