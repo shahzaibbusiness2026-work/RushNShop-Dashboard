@@ -41,12 +41,15 @@ import {
   Sliders,
   Award,
   Lock,
+  Menu,
+  X,
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 import { formatCurrency, formatPercent, cn, calculateUnitEconomics } from '../lib/utils';
 
 export default function RootLandingPage() {
   const { theme, toggleTheme } = useStore();
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeFeatureTab, setActiveFeatureTab] = useState<'profit' | 'ai' | 'ads' | 'stores' | 'helpdesk'>('profit');
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -132,14 +135,14 @@ export default function RootLandingPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 selection:bg-lime-400 selection:text-black overflow-x-hidden">
       {/* Navigation Bar */}
-      <nav className="sticky top-0 z-50 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0b0e14]/90 backdrop-blur-md px-4 sm:px-8 py-3.5">
+      <nav className="sticky top-0 z-50 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0b0e14]/90 backdrop-blur-md px-3.5 sm:px-8 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-lime-500 to-green-400 text-black shadow-md shadow-green-500/20">
-              <Zap className="h-6 w-6 fill-current text-black font-black" />
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-lime-500 to-green-400 text-black shadow-md shadow-green-500/20">
+              <Zap className="h-5 w-5 sm:h-6 sm:w-6 fill-current text-black font-black" />
             </div>
             <div>
-              <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white">RushNshop</span>
+              <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 dark:text-white">RushNshop</span>
               <span className="ml-1.5 rounded-md bg-emerald-100 dark:bg-emerald-950/60 px-1.5 py-0.5 text-[10px] font-bold text-emerald-800 dark:text-[#4ade80]">
                 AI OS
               </span>
@@ -165,13 +168,87 @@ export default function RootLandingPage() {
             </button>
             <Link
               href="/dashboard"
-              className="flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-4 py-2 text-xs font-bold text-black shadow-xs hover:bg-[#72b012] transition-all hover:scale-[1.02]"
+              className="hidden sm:flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-4 py-2 text-xs font-bold text-black shadow-xs hover:bg-[#72b012] transition-all hover:scale-[1.02]"
             >
               <span>View Dashboard</span>
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
+            {/* Mobile Hamburger Toggle Button */}
+            <button
+              onClick={() => setMobileNavOpen(!mobileNavOpen)}
+              aria-label="Toggle mobile menu"
+              className="flex md:hidden h-9 w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+            >
+              {mobileNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Navigation Dropdown Drawer */}
+        {mobileNavOpen && (
+          <div className="md:hidden mt-3 pt-3 border-t border-slate-200/80 dark:border-slate-800/80 space-y-3 animate-in fade-in slide-in-from-top-2">
+            <div className="flex flex-col space-y-1 text-xs font-semibold text-slate-700 dark:text-slate-200">
+              <a
+                href="#features"
+                onClick={() => setMobileNavOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
+              >
+                <span>Features</span>
+                <ArrowRight className="h-3 w-3 text-slate-400" />
+              </a>
+              <a
+                href="#trueprofit"
+                onClick={() => setMobileNavOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
+              >
+                <span>TrueProfit Waterfall</span>
+                <ArrowRight className="h-3 w-3 text-slate-400" />
+              </a>
+              <a
+                href="#calculator"
+                onClick={() => setMobileNavOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
+              >
+                <span>Profit Calculator</span>
+                <ArrowRight className="h-3 w-3 text-slate-400" />
+              </a>
+              <a
+                href="#roi"
+                onClick={() => setMobileNavOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
+              >
+                <span>ROI Estimator</span>
+                <ArrowRight className="h-3 w-3 text-slate-400" />
+              </a>
+              <a
+                href="#pricing"
+                onClick={() => setMobileNavOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
+              >
+                <span>Pricing</span>
+                <ArrowRight className="h-3 w-3 text-slate-400" />
+              </a>
+              <a
+                href="#faq"
+                onClick={() => setMobileNavOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
+              >
+                <span>FAQ</span>
+                <ArrowRight className="h-3 w-3 text-slate-400" />
+              </a>
+            </div>
+            <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
+              <Link
+                href="/dashboard"
+                onClick={() => setMobileNavOpen(false)}
+                className="w-full flex items-center justify-center gap-1.5 rounded-xl bg-[#84cc16] py-2.5 text-xs font-bold text-black shadow-xs hover:bg-[#72b012] transition-colors"
+              >
+                <span>Launch Live Dashboard Demo</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section with Cinematic Background Image & Interactive Spotlight */}
@@ -348,7 +425,7 @@ export default function RootLandingPage() {
       </section>
 
       {/* Problem vs Solution Comparison Section with Logistics Image Texture */}
-      <section className="relative py-20 px-4 sm:px-6 max-w-6xl mx-auto space-y-12 overflow-hidden">
+      <section id="trueprofit" className="relative py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto space-y-12 overflow-hidden">
         {/* Subtle Logistics Background Image */}
         <div className="absolute inset-0 -z-10 pointer-events-none opacity-5 dark:opacity-10 mix-blend-luminosity overflow-hidden">
           <img
