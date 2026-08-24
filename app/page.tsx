@@ -137,21 +137,23 @@ export default function RootLandingPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 selection:bg-lime-400 selection:text-black overflow-x-hidden">
       {/* Navigation Bar */}
-      <nav className="sticky top-0 z-50 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0b0e14]/90 backdrop-blur-md px-3.5 sm:px-8 py-3">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-lime-500 to-green-400 text-black shadow-md shadow-green-500/20">
-              <Zap className="h-5 w-5 sm:h-6 sm:w-6 fill-current text-black font-black" />
+      <nav className="sticky top-0 z-50 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#0b0e14]/95 backdrop-blur-md px-3 sm:px-8 py-2.5 sm:py-3 transition-colors">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          {/* Brand Logo */}
+          <Link href="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0 hover:opacity-90 transition-opacity">
+            <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-lime-500 to-green-400 text-black shadow-md shadow-green-500/20">
+              <Zap className="h-4 w-4 sm:h-5 sm:w-5 fill-current text-black font-black" />
             </div>
-            <div>
-              <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 dark:text-white">RushNshop</span>
-              <span className="ml-1.5 rounded-md bg-emerald-100 dark:bg-emerald-950/60 px-1.5 py-0.5 text-[10px] font-bold text-emerald-800 dark:text-[#4ade80]">
+            <div className="flex items-center gap-1 sm:gap-1.5">
+              <span className="text-base sm:text-lg font-black tracking-tight text-slate-900 dark:text-white">RushNshop</span>
+              <span className="rounded-md bg-emerald-100 dark:bg-emerald-950/60 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-bold text-emerald-800 dark:text-[#4ade80]">
                 AI OS
               </span>
             </div>
-          </div>
+          </Link>
 
-          <div className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600 dark:text-slate-300">
+          {/* Desktop Navigation Links */}
+          <div className="hidden lg:flex items-center gap-5 xl:gap-6 text-xs font-semibold text-slate-600 dark:text-slate-300">
             <a href="#features" className="hover:text-slate-900 dark:hover:text-white transition-colors">Features</a>
             <a href="#trueprofit" className="hover:text-slate-900 dark:hover:text-white transition-colors">TrueProfit</a>
             <a href="#calculator" className="hover:text-slate-900 dark:hover:text-white transition-colors">Profit Calculator</a>
@@ -160,37 +162,40 @@ export default function RootLandingPage() {
             <a href="#faq" className="hover:text-slate-900 dark:hover:text-white transition-colors">FAQ</a>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Actions: Theme Toggle, Dashboard Link, Mobile Menu Button */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             <button
               onClick={toggleTheme}
               aria-label="Toggle Theme"
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-600 dark:text-slate-300 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-colors"
+              className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-600 dark:text-slate-300 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-colors cursor-pointer"
             >
               {theme === 'dark' ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4 text-slate-700" />}
             </button>
+
             <Link
               href="/dashboard"
-              className="flex items-center gap-1 sm:gap-1.5 rounded-xl bg-[#84cc16] px-2.5 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold text-black shadow-xs hover:bg-[#72b012] transition-all hover:scale-[1.02]"
+              className="flex items-center gap-1 sm:gap-1.5 rounded-xl bg-[#84cc16] px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold text-black shadow-xs hover:bg-[#72b012] transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
             >
-              <span className="hidden sm:inline">View Dashboard</span>
-              <span className="sm:hidden">Dashboard</span>
+              <span className="hidden xs:inline">Dashboard</span>
               <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
             </Link>
+
             {/* Mobile Hamburger Toggle Button */}
             <button
+              type="button"
               onClick={() => setMobileNavOpen(!mobileNavOpen)}
-              aria-label="Toggle mobile menu"
-              className="flex md:hidden h-9 w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+              aria-label="Toggle mobile navigation menu"
+              className="flex lg:hidden h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
             >
-              {mobileNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileNavOpen ? <X className="h-4 w-4 sm:h-5 sm:w-5" /> : <Menu className="h-4 w-4 sm:h-5 sm:w-5" />}
             </button>
           </div>
         </div>
 
         {/* Mobile Navigation Dropdown Drawer */}
         {mobileNavOpen && (
-          <div className="md:hidden mt-3 pt-3 border-t border-slate-200/80 dark:border-slate-800/80 space-y-3 animate-in fade-in slide-in-from-top-2">
-            <div className="flex flex-col space-y-1 text-xs font-semibold text-slate-700 dark:text-slate-200">
+          <div className="lg:hidden mt-2.5 pt-3 border-t border-slate-200/80 dark:border-slate-800/80 space-y-2.5 animate-in fade-in slide-in-from-top-2">
+            <div className="grid grid-cols-2 gap-1 text-xs font-semibold text-slate-700 dark:text-slate-200">
               <a
                 href="#features"
                 onClick={() => setMobileNavOpen(false)}
@@ -204,7 +209,7 @@ export default function RootLandingPage() {
                 onClick={() => setMobileNavOpen(false)}
                 className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
               >
-                <span>TrueProfit Waterfall</span>
+                <span>TrueProfit</span>
                 <ArrowRight className="h-3 w-3 text-slate-400" />
               </a>
               <a
@@ -212,7 +217,7 @@ export default function RootLandingPage() {
                 onClick={() => setMobileNavOpen(false)}
                 className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
               >
-                <span>Profit Calculator</span>
+                <span>Calculator</span>
                 <ArrowRight className="h-3 w-3 text-slate-400" />
               </a>
               <a
@@ -254,16 +259,23 @@ export default function RootLandingPage() {
         )}
       </nav>
 
-      {/* Hero Section with Cinematic Background Image & Interactive Spotlight */}
+      {/* Hero Section with TikTok Shop Creator Background & Interactive Spotlight */}
       <section
         ref={heroRef}
         onMouseMove={handleMouseMove}
-        className="relative overflow-hidden pt-16 pb-20 sm:pt-24 sm:pb-32 px-4 sm:px-6 max-w-7xl mx-auto text-center"
+        className="relative overflow-hidden pt-14 pb-20 sm:pt-20 sm:pb-32 px-4 sm:px-6 max-w-7xl mx-auto text-center"
       >
-        {/* Lightweight High-Performance Gradient Layer */}
+        {/* TikTok Shop Live Streamer & Creator Commerce Background Layer */}
         <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none select-none">
-          <div className="absolute inset-0 bg-gradient-to-b from-lime-500/10 via-slate-50/90 to-slate-50 dark:from-emerald-500/10 dark:via-[#0b0e14]/90 dark:to-[#0b0e14]" />
-          <div className="absolute inset-0 bg-linear-grid opacity-60" />
+          <img
+            src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=1200&auto=format&fit=crop&q=75"
+            alt="TikTok Shop Creator Studio"
+            loading="eager"
+            decoding="async"
+            className="w-full h-full object-cover object-center opacity-10 dark:opacity-20 mix-blend-luminosity transform-gpu"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-50/85 via-slate-50/95 to-slate-50 dark:from-[#0b0e14]/80 dark:via-[#0b0e14]/92 dark:to-[#0b0e14]" />
+          <div className="absolute inset-0 bg-linear-grid opacity-50" />
         </div>
 
         {/* Interactive Radial Spotlight Background */}

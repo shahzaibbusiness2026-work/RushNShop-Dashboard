@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import {
   Calendar,
@@ -66,6 +66,23 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
   const [showAddStore, setShowAddStore] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
 
+  const storePickerRef = useRef<HTMLDivElement>(null);
+  const datePickerRef = useRef<HTMLDivElement>(null);
+
+  // Close popovers on click outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (storePickerRef.current && !storePickerRef.current.contains(event.target as Node)) {
+        setShowStorePicker(false);
+      }
+      if (datePickerRef.current && !datePickerRef.current.contains(event.target as Node)) {
+        setShowDatePicker(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const pageInfo = pageTitles[pathname] || {
     title: 'RushNshop OS',
     subtitle: 'TikTok Shop Business Management',
@@ -81,7 +98,7 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <button
             onClick={onOpenMobileMenu}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 lg:hidden"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 lg:hidden cursor-pointer"
             aria-label="Open navigation menu"
           >
             <Menu className="h-5 w-5" />
@@ -97,12 +114,12 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
         </div>
 
         {/* Right: Actions (Theme Toggle, Store Selector, Date picker, Notifications, Add Store) */}
-        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
             title={theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
-            className="flex h-8.5 w-8.5 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/10 shadow-2xs transition-all"
+            className="flex h-8.5 w-8.5 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/10 shadow-2xs transition-all cursor-pointer"
           >
             {theme === 'dark' ? (
               <Sun className="h-4 w-4 text-amber-400 fill-amber-400/20" />
@@ -112,13 +129,13 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
           </button>
 
           {/* Store Quick Switcher */}
-          <div className="relative">
+          <div className="relative" ref={storePickerRef}>
             <button
               onClick={() => {
                 setShowStorePicker(!showStorePicker);
                 setShowDatePicker(false);
               }}
-              className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-colors"
+              className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-colors cursor-pointer"
             >
               <StoreIcon className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400 hidden xs:inline" />
               <span>
@@ -147,7 +164,7 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                     setShowStorePicker(false);
                   }}
                   className={cn(
-                    'flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium text-left transition-colors',
+                    'flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium text-left transition-colors cursor-pointer',
                     selectedStoreId === 'all'
                       ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-[#4ade80] font-bold'
                       : 'hover:bg-slate-100 dark:hover:bg-white/5 text-slate-700 dark:text-slate-300'
@@ -168,7 +185,7 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                       setShowStorePicker(false);
                     }}
                     className={cn(
-                      'flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium text-left transition-colors',
+                      'flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium text-left transition-colors cursor-pointer',
                       selectedStoreId === st.id
                         ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-[#4ade80] font-bold'
                         : 'hover:bg-slate-100 dark:hover:bg-white/5 text-slate-700 dark:text-slate-300'
@@ -186,13 +203,13 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
           </div>
 
           {/* Date Range Selector Pill */}
-          <div className="relative">
+          <div className="relative" ref={datePickerRef}>
             <button
               onClick={() => {
                 setShowDatePicker(!showDatePicker);
                 setShowStorePicker(false);
               }}
-              className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-all"
+              className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-all cursor-pointer"
             >
               <Calendar className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400" />
               <span className="hidden sm:inline">{dateRange}</span>
@@ -212,7 +229,7 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                       setShowDatePicker(false);
                     }}
                     className={cn(
-                      'flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium transition-colors text-left',
+                      'flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium transition-colors text-left cursor-pointer',
                       datePreset === item.presetKey
                         ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-[#4ade80] font-bold'
                         : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
@@ -229,7 +246,7 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
           {/* Notifications Bell */}
           <button
             onClick={() => setShowNotifications(true)}
-            className="relative flex h-8.5 w-8.5 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/10 shadow-2xs transition-all"
+            className="relative flex h-8.5 w-8.5 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/10 shadow-2xs transition-all cursor-pointer"
             title="Notifications & Insights"
           >
             <Bell className="h-4 w-4" />
@@ -241,7 +258,7 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
           {/* Add Store Button */}
           <button
             onClick={() => setShowAddStore(true)}
-            className="flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-bold text-black shadow-2xs hover:bg-[#72b012] transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-bold text-black shadow-2xs hover:bg-[#72b012] transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
             <Plus className="h-4 w-4 stroke-[2.5]" />
             <span className="hidden sm:inline">Add Store</span>
