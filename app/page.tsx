@@ -73,6 +73,7 @@ export default function RootLandingPage() {
   const [calcCogs, setCalcCogs] = useState<number>(6.50);
   const [calcShipping, setCalcShipping] = useState<number>(3.80);
   const [calcAdCpa, setCalcAdCpa] = useState<number>(7.50);
+  const [activePreset, setActivePreset] = useState<string>('sunset');
 
   // ROI Estimator State
   const [monthlyOrders, setMonthlyOrders] = useState<number>(2500);
@@ -91,7 +92,8 @@ export default function RootLandingPage() {
     targetMarginPercent: 40.0,
   });
 
-  const applyPreset = (price: number, cogs: number, shipping: number, cpa: number) => {
+  const applyPreset = (key: string, price: number, cogs: number, shipping: number, cpa: number) => {
+    setActivePreset(key);
     setCalcPrice(price);
     setCalcCogs(cogs);
     setCalcShipping(shipping);
@@ -168,10 +170,11 @@ export default function RootLandingPage() {
             </button>
             <Link
               href="/dashboard"
-              className="hidden sm:flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-4 py-2 text-xs font-bold text-black shadow-xs hover:bg-[#72b012] transition-all hover:scale-[1.02]"
+              className="flex items-center gap-1 sm:gap-1.5 rounded-xl bg-[#84cc16] px-2.5 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold text-black shadow-xs hover:bg-[#72b012] transition-all hover:scale-[1.02]"
             >
-              <span>View Dashboard</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">View Dashboard</span>
+              <span className="sm:hidden">Dashboard</span>
+              <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
             </Link>
             {/* Mobile Hamburger Toggle Button */}
             <button
@@ -425,7 +428,7 @@ export default function RootLandingPage() {
       </section>
 
       {/* Problem vs Solution Comparison Section with Logistics Image Texture */}
-      <section id="trueprofit" className="relative py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto space-y-12 overflow-hidden">
+      <section id="trueprofit" className="relative py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto space-y-12 overflow-hidden scroll-mt-24">
         {/* Subtle Logistics Background Image */}
         <div className="absolute inset-0 -z-10 pointer-events-none opacity-5 dark:opacity-10 mix-blend-luminosity overflow-hidden">
           <img
@@ -503,7 +506,7 @@ export default function RootLandingPage() {
       </section>
 
       {/* Interactive Feature Deep-Dive Tabs with AI Neural Network Texture */}
-      <section id="features" className="relative py-20 px-4 sm:px-6 max-w-7xl mx-auto space-y-12 overflow-hidden">
+      <section id="features" className="relative py-20 px-4 sm:px-6 max-w-7xl mx-auto space-y-12 overflow-hidden scroll-mt-24">
         {/* Subtle AI Network Background Texture */}
         <div className="absolute inset-0 -z-10 pointer-events-none opacity-5 dark:opacity-10 mix-blend-luminosity overflow-hidden">
           <img
@@ -585,7 +588,7 @@ export default function RootLandingPage() {
                   </div>
                 </div>
                 <Link
-                  href="/dashboard"
+                  href="/profit-analytics"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-[#4ade80] hover:underline pt-2"
                 >
                   <span>Explore Profit Analytics Engine</span>
@@ -646,7 +649,7 @@ export default function RootLandingPage() {
                   Trained on millions of organic TikTok views. Generates scene-by-scene audio voiceovers, on-screen text overlays, and SEO product bullet points.
                 </p>
                 <Link
-                  href="/dashboard"
+                  href="/ai-assistant"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-pink-600 dark:text-[#f472b6] hover:underline pt-2"
                 >
                   <span>Open AI Video Studio</span>
@@ -680,7 +683,7 @@ export default function RootLandingPage() {
                   Track blended ROAS, individual creator affiliate performance, and receive automated budget scaling alerts when a campaign hits target CPA.
                 </p>
                 <Link
-                  href="/dashboard"
+                  href="/ads-analytics"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 dark:text-[#c084fc] hover:underline pt-2"
                 >
                   <span>View Ads Analytics</span>
@@ -726,7 +729,7 @@ export default function RootLandingPage() {
                   Manage accounts in USA, UK, Germany, and Canada from a single master dashboard. Grant team members store-level permissions.
                 </p>
                 <Link
-                  href="/dashboard"
+                  href="/stores"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-[#38bdf8] hover:underline pt-2"
                 >
                   <span>Manage Stores</span>
@@ -770,7 +773,7 @@ export default function RootLandingPage() {
                   AI scans customer inquiries, pulls live tracking coordinates, and drafts personalized replies ready for 1-click dispatch.
                 </p>
                 <Link
-                  href="/dashboard"
+                  href="/ai-customer-service"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-600 dark:text-[#2dd4bf] hover:underline pt-2"
                 >
                   <span>Open AI Customer Helpdesk</span>
@@ -795,7 +798,7 @@ export default function RootLandingPage() {
       </section>
 
       {/* Interactive Pre-Listing Calculator Section with Financial Chart Background */}
-      <section id="calculator" className="relative py-20 bg-slate-100/60 dark:bg-[#0f1117] border-y border-slate-200 dark:border-slate-800 px-4 sm:px-6 overflow-hidden">
+      <section id="calculator" className="relative py-20 bg-slate-100/60 dark:bg-[#0f1117] border-y border-slate-200 dark:border-slate-800 px-4 sm:px-6 overflow-hidden scroll-mt-24">
         {/* Financial Chart Background Texture */}
         <div className="absolute inset-0 -z-10 pointer-events-none opacity-5 dark:opacity-10 mix-blend-luminosity overflow-hidden">
           <img
@@ -820,20 +823,38 @@ export default function RootLandingPage() {
           <div className="flex items-center justify-center gap-2 flex-wrap">
             <span className="text-xs font-bold text-slate-400 mr-1">Product Presets:</span>
             <button
-              onClick={() => applyPreset(34.99, 6.50, 3.80, 7.50)}
-              className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] px-3 py-1.5 text-xs font-semibold hover:border-lime-500 hover:scale-[1.02] transition-all"
+              type="button"
+              onClick={() => applyPreset('sunset', 34.99, 6.50, 3.80, 7.50)}
+              className={cn(
+                'rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all hover:scale-[1.02] cursor-pointer',
+                activePreset === 'sunset'
+                  ? 'border-lime-500 bg-lime-500/10 text-lime-600 dark:text-[#4ade80] font-bold shadow-xs'
+                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] text-slate-700 dark:text-slate-300 hover:border-lime-500'
+              )}
             >
               🌅 Sunset Lamp ($34.99)
             </button>
             <button
-              onClick={() => applyPreset(49.99, 11.20, 4.20, 10.00)}
-              className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] px-3 py-1.5 text-xs font-semibold hover:border-lime-500 hover:scale-[1.02] transition-all"
+              type="button"
+              onClick={() => applyPreset('mic', 49.99, 11.20, 4.20, 10.00)}
+              className={cn(
+                'rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all hover:scale-[1.02] cursor-pointer',
+                activePreset === 'mic'
+                  ? 'border-lime-500 bg-lime-500/10 text-lime-600 dark:text-[#4ade80] font-bold shadow-xs'
+                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] text-slate-700 dark:text-slate-300 hover:border-lime-500'
+              )}
             >
               🎙️ Lavalier Mic ($49.99)
             </button>
             <button
-              onClick={() => applyPreset(24.99, 3.90, 3.50, 5.00)}
-              className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] px-3 py-1.5 text-xs font-semibold hover:border-lime-500 hover:scale-[1.02] transition-all"
+              type="button"
+              onClick={() => applyPreset('guasha', 24.99, 3.90, 3.50, 5.00)}
+              className={cn(
+                'rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all hover:scale-[1.02] cursor-pointer',
+                activePreset === 'guasha'
+                  ? 'border-lime-500 bg-lime-500/10 text-lime-600 dark:text-[#4ade80] font-bold shadow-xs'
+                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] text-slate-700 dark:text-slate-300 hover:border-lime-500'
+              )}
             >
               ✨ Gua Sha Set ($24.99)
             </button>
@@ -953,7 +974,7 @@ export default function RootLandingPage() {
       </section>
 
       {/* ROI Estimator Section */}
-      <section id="roi" className="py-20 px-4 sm:px-6 max-w-5xl mx-auto space-y-10">
+      <section id="roi" className="py-20 px-4 sm:px-6 max-w-5xl mx-auto space-y-10 scroll-mt-24">
         <div className="text-center max-w-2xl mx-auto">
           <span className="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-[#c084fc]">Value Estimator</span>
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-1">
@@ -1000,7 +1021,7 @@ export default function RootLandingPage() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto space-y-12">
+      <section id="pricing" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto space-y-12 scroll-mt-24">
         <div className="text-center max-w-2xl mx-auto">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">Transparent Pricing</span>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mt-1">
@@ -1123,17 +1144,17 @@ export default function RootLandingPage() {
             </div>
 
             <Link
-              href="/dashboard"
+              href="/stores"
               className="w-full flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 py-2.5 text-xs font-bold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
             >
-              Contact Sales
+              Manage Multi-Stores
             </Link>
           </div>
         </div>
       </section>
 
       {/* Frequently Asked Questions */}
-      <section id="faq" className="py-20 bg-slate-100/60 dark:bg-[#0f1117] border-t border-slate-200 dark:border-slate-800 px-4 sm:px-6">
+      <section id="faq" className="py-20 bg-slate-100/60 dark:bg-[#0f1117] border-t border-slate-200 dark:border-slate-800 px-4 sm:px-6 scroll-mt-24">
         <div className="max-w-3xl mx-auto space-y-8">
           <div className="text-center">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">Got Questions?</span>
