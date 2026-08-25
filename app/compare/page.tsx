@@ -24,6 +24,11 @@ import {
   ChevronRight,
   Eye,
   Sliders,
+  CheckCircle2,
+  Percent,
+  ShieldCheck,
+  Flame,
+  ArrowUpRight,
 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import { formatCurrency, formatPercent, cn } from '../../lib/utils';
@@ -62,7 +67,7 @@ export default function ComparePage() {
     const units = p.unitsSold || 1;
     const estSellingPrice = p.revenue / units || 29.99;
     const estCogs = p.cogs / units || 6.5;
-    const estInboundFreight = 1.2; // Inbound factory shipment charge
+    const estInboundFreight = 1.2; // Inbound supplier shipment charge
     const estShippingCost = Math.max(2.5, p.shippingCost / units) || 3.5; // Outbound 3PL delivery
     const estPackaging = 0.8;
     const estAffiliatePercent = p.revenue > 0 ? (p.affiliateCommission / p.revenue) * 100 : 10;
@@ -98,6 +103,13 @@ export default function ComparePage() {
 
   const winnerProduct = evaluatedProducts[winnerIndex];
 
+  // Calculate average margin for comparative badges
+  const avgMargin =
+    evaluatedProducts.length > 0
+      ? evaluatedProducts.reduce((acc, curr) => acc + curr.calc.netMarginPercent, 0) /
+        evaluatedProducts.length
+      : 0;
+
   const handleExportGoogleSheets = () => {
     const data = evaluatedProducts.map(({ product, calc }) => ({
       'Product Title': product.title,
@@ -108,6 +120,7 @@ export default function ComparePage() {
       'Inbound Freight ($)': calc.shipmentCharges,
       'Outbound Courier ($)': calc.shippingCost,
       'Total Shipping ($)': calc.totalShipping,
+      'Packaging ($)': calc.packagingCost,
       'TikTok Fees ($)': calc.tiktokFeeAmount + calc.paymentFeeAmount,
       'Creator Affiliate ($)': calc.affiliateAmount,
       'Ad CPA ($)': calc.adCpa,
@@ -128,6 +141,7 @@ export default function ComparePage() {
       COGS: `$${calc.cogs.toFixed(2)}`,
       InboundFreight: `$${calc.shipmentCharges.toFixed(2)}`,
       OutboundShipping: `$${calc.shippingCost.toFixed(2)}`,
+      Packaging: `$${calc.packagingCost.toFixed(2)}`,
       TotalLogistics: `$${(calc.totalShipping + calc.packagingCost).toFixed(2)}`,
       NetProfit: `$${calc.netProfit.toFixed(2)}`,
       Margin: `${calc.netMarginPercent.toFixed(1)}%`,
@@ -156,12 +170,20 @@ export default function ComparePage() {
     setListingModalOpen(true);
   };
 
+  // Determine dynamic grid columns based on count
+  const getGridColsClass = (count: number) => {
+    if (count === 1) return 'grid-cols-1 max-w-lg mx-auto';
+    if (count === 2) return 'grid-cols-1 md:grid-cols-2';
+    if (count === 3) return 'grid-cols-1 md:grid-cols-3';
+    return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
+  };
+
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 bg-slate-900 text-white dark:bg-white dark:text-black rounded-2xl shadow-2xl text-xs font-bold animate-in slide-in-from-bottom-3 duration-200">
-          <Sparkles className="h-4 w-4 text-[#84cc16] fill-current" />
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 bg-slate-900 text-white dark:bg-white dark:text-black rounded-2xl shadow-2xl text-xs font-bold animate-in slide-in-from-bottom-3 duration-200 border border-slate-700/50">
+          <Sparkles className="h-4 w-4 text-[#84cc16] fill-current shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -169,21 +191,21 @@ export default function ComparePage() {
       {/* Header Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-lime-500/10 text-[#84cc16] border border-lime-500/20 shadow-xs">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-lime-500/10 text-[#84cc16] border border-lime-500/20 shadow-xs">
               <Scale className="h-5 w-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                  Product Comparison Studio
+                  Product Comparison Matrix
                 </h1>
                 <span className="rounded-full border border-lime-500/30 bg-lime-500/10 px-2.5 py-0.5 text-[11px] font-bold text-lime-700 dark:text-[#84cc16]">
-                  4-Way Matrix
+                  Studio Pro
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
-                Benchmark unit economics, shipment charges, platform take-rates, and net margins side-by-side to crown your winning SKU.
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+                Benchmark unit economics, shipment charges, platform fees, and net profit margins across up to 4 SKUs.
               </p>
             </div>
           </div>
@@ -225,7 +247,7 @@ export default function ComparePage() {
         </div>
       </div>
 
-      {/* Comparison Grid */}
+      {/* Comparison Grid Container */}
       {comparedProducts.length === 0 ? (
         <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#121620] border border-slate-200/80 dark:border-slate-800/80 shadow-xs">
           <div className="h-16 w-16 mx-auto mb-4 rounded-3xl bg-lime-500/10 border border-lime-500/20 flex items-center justify-center text-[#84cc16]">
@@ -248,7 +270,7 @@ export default function ComparePage() {
         <div className="space-y-6">
           {/* Top Winner Notification Banner if > 1 SKU */}
           {evaluatedProducts.length > 1 && winnerProduct && (
-            <div className="relative overflow-hidden rounded-3xl border border-lime-500/40 bg-gradient-to-r from-lime-500/10 via-[#84cc16]/5 to-transparent p-5 dark:border-lime-500/30">
+            <div className="relative overflow-hidden rounded-3xl border border-lime-500/40 bg-gradient-to-r from-lime-500/15 via-[#84cc16]/5 to-transparent p-5 dark:border-lime-500/30">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div className="flex items-center gap-3.5">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#84cc16] text-black shadow-md">
@@ -260,14 +282,14 @@ export default function ComparePage() {
                         Top Profit Performer
                       </span>
                       <span className="rounded-full bg-[#84cc16] px-2 py-0.5 text-[10px] font-black text-black">
-                        #{winnerIndex + 1} Rated
+                        #{winnerIndex + 1} Ranked
                       </span>
                     </div>
-                    <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
-                      {winnerProduct.product.title} generates the highest net margin ({formatPercent(winnerProduct.calc.netMarginPercent)})
+                    <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white tracking-tight">
+                      {winnerProduct.product.title} delivers the highest net margin ({formatPercent(winnerProduct.calc.netMarginPercent)})
                     </h2>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
-                      Produces <strong className="text-slate-800 dark:text-slate-200">{formatCurrency(winnerProduct.calc.netProfit)}</strong> net profit per unit with break-even floor at {formatCurrency(winnerProduct.calc.breakEvenPrice)}.
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                      Generates <strong className="text-slate-900 dark:text-white font-bold">{formatCurrency(winnerProduct.calc.netProfit)}</strong> net profit per order with a break-even floor at {formatCurrency(winnerProduct.calc.breakEvenPrice)}.
                     </p>
                   </div>
                 </div>
@@ -275,7 +297,7 @@ export default function ComparePage() {
                 <div className="flex items-center gap-2 shrink-0">
                   <button
                     onClick={() => handleOpenListingGenerator(winnerProduct.product, winnerProduct.calc)}
-                    className="flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-black rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer"
+                    className="flex items-center gap-1.5 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-black rounded-xl text-xs font-black transition-all shadow-xs cursor-pointer"
                   >
                     <Sparkles className="h-3.5 w-3.5 text-[#84cc16]" />
                     <span>Launch on TikTok</span>
@@ -285,22 +307,23 @@ export default function ComparePage() {
             </div>
           )}
 
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Cards Grid: Perfectly Formatted & Balanced */}
+          <div className={cn('grid gap-4', getGridColsClass(evaluatedProducts.length))}>
             {evaluatedProducts.map(({ product, calc }, idx) => {
               const isWinner = idx === winnerIndex && evaluatedProducts.length > 1;
+              const marginDiff = calc.netMarginPercent - avgMargin;
 
               return (
                 <div
                   key={product.id}
                   className={cn(
-                    'relative flex flex-col justify-between rounded-3xl p-5 border transition-all duration-200',
+                    'relative flex flex-col justify-between rounded-3xl p-5 border transition-all duration-200 shadow-sm',
                     isWinner
-                      ? 'border-[#84cc16] bg-lime-500/5 dark:bg-lime-500/10 shadow-lg ring-1 ring-[#84cc16]'
+                      ? 'border-[#84cc16] bg-gradient-to-b from-lime-500/10 via-white to-white dark:via-[#121620] dark:to-[#121620] ring-2 ring-[#84cc16]/80'
                       : 'border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] hover:border-slate-300 dark:hover:border-slate-700',
                   )}
                 >
-                  {/* Remove button */}
+                  {/* Remove SKU Button */}
                   <button
                     onClick={() => toggleCompareProduct(product.id)}
                     aria-label="Remove product"
@@ -310,25 +333,25 @@ export default function ComparePage() {
                   </button>
 
                   <div>
-                    {/* Top Ribbon Badge */}
+                    {/* Top Status Ribbon */}
                     <div className="flex items-center gap-2 mb-3.5">
                       {isWinner ? (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#84cc16] text-black text-[10px] font-black uppercase tracking-wider shadow-xs">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#84cc16] text-black text-[10px] font-black uppercase tracking-wider shadow-xs">
                           <Trophy className="h-3 w-3 fill-current" /> Winner #{idx + 1}
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold uppercase tracking-wider">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold uppercase tracking-wider">
                           SKU #{idx + 1}
                         </span>
                       )}
-                      <span className="text-[11px] font-mono-numeric text-slate-400 font-semibold truncate">
+                      <span className="text-[11px] font-mono-numeric text-slate-400 dark:text-slate-500 font-semibold truncate">
                         {product.sku}
                       </span>
                     </div>
 
-                    {/* Product Header */}
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="h-12 w-12 rounded-2xl bg-slate-100 dark:bg-slate-800 overflow-hidden shrink-0 border border-slate-200/60 dark:border-slate-700/60">
+                    {/* Product Card Header */}
+                    <div className="flex items-center gap-3.5 mb-4">
+                      <div className="h-12 w-12 rounded-2xl bg-slate-100 dark:bg-slate-800 overflow-hidden shrink-0 border border-slate-200/80 dark:border-slate-700/80 shadow-2xs">
                         <img
                           src={product.image}
                           alt={product.title}
@@ -336,32 +359,32 @@ export default function ComparePage() {
                         />
                       </div>
                       <div className="min-w-0 flex-1 pr-6">
-                        <h3 className="text-sm font-bold text-slate-900 dark:text-white truncate" title={product.title}>
+                        <h3 className="text-sm font-extrabold text-slate-900 dark:text-white truncate tracking-tight" title={product.title}>
                           {product.title}
                         </h3>
-                        <p className="text-xs text-slate-500 dark:text-slate-400">
+                        <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
                           {product.category}
                         </p>
                       </div>
                     </div>
 
-                    {/* Main Profit Box */}
-                    <div className="p-4 rounded-2xl bg-slate-50/80 dark:bg-[#161b26] border border-slate-200/80 dark:border-slate-800 space-y-2.5 font-mono-numeric mb-4">
+                    {/* Primary Highlight Profit Box */}
+                    <div className="p-4 rounded-2xl bg-slate-50/90 dark:bg-[#161b26] border border-slate-200/80 dark:border-slate-800/90 space-y-3 font-mono-numeric mb-4">
                       <div className="flex justify-between items-center text-xs">
-                        <span className="text-slate-500 dark:text-slate-400 font-sans font-medium">Selling Price</span>
+                        <span className="text-slate-500 dark:text-slate-400 font-sans font-semibold">Selling Price</span>
                         <span className="font-black text-slate-900 dark:text-white text-sm">
                           {formatCurrency(calc.sellingPrice)}
                         </span>
                       </div>
 
                       <div className="flex justify-between items-center text-xs">
-                        <span className="text-slate-500 dark:text-slate-400 font-sans font-medium">Net Profit / Unit</span>
+                        <span className="text-slate-500 dark:text-slate-400 font-sans font-semibold">Net Profit / Unit</span>
                         <span
                           className={cn(
-                            'font-black text-sm',
+                            'font-black text-sm px-2 py-0.5 rounded-md',
                             calc.netProfit > 0
-                              ? 'text-emerald-600 dark:text-[#4ade80]'
-                              : 'text-rose-500',
+                              ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-[#4ade80]'
+                              : 'bg-rose-50 text-rose-600 dark:bg-rose-950/60 dark:text-rose-400',
                           )}
                         >
                           {formatCurrency(calc.netProfit)}
@@ -369,7 +392,7 @@ export default function ComparePage() {
                       </div>
 
                       <div className="flex justify-between items-center text-xs">
-                        <span className="text-slate-500 dark:text-slate-400 font-sans font-medium">Net Margin %</span>
+                        <span className="text-slate-500 dark:text-slate-400 font-sans font-semibold">Net Margin %</span>
                         <span
                           className={cn(
                             'font-black text-sm',
@@ -384,14 +407,14 @@ export default function ComparePage() {
                         </span>
                       </div>
 
-                      {/* Margin Progress Bar */}
-                      <div className="pt-1">
-                        <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                      {/* Visual Margin Bar */}
+                      <div className="pt-0.5">
+                        <div className="h-2 w-full rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
                           <div
                             className={cn(
-                              'h-full rounded-full',
+                              'h-full rounded-full transition-all duration-300',
                               calc.netMarginPercent >= 35
-                                ? 'bg-[#84cc16]'
+                                ? 'bg-gradient-to-r from-emerald-500 to-[#84cc16]'
                                 : calc.netMarginPercent > 0
                                   ? 'bg-amber-500'
                                   : 'bg-rose-500',
@@ -402,58 +425,60 @@ export default function ComparePage() {
                       </div>
 
                       <div className="flex justify-between items-center text-xs border-t border-slate-200/80 dark:border-slate-800 pt-2 text-slate-500 dark:text-slate-400">
-                        <span className="font-sans">Break-Even Floor</span>
-                        <span className="font-bold text-slate-800 dark:text-slate-200">
+                        <span className="font-sans font-medium">Break-Even Floor</span>
+                        <span className="font-bold text-slate-900 dark:text-white">
                           {formatCurrency(calc.breakEvenPrice)}
                         </span>
                       </div>
                     </div>
 
                     {/* Itemized Cost Breakdown */}
-                    <div className="space-y-1.5 text-xs font-mono-numeric">
-                      <div className="flex justify-between text-slate-600 dark:text-slate-400">
-                        <span className="font-sans">COGS (Factory)</span>
-                        <span className="font-semibold">{formatCurrency(calc.cogs)}</span>
+                    <div className="space-y-2 text-xs font-mono-numeric">
+                      <div className="flex justify-between items-center text-slate-600 dark:text-slate-300">
+                        <span className="font-sans font-medium text-slate-500 dark:text-slate-400">COGS (Factory)</span>
+                        <span className="font-bold text-slate-800 dark:text-slate-200">{formatCurrency(calc.cogs)}</span>
                       </div>
 
-                      <div className="flex justify-between text-blue-600 dark:text-blue-400">
-                        <span className="font-sans flex items-center gap-1">
-                          <Ship className="h-3 w-3" /> Inbound Freight
+                      <div className="flex justify-between items-center text-blue-600 dark:text-blue-400">
+                        <span className="font-sans font-medium flex items-center gap-1.5">
+                          <Ship className="h-3.5 w-3.5" /> Inbound Freight
                         </span>
-                        <span className="font-semibold">{formatCurrency(calc.shipmentCharges)}</span>
+                        <span className="font-bold">{formatCurrency(calc.shipmentCharges)}</span>
                       </div>
 
-                      <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
-                        <span className="font-sans flex items-center gap-1">
-                          <Truck className="h-3 w-3" /> Outbound Delivery
+                      <div className="flex justify-between items-center text-emerald-600 dark:text-emerald-400">
+                        <span className="font-sans font-medium flex items-center gap-1.5">
+                          <Truck className="h-3.5 w-3.5" /> Outbound Delivery
                         </span>
-                        <span className="font-semibold">{formatCurrency(calc.shippingCost)}</span>
+                        <span className="font-bold">{formatCurrency(calc.shippingCost)}</span>
                       </div>
 
-                      <div className="flex justify-between text-slate-600 dark:text-slate-400">
-                        <span className="font-sans">TikTok 5% + Merchant Fee</span>
-                        <span className="font-semibold">{formatCurrency(calc.tiktokFeeAmount + calc.paymentFeeAmount)}</span>
+                      <div className="flex justify-between items-center text-slate-600 dark:text-slate-300">
+                        <span className="font-sans font-medium text-slate-500 dark:text-slate-400">TikTok & Merchant Fees</span>
+                        <span className="font-bold text-slate-800 dark:text-slate-200">
+                          {formatCurrency(calc.tiktokFeeAmount + calc.paymentFeeAmount)}
+                        </span>
                       </div>
 
-                      <div className="flex justify-between text-slate-600 dark:text-slate-400">
-                        <span className="font-sans">Creator Affiliate Split</span>
-                        <span className="font-semibold">{formatCurrency(calc.affiliateAmount)}</span>
+                      <div className="flex justify-between items-center text-slate-600 dark:text-slate-300">
+                        <span className="font-sans font-medium text-slate-500 dark:text-slate-400">Creator Affiliate</span>
+                        <span className="font-bold text-slate-800 dark:text-slate-200">{formatCurrency(calc.affiliateAmount)}</span>
                       </div>
 
-                      <div className="flex justify-between text-purple-600 dark:text-[#c084fc]">
-                        <span className="font-sans">Ad CPA (Paid Traffic)</span>
-                        <span className="font-semibold">{formatCurrency(calc.adCpa)}</span>
+                      <div className="flex justify-between items-center text-purple-600 dark:text-[#c084fc]">
+                        <span className="font-sans font-medium">TikTok Ads CPA</span>
+                        <span className="font-bold">{formatCurrency(calc.adCpa)}</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Bottom Actions */}
+                  {/* Card Action Buttons */}
                   <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
                     <button
                       onClick={() => handleOpenListingGenerator(product, calc)}
-                      className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-xs font-bold text-white shadow-2xs transition-all cursor-pointer"
+                      className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-xs font-bold text-white shadow-2xs transition-all cursor-pointer"
                     >
-                      <Sparkles className="h-3.5 w-3.5" />
+                      <Sparkles className="h-3.5 w-3.5 text-lime-300" />
                       <span>Create TikTok Listing</span>
                     </button>
 
@@ -462,12 +487,30 @@ export default function ComparePage() {
                       className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs font-bold text-slate-800 dark:text-white transition-colors cursor-pointer"
                     >
                       <span>Simulate in Calculator</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
+                      <ArrowRight className="h-3.5 w-3.5 text-slate-400" />
                     </button>
                   </div>
                 </div>
               );
             })}
+
+            {/* Empty Slot Card if less than 4 products */}
+            {evaluatedProducts.length < 4 && (
+              <button
+                onClick={() => setAddModalOpen(true)}
+                className="flex flex-col items-center justify-center p-8 rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-800 hover:border-[#84cc16] dark:hover:border-[#84cc16] bg-slate-50/40 dark:bg-[#121620]/40 transition-all text-center group cursor-pointer min-h-[380px]"
+              >
+                <div className="h-12 w-12 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 group-hover:text-[#84cc16] group-hover:scale-110 transition-all shadow-2xs mb-3">
+                  <Plus className="h-6 w-6 stroke-[2.5]" />
+                </div>
+                <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-[#84cc16] transition-colors">
+                  Add #{evaluatedProducts.length + 1} SKU to Compare
+                </h4>
+                <p className="text-xs text-slate-400 mt-1 max-w-[200px]">
+                  Pick from your catalog to complete the benchmark
+                </p>
+              </button>
+            )}
           </div>
 
           {/* Deep Comparative Matrix Table */}
@@ -490,7 +533,7 @@ export default function ComparePage() {
                     <th className="pb-3 pr-4">Metric / Dimension</th>
                     {evaluatedProducts.map(({ product }, idx) => (
                       <th key={product.id} className="pb-3 px-4 font-bold text-slate-900 dark:text-white">
-                        SKU #{idx + 1}: {product.title.slice(0, 20)}...
+                        SKU #{idx + 1}: {product.title.slice(0, 22)}...
                       </th>
                     ))}
                   </tr>
