@@ -16,8 +16,17 @@ import {
   HelpCircle,
   Copy,
   Sliders,
+  Upload,
+  Tag,
+  Scale,
+  Printer,
+  History,
 } from 'lucide-react';
 import { calculateUnitEconomics, formatCurrency, formatPercent, cn } from '../../lib/utils';
+import { useStore } from '../../context/StoreContext';
+import BulkUploadModal from '../../components/calculator/BulkUploadModal';
+import ListingModal from '../../components/calculator/ListingModal';
+import PdfReportModal from '../../components/export/PdfReportModal';
 
 const PRESET_TEMPLATES = [
   {
@@ -76,6 +85,12 @@ const PRESET_TEMPLATES = [
 
 export default function CalculatorPage() {
   const router = useRouter();
+  const { saveCalculationToHistory, selectedStore } = useStore();
+
+  // Modals
+  const [bulkModalOpen, setBulkModalOpen] = useState(false);
+  const [listingModalOpen, setListingModalOpen] = useState(false);
+  const [pdfModalOpen, setPdfModalOpen] = useState(false);
 
   // Inputs
   const [productName, setProductName] = useState('New Viral Product');
@@ -123,6 +138,35 @@ export default function CalculatorPage() {
     setTargetMarginPercent(preset.targetMargin);
   };
 
+  const handleSaveToAuditHistory = () => {
+    let healthStatus: 'excellent' | 'good' | 'low' | 'loss' = 'good';
+    if (results.netProfit <= 0) healthStatus = 'loss';
+    else if (results.profitMargin >= 35) healthStatus = 'excellent';
+    else if (results.profitMargin < 15) healthStatus = 'low';
+
+    saveCalculationToHistory({
+      name: productName,
+      sku: `SKU-${Date.now().toString().slice(-4)}`,
+      category: 'General',
+      sellingPrice,
+      cogs,
+      shippingCost,
+      packagingCost,
+      tiktokFeePercent,
+      affiliatePercent,
+      adCpa,
+      otherExpenses,
+      netProfit: results.netProfit,
+      profitMarginPercent: results.profitMargin,
+      breakEvenPrice: results.breakEvenPrice,
+      healthStatus,
+      bestFor: `Optimized for ${targetMarginPercent}% Target Margin`,
+    });
+
+    setSavedSuccess(true);
+    setTimeout(() => setSavedSuccess(false), 2500);
+  };
+
   const handleCopySummary = () => {
     const summary = `📊 TikTok Shop Unit Economics Report: ${productName}
 • Selling Price: ${formatCurrency(sellingPrice)}
@@ -145,29 +189,24 @@ export default function CalculatorPage() {
   };
 
   const handleSendToAIListing = () => {
-    sessionStorage.setItem(
-      'rush_calculator_export',
-      JSON.stringify({
-        productName,
-        sellingPrice,
-        cogs,
-        netProfit: results.netProfit,
-        profitMargin: results.profitMargin,
-      }),
-    );
-    router.push('/ai-assistant');
+    setListingModalOpen(true);
   };
 
   const isProfitable = results.netProfit > 0;
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">
-            TikTok Shop Profit Margin Calculator
-          </h2>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white sm:text-2xl">
+              TikTok Shop Profit Margin Calculator
+            </h1>
+            <span className="rounded-md bg-lime-500/10 px-2 py-0.5 text-xs font-bold text-lime-700 dark:text-[#84cc16]">
+              Interactive Simulator
+            </span>
+          </div>
           <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
             Simulate true unit economics, break-even price floor, and target profit margins before
             listing.
@@ -176,23 +215,51 @@ export default function CalculatorPage() {
 
         <div className="flex flex-wrap items-center gap-2">
           <button
+            onClick={() => setBulkModalOpen(true)}
+            className="shadow-xs flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10 cursor-pointer"
+          >
+            <Upload className="h-3.5 w-3.5 text-slate-400" />
+            <span>Bulk CSV</span>
+          </button>
+
+          <button
+            onClick={() => router.push('/compare')}
+            className="shadow-xs flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10 cursor-pointer"
+          >
+            <Scale className="h-3.5 w-3.5 text-slate-400" />
+            <span>Compare SKUs</span>
+          </button>
+
+          <button
+            onClick={handleSaveToAuditHistory}
+            className="shadow-xs flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 transition-colors hover:bg-emerald-50 hover:text-emerald-700 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:text-[#4ade80] cursor-pointer"
+          >
+            {savedSuccess ? (
+              <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-[#4ade80]" />
+            ) : (
+              <Save className="h-3.5 w-3.5" />
+            )}
+            <span>{savedSuccess ? 'Saved to Audit!' : 'Save Calculation'}</span>
+          </button>
+
+          <button
             onClick={handleCopySummary}
-            className="shadow-xs flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10"
+            className="shadow-xs flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10 cursor-pointer"
           >
             {copySuccess ? (
               <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-[#4ade80]" />
             ) : (
               <Copy className="h-3.5 w-3.5" />
             )}
-            <span>{copySuccess ? 'Copied Summary!' : 'Copy Report'}</span>
+            <span>{copySuccess ? 'Copied!' : 'Copy Summary'}</span>
           </button>
 
           <button
             onClick={handleSendToAIListing}
-            className="flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-4 py-2 text-xs font-bold text-black shadow-sm transition-all hover:scale-[1.02] hover:bg-[#72b012]"
+            className="flex items-center gap-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 px-4 py-2 text-xs font-bold text-white shadow-sm transition-all cursor-pointer"
           >
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>Generate AI Listing</span>
+            <Tag className="h-3.5 w-3.5" />
+            <span>Create TikTok Listing</span>
           </button>
         </div>
       </div>
@@ -580,6 +647,21 @@ export default function CalculatorPage() {
           </div>
         </div>
       </div>
+
+      {/* Modals */}
+      <BulkUploadModal isOpen={bulkModalOpen} onClose={() => setBulkModalOpen(false)} />
+      <ListingModal
+        isOpen={listingModalOpen}
+        onClose={() => setListingModalOpen(false)}
+        initialProduct={{
+          name: productName,
+          sku: `SKU-${Date.now().toString().slice(-4)}`,
+          category: 'Kitchen & Dining',
+          sellingPrice,
+        }}
+      />
+      <PdfReportModal isOpen={pdfModalOpen} onClose={() => setPdfModalOpen(false)} />
     </div>
   );
 }
+

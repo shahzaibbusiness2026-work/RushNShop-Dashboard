@@ -10,6 +10,8 @@ import {
   Customer,
   AIInsight,
   CustomerTicket,
+  ListingItem,
+  CalculationRecord,
 } from '../types';
 import {
   INITIAL_STORES,
@@ -20,6 +22,8 @@ import {
   INITIAL_CUSTOMERS,
   INITIAL_AI_INSIGHTS,
   INITIAL_TICKETS,
+  INITIAL_LISTINGS,
+  INITIAL_CALCULATION_HISTORY,
   PROFIT_TREND_DATA,
 } from '../lib/mockData';
 
@@ -52,12 +56,18 @@ interface StoreContextType {
   customers: Customer[];
   insights: AIInsight[];
   tickets: CustomerTicket[];
+  listings: ListingItem[];
+  calculationHistory: CalculationRecord[];
+  comparisonProductIds: string[];
+  commandMenuOpen: boolean;
+  setCommandMenuOpen: (open: boolean) => void;
 
   // Actions
   addStore: (store: Omit<Store, 'id'>) => Promise<void>;
   removeStore: (id: string) => Promise<void>;
   updateProduct: (product: Product) => void;
   addProduct: (product: Omit<Product, 'id'>) => void;
+  bulkAddProducts: (products: Omit<Product, 'id'>[]) => void;
   updateOrderStatus: (orderId: string, status: Order['status']) => void;
   toggleCampaignStatus: (campaignId: string) => void;
   addExpense: (expense: Omit<Expense, 'id'>) => void;
@@ -65,6 +75,15 @@ interface StoreContextType {
   replyToTicket: (ticketId: string, replyText: string) => void;
   resolveTicket: (ticketId: string) => void;
   escalateTicket: (ticketId: string) => void;
+
+  // Listings & Comparison Actions
+  addListing: (listing: Omit<ListingItem, 'id' | 'createdAt'>) => void;
+  updateListing: (listing: ListingItem) => void;
+  deleteListing: (id: string) => void;
+  toggleCompareProduct: (productId: string) => void;
+  setComparisonProductIds: (ids: string[]) => void;
+  saveCalculationToHistory: (calc: Omit<CalculationRecord, 'id' | 'createdAt'>) => void;
+  deleteCalculationFromHistory: (id: string) => void;
 
   // Filtered & Aggregated Metrics
   selectedStore: Store | null;
@@ -132,6 +151,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [customers, setCustomers] = useState<Customer[]>(INITIAL_CUSTOMERS);
   const [insights, setInsights] = useState<AIInsight[]>(INITIAL_AI_INSIGHTS);
   const [tickets, setTickets] = useState<CustomerTicket[]>(INITIAL_TICKETS);
+  const [listings, setListings] = useState<ListingItem[]>(INITIAL_LISTINGS);
+  const [calculationHistory, setCalculationHistory] = useState<CalculationRecord[]>(INITIAL_CALCULATION_HISTORY);
+  const [comparisonProductIds, setComparisonProductIds] = useState<string[]>(['prod-1', 'prod-2', 'prod-3']);
+  const [commandMenuOpen, setCommandMenuOpen] = useState<boolean>(false);
 
   // Initialize theme from localStorage & apply to documentElement
   useEffect(() => {
@@ -311,6 +334,68 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     );
     setTickets(updated);
     saveToLocal('rush_tickets', updated);
+  };
+
+  const bulkAddProducts = (newProducts: Omit<Product, 'id'>[]) => {
+    const created: Product[] = newProducts.map((p, idx) => ({
+      ...p,
+      id: `prod-${Date.now()}-${idx}`,
+    }));
+    const updated = [...created, ...products];
+    setProducts(updated);
+    saveToLocal('rush_products', updated);
+  };
+
+  const addListing = (newListingData: Omit<ListingItem, 'id' | 'createdAt'>) => {
+    const newListing: ListingItem = {
+      ...newListingData,
+      id: `list-${Date.now()}`,
+      createdAt: new Date().toISOString().slice(0, 10),
+    };
+    const updated = [newListing, ...listings];
+    setListings(updated);
+    saveToLocal('rush_listings', updated);
+  };
+
+  const updateListing = (updatedListing: ListingItem) => {
+    const updated = listings.map((l) => (l.id === updatedListing.id ? updatedListing : l));
+    setListings(updated);
+    saveToLocal('rush_listings', updated);
+  };
+
+  const deleteListing = (id: string) => {
+    const updated = listings.filter((l) => l.id !== id);
+    setListings(updated);
+    saveToLocal('rush_listings', updated);
+  };
+
+  const toggleCompareProduct = (productId: string) => {
+    setComparisonProductIds((prev) => {
+      if (prev.includes(productId)) {
+        return prev.filter((id) => id !== productId);
+      }
+      if (prev.length >= 4) {
+        return [...prev.slice(1), productId];
+      }
+      return [...prev, productId];
+    });
+  };
+
+  const saveCalculationToHistory = (calc: Omit<CalculationRecord, 'id' | 'createdAt'>) => {
+    const newRecord: CalculationRecord = {
+      ...calc,
+      id: `calc-${Date.now()}`,
+      createdAt: new Date().toISOString().replace('T', ' ').slice(0, 16),
+    };
+    const updated = [newRecord, ...calculationHistory];
+    setCalculationHistory(updated);
+    saveToLocal('rush_calc_history', updated);
+  };
+
+  const deleteCalculationFromHistory = (id: string) => {
+    const updated = calculationHistory.filter((c) => c.id !== id);
+    setCalculationHistory(updated);
+    saveToLocal('rush_calc_history', updated);
   };
 
   // Selected Store Object
@@ -584,10 +669,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         customers,
         insights,
         tickets,
+        listings,
+        calculationHistory,
+        comparisonProductIds,
+        commandMenuOpen,
+        setCommandMenuOpen,
         addStore,
         removeStore,
         updateProduct,
         addProduct,
+        bulkAddProducts,
         updateOrderStatus,
         toggleCampaignStatus,
         addExpense,
@@ -595,6 +686,13 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         replyToTicket,
         resolveTicket,
         escalateTicket,
+        addListing,
+        updateListing,
+        deleteListing,
+        toggleCompareProduct,
+        setComparisonProductIds,
+        saveCalculationToHistory,
+        deleteCalculationFromHistory,
         selectedStore,
         filteredProducts,
         filteredOrders,

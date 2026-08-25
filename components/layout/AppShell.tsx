@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import Sidebar from './Sidebar';
 import TopHeader from './TopHeader';
 import MobileNavBar from './MobileNavBar';
+import CommandMenu from './CommandMenu';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -22,6 +23,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         className="min-h-screen w-full overflow-x-hidden bg-slate-50 dark:bg-[#0b0e14]"
       >
         {children}
+        <CommandMenu />
       </main>
     );
   }
@@ -43,6 +45,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         {/* Mobile Bottom Navigation */}
         <MobileNavBar onOpenMenu={() => setMobileMenuOpen(true)} />
       </div>
+
+      {/* Global Command Palette */}
+      <CommandMenu />
     </div>
   );
 }
+

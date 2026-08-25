@@ -156,3 +156,83 @@ export interface CalculatorState {
   otherExpenses: number;
   targetMarginPercent: number;
 }
+
+export type ProfitHealthStatus = 'excellent' | 'good' | 'low' | 'loss';
+
+export interface ListingItem {
+  id: string;
+  storeId?: string;
+  storeName?: string;
+  productName: string;
+  sku: string;
+  category: string;
+  sellingPrice: number;
+  stock: number;
+  status: 'draft' | 'ready' | 'synced';
+  createdAt: string;
+  syncedAt?: string;
+  bulletPoints?: string[];
+  viralHooks?: string[];
+  tags?: string[];
+  image?: string;
+}
+
+export interface CalculationRecord {
+  id: string;
+  name: string;
+  sku: string;
+  category: string;
+  image?: string;
+  sellingPrice: number;
+  cogs: number;
+  shippingCost: number;
+  packagingCost: number;
+  tiktokFeePercent: number;
+  affiliatePercent: number;
+  adCpa: number;
+  otherExpenses: number;
+  netProfit: number;
+  profitMarginPercent: number;
+  breakEvenPrice: number;
+  healthStatus: ProfitHealthStatus;
+  createdAt: string;
+  bestFor?: string;
+}
+
+export interface SaaSSubscriptionPlan {
+  id: string;
+  name: string;
+  badge?: string;
+  monthlyPrice: number;
+  annualPrice: number;
+  description: string;
+  popular?: boolean;
+  features: string[];
+  limits: {
+    stores: number | 'Unlimited';
+    monthlyCalculations: number | 'Unlimited';
+    aiGenerations: number | 'Unlimited';
+    teamMembers: number | 'Unlimited';
+    exportPdf: boolean;
+  };
+}
+
+export interface BulkParsedProduct {
+  name: string;
+  sku: string;
+  category: string;
+  image?: string;
+  cogs: number;
+  sellingPrice: number;
+  shippingCost: number;
+  packagingCost: number;
+  tiktokFeePercent: number;
+  affiliatePercent: number;
+  adCpa: number;
+  netProfit: number;
+  profitMarginPercent: number;
+  healthStatus: ProfitHealthStatus;
+  isValid: boolean;
+  error?: string;
+}
+

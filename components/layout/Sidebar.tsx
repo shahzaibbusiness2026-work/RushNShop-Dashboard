@@ -27,6 +27,11 @@ import {
   LogOut,
   Globe,
   X,
+  Calculator,
+  Scale,
+  Tag,
+  History,
+  CreditCard,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -51,10 +56,19 @@ const navSections: NavSection[] = [
     ],
   },
   {
-    title: 'Commerce & P&L',
+    title: 'Product Studio',
+    items: [
+      { name: 'Profit Calculator', href: '/calculator', icon: Calculator, badge: 'Calc' },
+      { name: 'Compare SKUs', href: '/compare', icon: Scale, badge: 'New' },
+      { name: 'TikTok Listings', href: '/listings', icon: Tag, badge: 'Sync' },
+      { name: 'Audit History', href: '/history', icon: History },
+      { name: 'Products Catalog', href: '/products', icon: Package },
+    ],
+  },
+  {
+    title: 'Commerce & TrueProfit',
     items: [
       { name: 'Stores', href: '/stores', icon: Store },
-      { name: 'Products', href: '/products', icon: Package },
       { name: 'Orders', href: '/orders', icon: ShoppingBag },
       { name: 'Profit Analytics', href: '/profit-analytics', icon: TrendingUp },
       { name: 'Ads Analytics', href: '/ads-analytics', icon: Megaphone },
@@ -71,13 +85,15 @@ const navSections: NavSection[] = [
     ],
   },
   {
-    title: 'Management',
+    title: 'Management & SaaS',
     items: [
-      { name: 'Reports', href: '/reports', icon: FileText },
+      { name: 'Pricing & Plans', href: '/pricing', icon: CreditCard, badge: 'Pro' },
+      { name: 'P&L Reports', href: '/reports', icon: FileText },
       { name: 'Settings', href: '/settings', icon: Settings },
     ],
   },
 ];
+
 
 export default function Sidebar({
   mobileOpen,
