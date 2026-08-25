@@ -67,6 +67,7 @@ interface StoreContextType {
   removeStore: (id: string) => Promise<void>;
   updateProduct: (product: Product) => void;
   addProduct: (product: Omit<Product, 'id'>) => void;
+  deleteProduct: (productId: string) => void;
   bulkAddProducts: (products: Omit<Product, 'id'>[]) => void;
   updateOrderStatus: (orderId: string, status: Order['status']) => void;
   toggleCampaignStatus: (campaignId: string) => void;
@@ -263,6 +264,13 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const updated = [product, ...products];
     setProducts(updated);
     saveToLocal('rush_products', updated);
+  };
+
+  const deleteProduct = (productId: string) => {
+    const updated = products.filter((p) => p.id !== productId);
+    setProducts(updated);
+    saveToLocal('rush_products', updated);
+    setComparisonProductIds((prev) => prev.filter((id) => id !== productId));
   };
 
   const updateOrderStatus = (orderId: string, status: Order['status']) => {
@@ -678,6 +686,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         removeStore,
         updateProduct,
         addProduct,
+        deleteProduct,
         bulkAddProducts,
         updateOrderStatus,
         toggleCampaignStatus,
