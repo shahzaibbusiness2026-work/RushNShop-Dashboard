@@ -10,7 +10,9 @@ export type { UnitEconomicsOutput };
 export interface DetailedProductProfit {
   sellingPrice: number;
   cogs: number;
-  shippingCost: number;
+  shipmentCharges: number; // Inbound freight / shipment charge from supplier
+  shippingCost: number; // Outbound customer courier shipping
+  totalShipping: number;
   packagingCost: number;
   tiktokFeeAmount: number;
   paymentFeeAmount: number;
@@ -28,6 +30,7 @@ export interface DetailedProductProfit {
 export function calculateDetailedProfit(params: {
   sellingPrice: number;
   cogs: number;
+  shipmentCharges?: number;
   shippingCost?: number;
   packagingCost?: number;
   tiktokFeePercent?: number;
@@ -41,6 +44,7 @@ export function calculateDetailedProfit(params: {
   const result = calculateUnitEconomics({
     sellingPrice: params.sellingPrice || 0,
     cogs: params.cogs || 0,
+    shipmentCharges: params.shipmentCharges || 0,
     shippingCost: params.shippingCost || 0,
     packagingCost: params.packagingCost || 0,
     tiktokFeePercent: params.tiktokFeePercent ?? 5.0,
@@ -55,7 +59,9 @@ export function calculateDetailedProfit(params: {
   return {
     sellingPrice: result.sellingPrice,
     cogs: result.cogs,
-    shippingCost: result.shipping,
+    shipmentCharges: result.shipmentCharges,
+    shippingCost: result.shippingCost,
+    totalShipping: result.shipping,
     packagingCost: result.packaging,
     tiktokFeeAmount: result.tiktokFee,
     paymentFeeAmount: result.paymentFee,

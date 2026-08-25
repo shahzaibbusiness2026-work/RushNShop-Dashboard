@@ -21,6 +21,14 @@ interface ListingModalProps {
     sku?: string;
     category?: string;
     sellingPrice?: number;
+    cogs?: number;
+    shippingCost?: number;
+    packagingCost?: number;
+    tiktokFeePercent?: number;
+    affiliatePercent?: number;
+    adCpa?: number;
+    netProfit?: number;
+    profitMarginPercent?: number;
   };
 }
 

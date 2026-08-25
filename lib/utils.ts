@@ -26,7 +26,9 @@ export function formatPercent(num: number): string {
 export interface UnitEconomicsOutput {
   sellingPrice: number;
   cogs: number;
-  shipping: number;
+  shipmentCharges: number; // Supplier / Freight Inbound
+  shippingCost: number; // Customer / 3PL Outbound
+  shipping: number; // Combined shipping
   packaging: number;
   tiktokFee: number;
   paymentFee: number;
@@ -44,7 +46,8 @@ export interface UnitEconomicsOutput {
 export function calculateUnitEconomics(params: {
   sellingPrice: number;
   cogs: number;
-  shippingCost: number;
+  shipmentCharges?: number; // Inbound freight / shipment charge from supplier
+  shippingCost: number; // Outbound customer courier shipping
   packagingCost: number;
   tiktokFeePercent: number; // e.g. 5 for 5%
   paymentFeePercent: number; // e.g. 2.9 for 2.9%
@@ -57,6 +60,7 @@ export function calculateUnitEconomics(params: {
   const {
     sellingPrice,
     cogs,
+    shipmentCharges = 0,
     shippingCost,
     packagingCost,
     tiktokFeePercent,
@@ -68,13 +72,14 @@ export function calculateUnitEconomics(params: {
     targetMarginPercent = 40,
   } = params;
 
+  const totalShipping = shipmentCharges + shippingCost;
   const tiktokFee = (sellingPrice * tiktokFeePercent) / 100;
   const paymentFee = (sellingPrice * paymentFeePercent) / 100 + paymentFeeFixed;
   const affiliateCommission = (sellingPrice * affiliatePercent) / 100;
 
   const totalCost =
     cogs +
-    shippingCost +
+    totalShipping +
     packagingCost +
     tiktokFee +
     paymentFee +
@@ -86,7 +91,7 @@ export function calculateUnitEconomics(params: {
 
   // Fixed unit costs without percent-based fees
   const fixedUnitCosts =
-    cogs + shippingCost + packagingCost + adCpa + otherExpenses + paymentFeeFixed;
+    cogs + totalShipping + packagingCost + adCpa + otherExpenses + paymentFeeFixed;
   const variableFeeRate = (tiktokFeePercent + paymentFeePercent + affiliatePercent) / 100;
 
   // Break-even selling price = fixedUnitCosts / (1 - variableFeeRate)
@@ -95,7 +100,7 @@ export function calculateUnitEconomics(params: {
   // Max CPA to still break even = Selling Price - all other costs (excluding adCpa)
   const costsWithoutAd =
     cogs +
-    shippingCost +
+    totalShipping +
     packagingCost +
     tiktokFee +
     paymentFee +
@@ -113,7 +118,9 @@ export function calculateUnitEconomics(params: {
   return {
     sellingPrice,
     cogs,
-    shipping: shippingCost,
+    shipmentCharges,
+    shippingCost,
+    shipping: totalShipping,
     packaging: packagingCost,
     tiktokFee,
     paymentFee,
@@ -128,3 +135,4 @@ export function calculateUnitEconomics(params: {
     recommendedPrice,
   };
 }
+
