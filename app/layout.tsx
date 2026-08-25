@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { StoreProvider } from '../context/StoreContext';
 import AppShell from '../components/layout/AppShell';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 export const metadata: Metadata = {
   title: 'RushNshop - AI Operating System for TikTok Shop',
@@ -24,11 +25,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className="bg-slate-50 dark:bg-[#0b0e14] text-slate-900 dark:text-slate-100 antialiased selection:bg-lime-400 selection:text-black min-h-screen"
+        className="min-h-screen bg-slate-50 text-slate-900 antialiased selection:bg-lime-400 selection:text-black dark:bg-[#0b0e14] dark:text-slate-100"
         suppressHydrationWarning
       >
+        {/* Skip to content link for keyboard/screen-reader users */}
+        <a href="#main-content" className="skip-to-content">
+          Skip to content
+        </a>
         <StoreProvider>
-          <AppShell>{children}</AppShell>
+          <ErrorBoundary>
+            <AppShell>{children}</AppShell>
+          </ErrorBoundary>
         </StoreProvider>
       </body>
     </html>

@@ -19,7 +19,9 @@ export async function POST(request: Request) {
       id: `prod-${Date.now()}`,
       title: body.title || 'New Product',
       sku: body.sku || `RUSH-${Math.floor(1000 + Math.random() * 9000)}`,
-      image: body.image || 'https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=150&auto=format&fit=crop&q=80',
+      image:
+        body.image ||
+        'https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=150&auto=format&fit=crop&q=80',
       category: body.category || 'General',
       storeId: body.storeId || 'store-us',
       unitsSold: body.unitsSold || 0,
@@ -29,9 +31,30 @@ export async function POST(request: Request) {
       tiktokFees: body.tiktokFees || 0,
       affiliateCommission: body.affiliateCommission || 0,
       adCost: body.adCost || 0,
-      totalCost: (body.cogs || 0) + (body.shippingCost || 0) + (body.tiktokFees || 0) + (body.affiliateCommission || 0) + (body.adCost || 0),
-      netProfit: (body.revenue || 0) - ((body.cogs || 0) + (body.shippingCost || 0) + (body.tiktokFees || 0) + (body.affiliateCommission || 0) + (body.adCost || 0)),
-      margin: body.revenue > 0 ? (((body.revenue - ((body.cogs || 0) + (body.shippingCost || 0) + (body.tiktokFees || 0) + (body.affiliateCommission || 0) + (body.adCost || 0))) / body.revenue) * 100) : 0,
+      totalCost:
+        (body.cogs || 0) +
+        (body.shippingCost || 0) +
+        (body.tiktokFees || 0) +
+        (body.affiliateCommission || 0) +
+        (body.adCost || 0),
+      netProfit:
+        (body.revenue || 0) -
+        ((body.cogs || 0) +
+          (body.shippingCost || 0) +
+          (body.tiktokFees || 0) +
+          (body.affiliateCommission || 0) +
+          (body.adCost || 0)),
+      margin:
+        body.revenue > 0
+          ? ((body.revenue -
+              ((body.cogs || 0) +
+                (body.shippingCost || 0) +
+                (body.tiktokFees || 0) +
+                (body.affiliateCommission || 0) +
+                (body.adCost || 0))) /
+              body.revenue) *
+            100
+          : 0,
       stock: body.stock || 100,
       status: body.status || 'profitable',
     };
@@ -56,7 +79,8 @@ export async function PATCH(request: Request) {
     Object.assign(prod, updates);
 
     // Recalculate profit & margin if costs changed
-    prod.totalCost = prod.cogs + prod.shippingCost + prod.tiktokFees + prod.affiliateCommission + prod.adCost;
+    prod.totalCost =
+      prod.cogs + prod.shippingCost + prod.tiktokFees + prod.affiliateCommission + prod.adCost;
     prod.netProfit = prod.revenue - prod.totalCost;
     prod.margin = prod.revenue > 0 ? (prod.netProfit / prod.revenue) * 100 : 0;
 

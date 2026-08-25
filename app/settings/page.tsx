@@ -30,11 +30,15 @@ import { cn } from '../../lib/utils';
 
 export default function SettingsPage() {
   const { stores } = useStore();
-  const [activeTab, setActiveTab] = useState<'ai' | 'integrations' | 'defaults' | 'team' | 'notifications'>('ai');
+  const [activeTab, setActiveTab] = useState<
+    'ai' | 'integrations' | 'defaults' | 'team' | 'notifications'
+  >('ai');
   const [saved, setSaved] = useState(false);
 
   // AI Backend Integration State
-  const [aiProvider, setAiProvider] = useState<'openai' | 'gemini' | 'anthropic' | 'deepseek' | 'custom'>('openai');
+  const [aiProvider, setAiProvider] = useState<
+    'openai' | 'gemini' | 'anthropic' | 'deepseek' | 'custom'
+  >('openai');
   const [aiModel, setAiModel] = useState('gpt-4o');
   const [aiApiKey, setAiApiKey] = useState('');
   const [customBaseUrl, setCustomBaseUrl] = useState('');
@@ -42,7 +46,11 @@ export default function SettingsPage() {
   const [hasKey, setHasKey] = useState(false);
   const [showKey, setShowKey] = useState(false);
   const [isTestingAi, setIsTestingAi] = useState(false);
-  const [aiTestResult, setAiTestResult] = useState<{ success: boolean; message: string; latency?: string } | null>(null);
+  const [aiTestResult, setAiTestResult] = useState<{
+    success: boolean;
+    message: string;
+    latency?: string;
+  } | null>(null);
 
   // Default Calculation Settings
   const [defaultTiktokFee, setDefaultTiktokFee] = useState('5.0');
@@ -160,9 +168,12 @@ export default function SettingsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">System Settings & Integrations</h2>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">
+            System Settings & Integrations
+          </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Configure backend AI models, API keys, TikTok Shop webhooks, and team access permissions.
+            Configure backend AI models, API keys, TikTok Shop webhooks, and team access
+            permissions.
           </p>
         </div>
 
@@ -193,13 +204,13 @@ export default function SettingsPage() {
                 'flex items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 py-2 text-xs font-bold transition-all',
                 activeTab === tab.id
                   ? 'bg-white dark:bg-[#151b26] text-slate-900 dark:text-white shadow-xs'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white',
               )}
             >
               <Icon className="h-3.5 w-3.5" />
               <span>{tab.label}</span>
               {tab.badge && (
-                <span className="rounded-md bg-emerald-100 dark:bg-emerald-950/60 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800 dark:text-[#4ade80]">
+                <span className="rounded-md bg-emerald-100 dark:bg-emerald-950/60 px-1.5 py-0.5 text-[9px] font-bold text-emerald-800 dark:text-[#4ade80]">
                   {tab.badge}
                 </span>
               )}
@@ -221,8 +232,14 @@ export default function SettingsPage() {
                 🛡️ Zero-Leak Server-Side AI Architecture
               </h4>
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                Your AI model API keys are <strong>strictly stored on the Next.js server backend</strong> and used for server-to-server inference calls (<code className="rounded bg-black/5 dark:bg-white/10 px-1 py-0.5 text-[11px] font-mono">/api/ai/chat</code>). 
-                Keys are <strong>never sent to the browser DOM, frontend state, or client bundles</strong>.
+                Your AI model API keys are{' '}
+                <strong>strictly stored on the Next.js server backend</strong> and used for
+                server-to-server inference calls (
+                <code className="rounded bg-black/5 dark:bg-white/10 px-1 py-0.5 text-[11px] font-mono">
+                  /api/ai/chat
+                </code>
+                ). Keys are{' '}
+                <strong>never sent to the browser DOM, frontend state, or client bundles</strong>.
               </p>
             </div>
           </div>
@@ -236,7 +253,8 @@ export default function SettingsPage() {
                   <span>AI Provider & Model Selection</span>
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  Select which foundation model powers your AI Business Advisor, Viral Video Studio, and Customer Desk.
+                  Select which foundation model powers your AI Business Advisor, Viral Video Studio,
+                  and Customer Desk.
                 </p>
               </div>
 
@@ -247,25 +265,54 @@ export default function SettingsPage() {
                     'flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold border',
                     hasKey
                       ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-[#4ade80] border-emerald-200 dark:border-emerald-800'
-                      : 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-[#fb923c] border-amber-200 dark:border-amber-800'
+                      : 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-[#fb923c] border-amber-200 dark:border-amber-800',
                   )}
                 >
-                  <span className={cn('h-2 w-2 rounded-full', hasKey ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500')} />
-                  <span>{hasKey ? `Active (${aiProvider.toUpperCase()})` : 'Server Simulation Mode'}</span>
+                  <span
+                    className={cn(
+                      'h-2 w-2 rounded-full',
+                      hasKey ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500',
+                    )}
+                  />
+                  <span>
+                    {hasKey ? `Active (${aiProvider.toUpperCase()})` : 'Server Simulation Mode'}
+                  </span>
                 </span>
               </div>
             </div>
 
             {/* Provider Grid */}
             <div className="space-y-2">
-              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">Choose AI Foundation Provider</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
+                Choose AI Foundation Provider
+              </label>
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
                 {[
                   { id: 'openai', label: 'OpenAI', model: 'gpt-4o', desc: 'GPT-4o / GPT-4o-mini' },
-                  { id: 'gemini', label: 'Google Gemini', model: 'gemini-1.5-pro', desc: 'Gemini 1.5 Pro / Flash' },
-                  { id: 'anthropic', label: 'Anthropic', model: 'claude-3-5-sonnet-20241022', desc: 'Claude 3.5 Sonnet' },
-                  { id: 'deepseek', label: 'DeepSeek', model: 'deepseek-chat', desc: 'DeepSeek V3 / R1' },
-                  { id: 'custom', label: 'Custom / Local', model: 'custom-model', desc: 'Ollama / vLLM' },
+                  {
+                    id: 'gemini',
+                    label: 'Google Gemini',
+                    model: 'gemini-1.5-pro',
+                    desc: 'Gemini 1.5 Pro / Flash',
+                  },
+                  {
+                    id: 'anthropic',
+                    label: 'Anthropic',
+                    model: 'claude-3-5-sonnet-20241022',
+                    desc: 'Claude 3.5 Sonnet',
+                  },
+                  {
+                    id: 'deepseek',
+                    label: 'DeepSeek',
+                    model: 'deepseek-chat',
+                    desc: 'DeepSeek V3 / R1',
+                  },
+                  {
+                    id: 'custom',
+                    label: 'Custom / Local',
+                    model: 'custom-model',
+                    desc: 'Ollama / vLLM',
+                  },
                 ].map((p) => {
                   const isSelected = aiProvider === p.id;
                   return (
@@ -280,11 +327,15 @@ export default function SettingsPage() {
                         'flex flex-col items-start p-3 rounded-2xl border text-left transition-all',
                         isSelected
                           ? 'border-[#84cc16] bg-lime-50/50 dark:bg-lime-950/20 shadow-xs ring-1 ring-[#84cc16]'
-                          : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-[#0f1117]/50 hover:bg-slate-100 dark:hover:bg-white/5'
+                          : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-[#0f1117]/50 hover:bg-slate-100 dark:hover:bg-white/5',
                       )}
                     >
-                      <span className="font-bold text-xs text-slate-900 dark:text-white">{p.label}</span>
-                      <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">{p.desc}</span>
+                      <span className="font-bold text-xs text-slate-900 dark:text-white">
+                        {p.label}
+                      </span>
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
+                        {p.desc}
+                      </span>
                     </button>
                   );
                 })}
@@ -294,14 +345,18 @@ export default function SettingsPage() {
             {/* Model Name Selector */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Target Model ID</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  Target Model ID
+                </label>
                 {aiProvider === 'openai' ? (
                   <select
                     value={aiModel}
                     onChange={(e) => setAiModel(e.target.value)}
                     className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold text-slate-900 dark:text-white"
                   >
-                    <option value="gpt-4o">gpt-4o (Recommended - Best Quantitative Analysis)</option>
+                    <option value="gpt-4o">
+                      gpt-4o (Recommended - Best Quantitative Analysis)
+                    </option>
                     <option value="gpt-4o-mini">gpt-4o-mini (Ultra Fast & Low Latency)</option>
                     <option value="o1-mini">o1-mini (Advanced Reasoning)</option>
                   </select>
@@ -321,8 +376,12 @@ export default function SettingsPage() {
                     onChange={(e) => setAiModel(e.target.value)}
                     className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold text-slate-900 dark:text-white"
                   >
-                    <option value="claude-3-5-sonnet-20241022">claude-3-5-sonnet-20241022 (Best Direct-Response Copywriting)</option>
-                    <option value="claude-3-5-haiku-20241022">claude-3-5-haiku-20241022 (Fast)</option>
+                    <option value="claude-3-5-sonnet-20241022">
+                      claude-3-5-sonnet-20241022 (Best Direct-Response Copywriting)
+                    </option>
+                    <option value="claude-3-5-haiku-20241022">
+                      claude-3-5-haiku-20241022 (Fast)
+                    </option>
                   </select>
                 ) : aiProvider === 'deepseek' ? (
                   <select
@@ -347,12 +406,17 @@ export default function SettingsPage() {
               {/* Secret API Key Input */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                  Secret API Key {maskedKey && <span className="text-slate-400 font-normal">({maskedKey})</span>}
+                  Secret API Key{' '}
+                  {maskedKey && <span className="text-slate-400 font-normal">({maskedKey})</span>}
                 </label>
                 <div className="relative">
                   <input
                     type={showKey ? 'text' : 'password'}
-                    placeholder={hasKey ? '•••••••••••••••••••••••• (Key Configured on Server)' : 'Enter API Key (e.g. sk-proj-...)'}
+                    placeholder={
+                      hasKey
+                        ? '•••••••••••••••••••••••• (Key Configured on Server)'
+                        : 'Enter API Key (e.g. sk-proj-...)'
+                    }
                     value={aiApiKey}
                     onChange={(e) => setAiApiKey(e.target.value)}
                     className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 font-mono text-xs text-slate-900 dark:text-white pr-10"
@@ -387,7 +451,9 @@ export default function SettingsPage() {
             {/* Actions: Save & Test Connection */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
               <div className="text-xs text-slate-500 dark:text-slate-400">
-                {hasKey ? '✓ Active API key loaded from backend memory' : 'ℹ️ Running in intelligent server emulation mode'}
+                {hasKey
+                  ? '✓ Active API key loaded from backend memory'
+                  : 'ℹ️ Running in intelligent server emulation mode'}
               </div>
 
               <div className="flex items-center gap-2">
@@ -397,7 +463,11 @@ export default function SettingsPage() {
                   disabled={isTestingAi}
                   className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-white/5 px-4 py-2.5 text-xs font-bold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-50 transition-colors"
                 >
-                  {isTestingAi ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Server className="h-3.5 w-3.5 text-emerald-500" />}
+                  {isTestingAi ? (
+                    <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Server className="h-3.5 w-3.5 text-emerald-500" />
+                  )}
                   <span>Test Connection</span>
                 </button>
 
@@ -420,11 +490,15 @@ export default function SettingsPage() {
                   'rounded-2xl p-4 text-xs font-semibold flex items-center justify-between border animate-in fade-in',
                   aiTestResult.success
                     ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 border-emerald-200 dark:border-emerald-800'
-                    : 'bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 border-rose-200 dark:border-rose-800'
+                    : 'bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 border-rose-200 dark:border-rose-800',
                 )}
               >
                 <div className="flex items-center gap-2">
-                  {aiTestResult.success ? <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" /> : <AlertCircle className="h-4 w-4 text-rose-500" />}
+                  {aiTestResult.success ? (
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
+                  ) : (
+                    <AlertCircle className="h-4 w-4 text-rose-500" />
+                  )}
                   <span>{aiTestResult.message}</span>
                 </div>
                 {aiTestResult.latency && (
@@ -442,10 +516,14 @@ export default function SettingsPage() {
       {activeTab === 'integrations' && (
         <div className="space-y-4">
           <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-6 shadow-xs space-y-4">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">TikTok Shop Open API Credentials</h3>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">
+              TikTok Shop Open API Credentials
+            </h3>
             <div className="space-y-3 text-xs">
               <div>
-                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Partner App Key</label>
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  Partner App Key
+                </label>
                 <input
                   type="text"
                   value={ttShopAppKey}
@@ -454,7 +532,9 @@ export default function SettingsPage() {
                 />
               </div>
               <div>
-                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Webhook Endpoint URL</label>
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  Webhook Endpoint URL
+                </label>
                 <input
                   type="text"
                   readOnly
@@ -466,10 +546,14 @@ export default function SettingsPage() {
           </div>
 
           <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-6 shadow-xs space-y-4">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">TikTok Ads Marketing API</h3>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">
+              TikTok Ads Marketing API
+            </h3>
             <div className="space-y-3 text-xs">
               <div>
-                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">TikTok Ads Long-Lived Access Token</label>
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  TikTok Ads Long-Lived Access Token
+                </label>
                 <input
                   type="password"
                   value={ttAdsToken}
@@ -481,10 +565,14 @@ export default function SettingsPage() {
           </div>
 
           <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-6 shadow-xs space-y-4">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">Shipping & Fulfillment Carriers</h3>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">
+              Shipping & Fulfillment Carriers
+            </h3>
             <div className="space-y-3 text-xs">
               <div>
-                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Active 3PL Warehouse Provider</label>
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  Active 3PL Warehouse Provider
+                </label>
                 <input
                   type="text"
                   value={fulfillment3pl}
@@ -500,14 +588,18 @@ export default function SettingsPage() {
       {/* Tab 3: Default Economics */}
       {activeTab === 'defaults' && (
         <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-6 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">Default Profit Margin Assumptions</h3>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">
+            Default Profit Margin Assumptions
+          </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400">
             These values are pre-filled when opening the TikTok Profit Margin Calculator.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
             <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Default TikTok Fee (%)</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                Default TikTok Fee (%)
+              </label>
               <input
                 type="number"
                 step="0.1"
@@ -517,7 +609,9 @@ export default function SettingsPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Default Payment Fee (%)</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                Default Payment Fee (%)
+              </label>
               <input
                 type="number"
                 step="0.1"
@@ -527,7 +621,9 @@ export default function SettingsPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Default Target Margin (%)</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                Default Target Margin (%)
+              </label>
               <input
                 type="number"
                 step="1"
@@ -543,28 +639,36 @@ export default function SettingsPage() {
       {/* Tab 4: Team */}
       {activeTab === 'team' && (
         <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-6 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">Staff Team Members</h3>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">
+            Staff Team Members
+          </h3>
           <div className="space-y-3 divide-y divide-slate-100 dark:divide-slate-800">
             <div className="flex items-center justify-between pt-2 first:pt-0 text-xs">
               <div>
                 <p className="font-bold text-slate-900 dark:text-white">John Doe (You)</p>
                 <p className="text-slate-400 dark:text-slate-500">john@rushnshop.com</p>
               </div>
-              <span className="rounded-md bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 font-bold text-emerald-800 dark:text-[#4ade80]">Owner</span>
+              <span className="rounded-md bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 font-bold text-emerald-800 dark:text-[#4ade80]">
+                Owner
+              </span>
             </div>
             <div className="flex items-center justify-between pt-3 text-xs">
               <div>
                 <p className="font-bold text-slate-900 dark:text-white">Sarah Jenkins</p>
                 <p className="text-slate-400 dark:text-slate-500">sarah.support@rushnshop.com</p>
               </div>
-              <span className="rounded-md bg-blue-100 dark:bg-blue-950/60 px-2 py-0.5 font-bold text-blue-800 dark:text-blue-300">Support Staff</span>
+              <span className="rounded-md bg-blue-100 dark:bg-blue-950/60 px-2 py-0.5 font-bold text-blue-800 dark:text-blue-300">
+                Support Staff
+              </span>
             </div>
             <div className="flex items-center justify-between pt-3 text-xs">
               <div>
                 <p className="font-bold text-slate-900 dark:text-white">Marcus Vance</p>
                 <p className="text-slate-400 dark:text-slate-500">marcus.media@rushnshop.com</p>
               </div>
-              <span className="rounded-md bg-purple-100 dark:bg-purple-950/60 px-2 py-0.5 font-bold text-purple-800 dark:text-purple-300">Ads Manager</span>
+              <span className="rounded-md bg-purple-100 dark:bg-purple-950/60 px-2 py-0.5 font-bold text-purple-800 dark:text-purple-300">
+                Ads Manager
+              </span>
             </div>
           </div>
         </div>
@@ -573,19 +677,27 @@ export default function SettingsPage() {
       {/* Tab 5: Notifications */}
       {activeTab === 'notifications' && (
         <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-6 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">AI Alerts & Autonomous Rules</h3>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">
+            AI Alerts & Autonomous Rules
+          </h3>
           <div className="space-y-3 text-xs">
             <label className="flex items-center gap-3">
               <input type="checkbox" defaultChecked className="h-4 w-4 rounded accent-lime-500" />
-              <span className="font-semibold text-slate-800 dark:text-slate-200">Auto-alert when ad campaign CPA exceeds break-even price</span>
+              <span className="font-semibold text-slate-800 dark:text-slate-200">
+                Auto-alert when ad campaign CPA exceeds break-even price
+              </span>
             </label>
             <label className="flex items-center gap-3">
               <input type="checkbox" defaultChecked className="h-4 w-4 rounded accent-lime-500" />
-              <span className="font-semibold text-slate-800 dark:text-slate-200">Notify when product margin drops below 35%</span>
+              <span className="font-semibold text-slate-800 dark:text-slate-200">
+                Notify when product margin drops below 35%
+              </span>
             </label>
             <label className="flex items-center gap-3">
               <input type="checkbox" defaultChecked className="h-4 w-4 rounded accent-lime-500" />
-              <span className="font-semibold text-slate-800 dark:text-slate-200">Send daily P&L executive summary to owner email</span>
+              <span className="font-semibold text-slate-800 dark:text-slate-200">
+                Send daily P&L executive summary to owner email
+              </span>
             </label>
           </div>
         </div>

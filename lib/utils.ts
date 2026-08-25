@@ -1,13 +1,18 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function formatCurrency(amount: number, currency: string = 'USD'): string {
-  const symbol = currency === 'GBP' ? '£' : currency === 'EUR' ? '€' : currency === 'CAD' ? 'CA$' : '$';
-  return `${symbol}${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const symbol =
+    currency === 'GBP' ? '£' : currency === 'EUR' ? '€' : currency === 'CAD' ? 'CA$' : '$';
+  const absFormatted = Math.abs(amount).toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return amount < 0 ? `-${symbol}${absFormatted}` : `${symbol}${absFormatted}`;
 }
 
 export function formatNumber(num: number): string {
@@ -67,19 +72,35 @@ export function calculateUnitEconomics(params: {
   const paymentFee = (sellingPrice * paymentFeePercent) / 100 + paymentFeeFixed;
   const affiliateCommission = (sellingPrice * affiliatePercent) / 100;
 
-  const totalCost = cogs + shippingCost + packagingCost + tiktokFee + paymentFee + affiliateCommission + adCpa + otherExpenses;
+  const totalCost =
+    cogs +
+    shippingCost +
+    packagingCost +
+    tiktokFee +
+    paymentFee +
+    affiliateCommission +
+    adCpa +
+    otherExpenses;
   const netProfit = sellingPrice - totalCost;
   const profitMargin = sellingPrice > 0 ? (netProfit / sellingPrice) * 100 : 0;
 
   // Fixed unit costs without percent-based fees
-  const fixedUnitCosts = cogs + shippingCost + packagingCost + adCpa + otherExpenses + paymentFeeFixed;
+  const fixedUnitCosts =
+    cogs + shippingCost + packagingCost + adCpa + otherExpenses + paymentFeeFixed;
   const variableFeeRate = (tiktokFeePercent + paymentFeePercent + affiliatePercent) / 100;
 
   // Break-even selling price = fixedUnitCosts / (1 - variableFeeRate)
   const breakEvenPrice = variableFeeRate < 1 ? fixedUnitCosts / (1 - variableFeeRate) : 0;
 
   // Max CPA to still break even = Selling Price - all other costs (excluding adCpa)
-  const costsWithoutAd = cogs + shippingCost + packagingCost + tiktokFee + paymentFee + affiliateCommission + otherExpenses;
+  const costsWithoutAd =
+    cogs +
+    shippingCost +
+    packagingCost +
+    tiktokFee +
+    paymentFee +
+    affiliateCommission +
+    otherExpenses;
   const maxAllowableCpa = Math.max(0, sellingPrice - costsWithoutAd);
 
   // Recommended price for target margin

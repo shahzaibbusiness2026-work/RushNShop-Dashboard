@@ -46,7 +46,7 @@ Generate the complete viral TikTok Shop video script package and listing copy.
         success: false,
         error: error.message || 'Failed to generate TikTok script',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

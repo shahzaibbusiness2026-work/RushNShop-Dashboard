@@ -28,12 +28,17 @@ html {
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
 }
 
 /* Enhanced typography & contrast */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   letter-spacing: -0.02em;
 }
 
@@ -78,9 +83,13 @@ h1, h2, h3, h4, h5, h6 {
   background: #3e485b;
 }
 
-/* Glow effects */
+/* Glow & Glass effects */
 .glow-green {
   box-shadow: 0 0 25px rgba(132, 204, 22, 0.25);
+}
+
+.glow-lime {
+  box-shadow: 0 0 20px -3px rgba(132, 204, 22, 0.4);
 }
 
 .glow-card {
@@ -91,8 +100,55 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 4px 25px -2px rgba(0, 0, 0, 0.5);
 }
 
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass-panel {
+  background: rgba(18, 22, 32, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-panel-elevated {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+}
+
+.dark .glass-panel-elevated {
+  background: rgba(18, 22, 32, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
 .sparkline-glow {
   filter: drop-shadow(0 2px 4px rgba(34, 197, 94, 0.3));
+}
+
+.beacon-pulse {
+  position: relative;
+}
+
+.beacon-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  background: inherit;
+  opacity: 0.75;
+  animation: beacon-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes beacon-ping {
+  75%, 100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
 }
 
 /* Landing Page Grid & Background Styles */
@@ -107,14 +163,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .bg-linear-grid {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
 .dark .bg-linear-grid {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 32px 32px;
@@ -122,7 +178,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Keyframe Animations */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
@@ -131,7 +188,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes float-delayed {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
@@ -140,7 +198,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.35;
     transform: scale(1);
   }
@@ -207,9 +266,57 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-hover-lift {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease;
 }
 
 .card-hover-lift:hover {
   transform: translateY(-4px);
+}
+
+/* Focus-visible outlines for keyboard accessibility */
+*:focus-visible {
+  outline: 2px solid #84cc16;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip to content link */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: #84cc16;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 0.75rem;
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 1rem;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Improve selection contrast */
+::selection {
+  background: #84cc16;
+  color: #000;
 }

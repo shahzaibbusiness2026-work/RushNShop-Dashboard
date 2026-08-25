@@ -7,7 +7,8 @@ export async function POST(request: Request) {
     const result = await executeAIChat([
       {
         role: 'system',
-        content: 'You are an AI diagnostic assistant for RushNshop TikTok Shop Operating System. Respond in 1 brief sentence verifying connection.',
+        content:
+          'You are an AI diagnostic assistant for RushNshop TikTok Shop Operating System. Respond in 1 brief sentence verifying connection.',
       },
       {
         role: 'user',
@@ -30,7 +31,7 @@ export async function POST(request: Request) {
         success: false,
         error: error.message || 'Failed to connect to AI provider backend',
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 }

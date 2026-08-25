@@ -68,6 +68,7 @@ export default function StatCard({
 }: StatCardProps) {
   const theme = themeStyles[themeColor];
   const isPositive = growth >= 0;
+  const gradientId = `sparkline-grad-${themeColor}-${title.replace(/\s+/g, '-').toLowerCase()}`;
 
   // Generate SVG smoothed sparkline
   const min = Math.min(...sparklinePoints);
@@ -84,51 +85,72 @@ export default function StatCard({
     })
     .join(' ');
 
+  const areaPoints = `${points} ${width},${height} 0,${height}`;
+
   return (
-    <div className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-4 shadow-xs hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700/80 transition-all duration-200">
+    <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-card-hover dark:border-slate-800/80 dark:bg-[#121620] dark:hover:border-slate-700/80 sm:p-4">
+      {/* Background illumination on hover */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{
+          background: `radial-gradient(circle at 50% 0%, ${theme.glow}, transparent 70%)`,
+        }}
+      />
+
       {/* Top Header: Icon + Title */}
-      <div className="flex items-center gap-2">
-        <div
-          className={cn(
-            'flex h-7 w-7 items-center justify-center rounded-lg border transition-transform duration-200 group-hover:scale-105',
-            theme.bg,
-            theme.text,
-            theme.border
-          )}
-        >
-          <Icon className="h-4 w-4 stroke-[2.2]" />
+      <div className="relative z-10 flex items-center justify-between gap-2 min-w-0">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          <div
+            className={cn(
+              'flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-transform duration-200 group-hover:scale-110',
+              theme.bg,
+              theme.text,
+              theme.border,
+            )}
+          >
+            <Icon className="h-4 w-4 stroke-[2.2]" />
+          </div>
+          <span className="truncate text-xs font-semibold tracking-tight text-slate-500 dark:text-slate-400">
+            {title}
+          </span>
         </div>
-        <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 truncate tracking-tight">
-          {title}
-        </span>
       </div>
 
       {/* Main Metric Value */}
-      <div className="mt-2.5">
-        <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-slate-50 font-mono-numeric">
+      <div className="relative z-10 mt-2.5 min-w-0">
+        <span className="font-mono-numeric block truncate text-lg font-black tracking-tight text-slate-900 dark:text-slate-50 sm:text-xl xl:text-2xl leading-none">
           {value}
         </span>
       </div>
 
-      {/* Bottom Footer: Delta + Sparkline */}
-      <div className="mt-2.5 flex items-center justify-between">
+      {/* Bottom Footer: Delta Pill + Sparkline */}
+      <div className="relative z-10 mt-2.5 flex items-center justify-between gap-1.5 min-w-0">
         <div
           className={cn(
-            'flex items-center gap-0.5 text-xs font-bold font-mono-numeric',
-            isPositive ? 'text-emerald-600 dark:text-[#4ade80]' : 'text-rose-600 dark:text-rose-400'
+            'font-mono-numeric inline-flex shrink-0 items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[10px] font-bold sm:text-[11px]',
+            isPositive
+              ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-[#4ade80]'
+              : 'bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-400',
           )}
         >
           {isPositive ? (
-            <ArrowUpRight className="h-3.5 w-3.5 stroke-[2.5]" />
+            <ArrowUpRight className="h-3 w-3 stroke-[2.5]" />
           ) : (
-            <ArrowDownRight className="h-3.5 w-3.5 stroke-[2.5]" />
+            <ArrowDownRight className="h-3 w-3 stroke-[2.5]" />
           )}
           <span>{Math.abs(growth).toFixed(1)}%</span>
         </div>
 
-        {/* Sparkline Graph */}
-        <div className="h-7 w-19 shrink-0">
-          <svg viewBox={`0 0 ${width} ${height}`} className="h-full w-full overflow-visible">
+        {/* Sparkline Graph with Gradient Fill */}
+        <div className="h-6 w-14 shrink-0 overflow-hidden sm:h-7 sm:w-16">
+          <svg viewBox={`0 0 ${width} ${height}`} className="h-full w-full">
+            <defs>
+              <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={theme.stroke} stopOpacity="0.28" />
+                <stop offset="100%" stopColor={theme.stroke} stopOpacity="0.0" />
+              </linearGradient>
+            </defs>
+            <polygon fill={`url(#${gradientId})`} points={areaPoints} />
             <polyline
               fill="none"
               stroke={theme.stroke}

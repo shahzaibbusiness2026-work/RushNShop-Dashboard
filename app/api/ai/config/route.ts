@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server';
-import { getServerAIConfig, updateServerAIConfig, getMaskedApiKey } from '../../../../lib/server/aiConfig';
+import {
+  getServerAIConfig,
+  updateServerAIConfig,
+  getMaskedApiKey,
+} from '../../../../lib/server/aiConfig';
 
 export async function GET() {
   try {
@@ -13,10 +17,15 @@ export async function GET() {
       maxTokens: config.maxTokens ?? 1500,
       hasKey: Boolean(config.apiKey),
       maskedKey: getMaskedApiKey(config.apiKey),
-      status: config.apiKey ? 'Connected to ' + config.provider.toUpperCase() : 'Intelligent Server Engine',
+      status: config.apiKey
+        ? 'Connected to ' + config.provider.toUpperCase()
+        : 'Intelligent Server Engine',
     });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to get AI config' }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || 'Failed to get AI config' },
+      { status: 500 },
+    );
   }
 }
 
@@ -43,6 +52,9 @@ export async function POST(request: Request) {
       maskedKey: getMaskedApiKey(updated.apiKey),
     });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to update AI config' }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || 'Failed to update AI config' },
+      { status: 500 },
+    );
   }
 }

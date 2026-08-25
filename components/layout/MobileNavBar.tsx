@@ -3,14 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  LayoutDashboard,
-  ShoppingBag,
-  TrendingUp,
-  Sparkles,
-  Store,
-  Menu,
-} from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, TrendingUp, Sparkles, Store, Menu } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 interface MobileNavBarProps {
@@ -29,7 +22,7 @@ export default function MobileNavBar({ onOpenMenu }: MobileNavBarProps) {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden border-t border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#0f1117]/95 backdrop-blur-lg px-2 py-1.5 safe-area-inset-bottom">
+    <div className="safe-area-inset-bottom fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200/80 bg-white/95 px-2 py-1.5 backdrop-blur-lg dark:border-slate-800/80 dark:bg-[#0f1117]/95 lg:hidden">
       <div className="flex items-center justify-around">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
@@ -40,16 +33,16 @@ export default function MobileNavBar({ onOpenMenu }: MobileNavBarProps) {
               key={item.name}
               href={item.href}
               className={cn(
-                'flex flex-col items-center justify-center gap-0.5 rounded-xl py-1 px-2.5 transition-colors',
+                'flex flex-col items-center justify-center gap-0.5 rounded-xl px-2.5 py-1 transition-colors',
                 isActive
-                  ? 'text-emerald-600 dark:text-[#4ade80] font-bold'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  ? 'font-bold text-emerald-600 dark:text-[#4ade80]'
+                  : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200',
               )}
             >
               <div className="relative">
                 <Icon className={cn('h-5 w-5', isActive && 'stroke-[2.5]')} />
                 {isActive && (
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-emerald-500 dark:bg-[#4ade80]" />
+                  <span className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-emerald-500 dark:bg-[#4ade80]" />
                 )}
               </div>
               <span className="text-[10px] tracking-tight">{item.name}</span>
@@ -60,7 +53,8 @@ export default function MobileNavBar({ onOpenMenu }: MobileNavBarProps) {
         {/* More Drawer Button */}
         <button
           onClick={onOpenMenu}
-          className="flex flex-col items-center justify-center gap-0.5 rounded-xl py-1 px-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors"
+          aria-label="Open full navigation menu"
+          className="flex flex-col items-center justify-center gap-0.5 rounded-xl px-2.5 py-1 text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
         >
           <Menu className="h-5 w-5" />
           <span className="text-[10px] tracking-tight">Menu</span>

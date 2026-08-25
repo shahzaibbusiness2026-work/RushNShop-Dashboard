@@ -27,7 +27,17 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, country, countryCode, flag, currency, currencySymbol, accountRole, appKey, appSecret } = body;
+    const {
+      name,
+      country,
+      countryCode,
+      flag,
+      currency,
+      currencySymbol,
+      accountRole,
+      appKey,
+      appSecret,
+    } = body;
 
     if (!name) {
       return NextResponse.json({ error: 'Store name is required' }, { status: 400 });
@@ -61,7 +71,7 @@ export async function POST(request: Request) {
         store: newStore,
         stores: currentStores,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     return NextResponse.json({ error: 'Failed to process request' }, { status: 500 });
@@ -82,7 +92,10 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: 'Store not found' }, { status: 404 });
     }
 
-    const removed = currentStores.splice(index, 1)[0];
+    const [removed] = currentStores.splice(index, 1);
+    if (!removed) {
+      return NextResponse.json({ error: 'Store not found' }, { status: 404 });
+    }
 
     return NextResponse.json({
       success: true,

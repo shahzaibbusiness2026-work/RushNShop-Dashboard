@@ -42,7 +42,7 @@ export default function ExpensesPage() {
       recurrence,
       storeId,
       storeName: storeId === 'all' ? 'All Stores' : storeObj?.name || 'All Stores',
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().slice(0, 10),
       status: 'Paid',
     });
 
@@ -67,19 +67,21 @@ export default function ExpensesPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="mx-auto max-w-7xl space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">Cost & Operating Expense Tracking</h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">
+            Cost & Operating Expense Tracking
+          </h2>
+          <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
             Monitor fixed business overheads, SaaS tools, 3PL warehouse fees, and team payroll.
           </p>
         </div>
 
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 rounded-xl bg-[#84cc16] px-4 py-2.5 text-xs font-bold text-black shadow-xs hover:bg-[#72b012] transition-all self-start sm:self-auto hover:scale-[1.02]"
+          className="shadow-xs flex items-center gap-2 self-start rounded-xl bg-[#84cc16] px-4 py-2.5 text-xs font-bold text-black transition-all hover:scale-[1.02] hover:bg-[#72b012] sm:self-auto"
         >
           <Plus className="h-4 w-4 stroke-[2.5]" />
           <span>Add Custom Expense</span>
@@ -87,48 +89,73 @@ export default function ExpensesPage() {
       </div>
 
       {/* Expenses Overview Cards */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 font-mono-numeric">
-        <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs">
-          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 font-sans">Total Fixed Monthly Expenses</p>
-          <p className="text-2xl font-black text-slate-900 dark:text-slate-50 mt-1">{formatCurrency(totalMonthlyExpenses, selectedStore?.currency)}</p>
-          <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 font-sans">Deducted from gross profit calculations</p>
+      <div className="font-mono-numeric grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="shadow-xs rounded-2xl border border-slate-200/80 bg-white p-5 dark:border-slate-800/80 dark:bg-[#121620]">
+          <p className="font-sans text-xs font-semibold text-slate-500 dark:text-slate-400">
+            Total Fixed Monthly Expenses
+          </p>
+          <p className="mt-1 text-2xl font-black text-slate-900 dark:text-slate-50">
+            {formatCurrency(totalMonthlyExpenses, selectedStore?.currency)}
+          </p>
+          <p className="mt-1 font-sans text-xs text-slate-400 dark:text-slate-500">
+            Deducted from gross profit calculations
+          </p>
         </div>
-        <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs">
-          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 font-sans">Active Staff & VA Payroll</p>
-          <p className="text-2xl font-black text-purple-600 dark:text-[#c084fc] mt-1">{formatCurrency(1200.00, selectedStore?.currency)}</p>
-          <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 font-sans">2 Virtual Assistants</p>
+        <div className="shadow-xs rounded-2xl border border-slate-200/80 bg-white p-5 dark:border-slate-800/80 dark:bg-[#121620]">
+          <p className="font-sans text-xs font-semibold text-slate-500 dark:text-slate-400">
+            Active Staff & VA Payroll
+          </p>
+          <p className="mt-1 text-2xl font-black text-purple-600 dark:text-[#c084fc]">
+            {formatCurrency(1200.0, selectedStore?.currency)}
+          </p>
+          <p className="mt-1 font-sans text-xs text-slate-400 dark:text-slate-500">
+            2 Virtual Assistants
+          </p>
         </div>
-        <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs">
-          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 font-sans">Software & Subscriptions</p>
-          <p className="text-2xl font-black text-blue-600 dark:text-[#38bdf8] mt-1">{formatCurrency(199.00, selectedStore?.currency)}</p>
-          <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 font-sans">TikTok tools, automation API</p>
+        <div className="shadow-xs rounded-2xl border border-slate-200/80 bg-white p-5 dark:border-slate-800/80 dark:bg-[#121620]">
+          <p className="font-sans text-xs font-semibold text-slate-500 dark:text-slate-400">
+            Software & Subscriptions
+          </p>
+          <p className="mt-1 text-2xl font-black text-blue-600 dark:text-[#38bdf8]">
+            {formatCurrency(199.0, selectedStore?.currency)}
+          </p>
+          <p className="mt-1 font-sans text-xs text-slate-400 dark:text-slate-500">
+            TikTok tools, automation API
+          </p>
         </div>
       </div>
 
       {/* Expenses Ledger */}
-      <div className="overflow-hidden rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] shadow-xs">
-        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-          <h3 className="font-bold text-slate-900 dark:text-slate-50 text-sm">Operating Expenses Ledger</h3>
-          <span className="text-xs font-medium text-slate-400 dark:text-slate-500">{filteredExpenses.length} Entries</span>
+      <div className="shadow-xs overflow-hidden rounded-3xl border border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-[#121620]">
+        <div className="flex items-center justify-between border-b border-slate-100 p-5 dark:border-slate-800">
+          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">
+            Operating Expenses Ledger
+          </h3>
+          <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
+            {filteredExpenses.length} Entries
+          </span>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs whitespace-nowrap">
+          <table className="w-full whitespace-nowrap text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-white/5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                <th className="py-3.5 px-4 font-semibold">Expense Title</th>
-                <th className="py-3.5 px-3 font-semibold">Category</th>
-                <th className="py-3.5 px-3 font-semibold">Allocated Store</th>
-                <th className="py-3.5 px-3 font-semibold">Recurrence</th>
-                <th className="py-3.5 px-3 font-semibold">Date</th>
-                <th className="py-3.5 px-3 font-semibold">Amount</th>
-                <th className="py-3.5 px-4 text-right font-semibold">Status</th>
+              <tr className="border-b border-slate-100 bg-slate-50/70 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:border-slate-800 dark:bg-white/5 dark:text-slate-500">
+                <th className="px-4 py-3.5 font-semibold">Expense Title</th>
+                <th className="px-3 py-3.5 font-semibold">Category</th>
+                <th className="px-3 py-3.5 font-semibold">Allocated Store</th>
+                <th className="px-3 py-3.5 font-semibold">Recurrence</th>
+                <th className="px-3 py-3.5 font-semibold">Date</th>
+                <th className="px-3 py-3.5 font-semibold">Amount</th>
+                <th className="px-4 py-3.5 text-right font-semibold">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 font-medium text-slate-700 dark:text-slate-300">
+            <tbody className="divide-y divide-slate-100 font-medium text-slate-700 dark:divide-slate-800/60 dark:text-slate-300">
               {filteredExpenses.map((exp) => (
-                <tr key={exp.id} className="hover:bg-slate-50/80 dark:hover:bg-white/5 transition-colors">
-                  <td className="py-3.5 px-4">
+                <tr
+                  key={exp.id}
+                  className="transition-colors hover:bg-slate-50/80 dark:hover:bg-white/5"
+                >
+                  <td className="px-4 py-3.5">
                     <div className="flex items-center gap-2.5">
                       <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 dark:bg-[#0f1117]">
                         {getCategoryIcon(exp.category)}
@@ -136,17 +163,23 @@ export default function ExpensesPage() {
                       <span className="font-bold text-slate-900 dark:text-white">{exp.title}</span>
                     </div>
                   </td>
-                  <td className="py-3.5 px-3 font-semibold text-slate-600 dark:text-slate-400">{exp.category}</td>
-                  <td className="py-3.5 px-3 text-slate-800 dark:text-slate-200">{exp.storeName}</td>
-                  <td className="py-3.5 px-3">
-                    <span className="rounded-md bg-slate-100 dark:bg-white/5 px-2 py-0.5 font-semibold text-slate-700 dark:text-slate-300">
+                  <td className="px-3 py-3.5 font-semibold text-slate-600 dark:text-slate-400">
+                    {exp.category}
+                  </td>
+                  <td className="px-3 py-3.5 text-slate-800 dark:text-slate-200">
+                    {exp.storeName}
+                  </td>
+                  <td className="px-3 py-3.5">
+                    <span className="rounded-md bg-slate-100 px-2 py-0.5 font-semibold text-slate-700 dark:bg-white/5 dark:text-slate-300">
                       {exp.recurrence}
                     </span>
                   </td>
-                  <td className="py-3.5 px-3 text-slate-500 dark:text-slate-400">{exp.date}</td>
-                  <td className="py-3.5 px-3 font-black text-slate-900 dark:text-white font-mono-numeric">{formatCurrency(exp.amount, selectedStore?.currency)}</td>
-                  <td className="py-3.5 px-4 text-right">
-                    <span className="rounded-full bg-emerald-50 dark:bg-emerald-950/50 px-2.5 py-0.5 text-[11px] font-bold text-emerald-700 dark:text-[#4ade80] border border-emerald-200 dark:border-emerald-800/60">
+                  <td className="px-3 py-3.5 text-slate-500 dark:text-slate-400">{exp.date}</td>
+                  <td className="font-mono-numeric px-3 py-3.5 font-black text-slate-900 dark:text-white">
+                    {formatCurrency(exp.amount, selectedStore?.currency)}
+                  </td>
+                  <td className="px-4 py-3.5 text-right">
+                    <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-bold text-emerald-700 dark:border-emerald-800/60 dark:bg-emerald-950/50 dark:text-[#4ade80]">
                       {exp.status}
                     </span>
                   </td>
@@ -159,75 +192,107 @@ export default function ExpensesPage() {
 
       {/* Add Expense Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-xs animate-in fade-in">
-          <div className="w-full max-w-md rounded-3xl bg-white dark:bg-[#151b26] border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-4 text-slate-900 dark:text-white">
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Add New Expense / Overhead</h3>
+        <div className="backdrop-blur-xs animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+          <div className="w-full max-w-md space-y-4 rounded-3xl border border-slate-200 bg-white p-6 text-slate-900 shadow-2xl dark:border-slate-800 dark:bg-[#151b26] dark:text-white">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">
+              Add New Expense / Overhead
+            </h3>
 
             <form onSubmit={handleAdd} className="space-y-3.5">
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Expense Description</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Expense Description
+                </label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. TikTok Ads Tracking Software"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold dark:text-white"
+                  className="w-full rounded-xl border border-slate-200 bg-white p-2.5 text-xs font-semibold dark:border-slate-800 dark:bg-[#0f1117] dark:text-white"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Category</label>
+                  <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                    Category
+                  </label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value as any)}
-                    className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold dark:text-white"
+                    className="w-full rounded-xl border border-slate-200 bg-white p-2.5 text-xs font-semibold dark:border-slate-800 dark:bg-[#0f1117] dark:text-white"
                   >
-                    <option value="Software" className="dark:bg-[#0f1117]">Software & SaaS</option>
-                    <option value="Staff" className="dark:bg-[#0f1117]">Staff / VA Salaries</option>
-                    <option value="Warehouse" className="dark:bg-[#0f1117]">3PL Warehouse</option>
-                    <option value="Packaging" className="dark:bg-[#0f1117]">Packaging</option>
-                    <option value="Marketing" className="dark:bg-[#0f1117]">Marketing / Samples</option>
-                    <option value="Other" className="dark:bg-[#0f1117]">Other Expenses</option>
+                    <option value="Software" className="dark:bg-[#0f1117]">
+                      Software & SaaS
+                    </option>
+                    <option value="Staff" className="dark:bg-[#0f1117]">
+                      Staff / VA Salaries
+                    </option>
+                    <option value="Warehouse" className="dark:bg-[#0f1117]">
+                      3PL Warehouse
+                    </option>
+                    <option value="Packaging" className="dark:bg-[#0f1117]">
+                      Packaging
+                    </option>
+                    <option value="Marketing" className="dark:bg-[#0f1117]">
+                      Marketing / Samples
+                    </option>
+                    <option value="Other" className="dark:bg-[#0f1117]">
+                      Other Expenses
+                    </option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Amount ($)</label>
+                  <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                    Amount ($)
+                  </label>
                   <input
                     type="number"
                     step="0.01"
                     required
                     value={amount || ''}
                     onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
-                    className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-bold dark:text-white"
+                    className="w-full rounded-xl border border-slate-200 bg-white p-2.5 text-xs font-bold dark:border-slate-800 dark:bg-[#0f1117] dark:text-white"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Recurrence</label>
+                  <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                    Recurrence
+                  </label>
                   <select
                     value={recurrence}
                     onChange={(e) => setRecurrence(e.target.value as any)}
-                    className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold dark:text-white"
+                    className="w-full rounded-xl border border-slate-200 bg-white p-2.5 text-xs font-semibold dark:border-slate-800 dark:bg-[#0f1117] dark:text-white"
                   >
-                    <option value="Monthly" className="dark:bg-[#0f1117]">Monthly Recurring</option>
-                    <option value="One-off" className="dark:bg-[#0f1117]">One-off Payment</option>
-                    <option value="Annual" className="dark:bg-[#0f1117]">Annual</option>
+                    <option value="Monthly" className="dark:bg-[#0f1117]">
+                      Monthly Recurring
+                    </option>
+                    <option value="One-off" className="dark:bg-[#0f1117]">
+                      One-off Payment
+                    </option>
+                    <option value="Annual" className="dark:bg-[#0f1117]">
+                      Annual
+                    </option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Store Allocation</label>
+                  <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                    Store Allocation
+                  </label>
                   <select
                     value={storeId}
                     onChange={(e) => setStoreId(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-xs font-semibold dark:text-white"
+                    className="w-full rounded-xl border border-slate-200 bg-white p-2.5 text-xs font-semibold dark:border-slate-800 dark:bg-[#0f1117] dark:text-white"
                   >
-                    <option value="all" className="dark:bg-[#0f1117]">Apportion All Stores</option>
+                    <option value="all" className="dark:bg-[#0f1117]">
+                      Apportion All Stores
+                    </option>
                     {stores.map((s) => (
                       <option key={s.id} value={s.id} className="dark:bg-[#0f1117]">
                         {s.name}
@@ -241,13 +306,13 @@ export default function ExpensesPage() {
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="rounded-xl border border-slate-200 dark:border-slate-800 px-4 py-2 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
+                  className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-bold text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-white/5"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-[#84cc16] px-5 py-2 text-xs font-bold text-black hover:bg-[#72b012] transition-colors"
+                  className="rounded-xl bg-[#84cc16] px-5 py-2 text-xs font-bold text-black transition-colors hover:bg-[#72b012]"
                 >
                   Save Expense
                 </button>

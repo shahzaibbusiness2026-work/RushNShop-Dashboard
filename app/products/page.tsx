@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Package,
   Search,
@@ -58,27 +59,30 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="mx-auto max-w-7xl space-y-6">
       {/* Header & Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">Product Level Profit Analytics</h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            TrueProfit SKU breakdown with COGS, TikTok platform fees, affiliate payouts, and advertising costs.
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">
+            Product Level Profit Analytics
+          </h2>
+          <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+            TrueProfit SKU breakdown with COGS, TikTok platform fees, affiliate payouts, and
+            advertising costs.
           </p>
         </div>
 
         <div className="flex items-center gap-2.5">
           <Link
             href="/calculator"
-            className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] px-3.5 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-colors"
+            className="shadow-2xs flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10"
           >
             <Calculator className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
             <span>Margin Calculator</span>
           </Link>
           <Link
             href="/ai-assistant"
-            className="flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-4 py-2 text-xs font-bold text-black shadow-xs hover:bg-[#72b012] transition-all hover:scale-[1.02]"
+            className="shadow-xs flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-4 py-2 text-xs font-bold text-black transition-all hover:scale-[1.02] hover:bg-[#72b012]"
           >
             <Sparkles className="h-4 w-4" />
             <span>AI Recommendations</span>
@@ -87,20 +91,20 @@ export default function ProductsPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-4 shadow-xs">
+      <div className="shadow-xs flex flex-col items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 dark:border-slate-800/80 dark:bg-[#121620] sm:flex-row">
         <div className="relative w-full sm:w-80">
           <input
             type="text"
             placeholder="Search SKU or product title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] pl-9 pr-4 py-2 text-xs font-medium text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:border-lime-500 focus:outline-none"
+            className="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-4 text-xs font-medium text-slate-800 placeholder-slate-400 focus:border-lime-500 focus:outline-none dark:border-slate-800 dark:bg-[#0f1117] dark:text-slate-100 dark:placeholder-slate-600"
           />
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
         </div>
 
         {/* Status Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+        <div className="flex w-full items-center gap-1.5 overflow-x-auto pb-1 sm:w-auto sm:pb-0">
           {[
             { label: 'All Products', value: 'all' },
             { label: '🌟 Star Products', value: 'star' },
@@ -114,8 +118,8 @@ export default function ProductsPage() {
               className={cn(
                 'whitespace-nowrap rounded-xl px-3 py-1.5 text-xs font-semibold transition-colors',
                 statusFilter === tab.value
-                  ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
-                  : 'bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-white/10'
+                  ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-white/5 dark:text-slate-400 dark:hover:bg-white/10',
               )}
             >
               {tab.label}
@@ -125,84 +129,116 @@ export default function ProductsPage() {
       </div>
 
       {/* Products Table */}
-      <div className="overflow-hidden rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] shadow-xs">
+      <div className="shadow-xs overflow-hidden rounded-3xl border border-slate-200/80 bg-white dark:border-slate-800/80 dark:bg-[#121620]">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs whitespace-nowrap">
+          <table className="w-full whitespace-nowrap text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-white/5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                <th className="py-3.5 px-4 font-semibold">Product / SKU</th>
-                <th className="py-3.5 px-3 font-semibold">Units Sold</th>
-                <th className="py-3.5 px-3 font-semibold">Revenue</th>
-                <th className="py-3.5 px-3 font-semibold">COGS</th>
-                <th className="py-3.5 px-3 font-semibold">Shipping</th>
-                <th className="py-3.5 px-3 font-semibold">TikTok Fees</th>
-                <th className="py-3.5 px-3 font-semibold">Affiliate</th>
-                <th className="py-3.5 px-3 font-semibold">Ad Spend</th>
-                <th className="py-3.5 px-3 font-semibold">Total Cost</th>
-                <th className="py-3.5 px-3 font-semibold">Net Profit</th>
-                <th className="py-3.5 px-3 font-semibold">Margin</th>
-                <th className="py-3.5 px-4 text-right font-semibold">Action</th>
+              <tr className="border-b border-slate-100 bg-slate-50/70 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:border-slate-800 dark:bg-white/5 dark:text-slate-500">
+                <th className="px-4 py-3.5 font-semibold">Product / SKU</th>
+                <th className="px-3 py-3.5 font-semibold">Units Sold</th>
+                <th className="px-3 py-3.5 font-semibold">Revenue</th>
+                <th className="px-3 py-3.5 font-semibold">COGS</th>
+                <th className="px-3 py-3.5 font-semibold">Shipping</th>
+                <th className="px-3 py-3.5 font-semibold">TikTok Fees</th>
+                <th className="px-3 py-3.5 font-semibold">Affiliate</th>
+                <th className="px-3 py-3.5 font-semibold">Ad Spend</th>
+                <th className="px-3 py-3.5 font-semibold">Total Cost</th>
+                <th className="px-3 py-3.5 font-semibold">Net Profit</th>
+                <th className="px-3 py-3.5 font-semibold">Margin</th>
+                <th className="px-4 py-3.5 text-right font-semibold">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 font-medium text-slate-700 dark:text-slate-300">
+            <tbody className="divide-y divide-slate-100 font-medium text-slate-700 dark:divide-slate-800/60 dark:text-slate-300">
               {filtered.map((prod) => {
                 const isLoss = prod.netProfit < 0 || prod.status === 'bleeding';
 
                 return (
-                  <tr key={prod.id} className="hover:bg-slate-50/80 dark:hover:bg-white/5 transition-colors">
+                  <tr
+                    key={prod.id}
+                    className="transition-colors hover:bg-slate-50/80 dark:hover:bg-white/5"
+                  >
                     {/* Product */}
-                    <td className="py-3 px-4">
+                    <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <img
+                        <Image
                           src={prod.image}
                           alt={prod.title}
-                          className="h-10 w-10 rounded-xl object-cover border border-slate-100 dark:border-slate-800 shadow-2xs shrink-0"
+                          width={40}
+                          height={40}
+                          className="shadow-2xs shrink-0 rounded-xl border border-slate-100 object-cover dark:border-slate-800"
                         />
                         <div>
                           <div className="flex items-center gap-1.5">
-                            <span className="font-bold text-slate-900 dark:text-white line-clamp-1">{prod.title}</span>
+                            <span className="line-clamp-1 font-bold text-slate-900 dark:text-white">
+                              {prod.title}
+                            </span>
                             {prod.status === 'star' && (
-                              <span className="rounded-md bg-amber-50 dark:bg-amber-950/50 px-1.5 py-0.2 text-[10px] font-bold text-amber-700 dark:text-amber-300">
+                              <span className="rounded-md bg-amber-50 px-1.5 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-950/50 dark:text-amber-300">
                                 🌟 Star
                               </span>
                             )}
                             {prod.status === 'bleeding' && (
-                              <span className="rounded-md bg-rose-50 dark:bg-rose-950/50 px-1.5 py-0.2 text-[10px] font-bold text-rose-700 dark:text-rose-300">
+                              <span className="rounded-md bg-rose-50 px-1.5 py-0.5 text-[10px] font-bold text-rose-700 dark:bg-rose-950/50 dark:text-rose-300">
                                 ⚠️ High CPA
                               </span>
                             )}
                           </div>
-                          <p className="text-[11px] text-slate-400 dark:text-slate-500 font-mono">{prod.sku} • Stock: {prod.stock}</p>
+                          <p className="font-mono text-[11px] text-slate-400 dark:text-slate-500">
+                            {prod.sku} • Stock: {prod.stock}
+                          </p>
                         </div>
                       </div>
                     </td>
 
-                    <td className="py-3 px-3 font-bold text-slate-900 dark:text-white font-mono-numeric">{prod.unitsSold}</td>
-                    <td className="py-3 px-3 font-bold text-slate-900 dark:text-white font-mono-numeric">{formatCurrency(prod.revenue, selectedStore?.currency)}</td>
-                    <td className="py-3 px-3 text-slate-600 dark:text-slate-400 font-mono-numeric">{formatCurrency(prod.cogs, selectedStore?.currency)}</td>
-                    <td className="py-3 px-3 text-slate-600 dark:text-slate-400 font-mono-numeric">{formatCurrency(prod.shippingCost, selectedStore?.currency)}</td>
-                    <td className="py-3 px-3 text-slate-600 dark:text-slate-400 font-mono-numeric">{formatCurrency(prod.tiktokFees, selectedStore?.currency)}</td>
-                    <td className="py-3 px-3 text-slate-600 dark:text-slate-400 font-mono-numeric">{formatCurrency(prod.affiliateCommission, selectedStore?.currency)}</td>
-                    <td className="py-3 px-3 text-slate-600 dark:text-slate-400 font-mono-numeric">{formatCurrency(prod.adCost, selectedStore?.currency)}</td>
-                    <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200 font-mono-numeric">{formatCurrency(prod.totalCost, selectedStore?.currency)}</td>
+                    <td className="font-mono-numeric px-3 py-3 font-bold text-slate-900 dark:text-white">
+                      {prod.unitsSold}
+                    </td>
+                    <td className="font-mono-numeric px-3 py-3 font-bold text-slate-900 dark:text-white">
+                      {formatCurrency(prod.revenue, selectedStore?.currency)}
+                    </td>
+                    <td className="font-mono-numeric px-3 py-3 text-slate-600 dark:text-slate-400">
+                      {formatCurrency(prod.cogs, selectedStore?.currency)}
+                    </td>
+                    <td className="font-mono-numeric px-3 py-3 text-slate-600 dark:text-slate-400">
+                      {formatCurrency(prod.shippingCost, selectedStore?.currency)}
+                    </td>
+                    <td className="font-mono-numeric px-3 py-3 text-slate-600 dark:text-slate-400">
+                      {formatCurrency(prod.tiktokFees, selectedStore?.currency)}
+                    </td>
+                    <td className="font-mono-numeric px-3 py-3 text-slate-600 dark:text-slate-400">
+                      {formatCurrency(prod.affiliateCommission, selectedStore?.currency)}
+                    </td>
+                    <td className="font-mono-numeric px-3 py-3 text-slate-600 dark:text-slate-400">
+                      {formatCurrency(prod.adCost, selectedStore?.currency)}
+                    </td>
+                    <td className="font-mono-numeric px-3 py-3 font-bold text-slate-800 dark:text-slate-200">
+                      {formatCurrency(prod.totalCost, selectedStore?.currency)}
+                    </td>
 
                     {/* Net Profit */}
-                    <td className="py-3 px-3">
-                      <span className={cn('font-black text-sm font-mono-numeric', isLoss ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-[#4ade80]')}>
+                    <td className="px-3 py-3">
+                      <span
+                        className={cn(
+                          'font-mono-numeric text-sm font-black',
+                          isLoss
+                            ? 'text-rose-600 dark:text-rose-400'
+                            : 'text-emerald-600 dark:text-[#4ade80]',
+                        )}
+                      >
                         {formatCurrency(prod.netProfit, selectedStore?.currency)}
                       </span>
                     </td>
 
                     {/* Margin */}
-                    <td className="py-3 px-3">
+                    <td className="px-3 py-3">
                       <span
                         className={cn(
-                          'rounded-full px-2 py-0.5 text-[11px] font-bold font-mono-numeric',
+                          'font-mono-numeric rounded-full px-2 py-0.5 text-[11px] font-bold',
                           prod.margin >= 40
-                            ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-[#4ade80]'
+                            ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-[#4ade80]'
                             : prod.margin >= 25
-                            ? 'bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300'
-                            : 'bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300'
+                              ? 'bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300'
+                              : 'bg-rose-50 text-rose-700 dark:bg-rose-950/50 dark:text-rose-300',
                         )}
                       >
                         {formatPercent(prod.margin)}
@@ -210,10 +246,10 @@ export default function ProductsPage() {
                     </td>
 
                     {/* Actions */}
-                    <td className="py-3 px-4 text-right">
+                    <td className="px-4 py-3 text-right">
                       <button
                         onClick={() => setEditingProduct(prod)}
-                        className="rounded-lg border border-slate-200 dark:border-slate-800 p-1.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white transition-colors"
+                        className="rounded-lg border border-slate-200 p-1.5 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
                         title="Edit Costs & COGS"
                       >
                         <Edit2 className="h-3.5 w-3.5" />
@@ -229,16 +265,20 @@ export default function ProductsPage() {
 
       {/* Edit Product Modal */}
       {editingProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-xs animate-in fade-in">
-          <div className="w-full max-w-md rounded-3xl bg-white dark:bg-[#151b26] border border-slate-200 dark:border-slate-800 p-6 shadow-2xl text-slate-900 dark:text-white">
+        <div className="backdrop-blur-xs animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+          <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 text-slate-900 shadow-2xl dark:border-slate-800 dark:bg-[#151b26] dark:text-white">
             <h3 className="text-base font-bold text-slate-900 dark:text-white">
               Edit Product Costs: {editingProduct.title}
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Update COGS, shipping, and ad allocations</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+              Update COGS, shipping, and ad allocations
+            </p>
 
             <form onSubmit={handleSaveEdit} className="mt-4 space-y-3">
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Product Cost (COGS Total)</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Product Cost (COGS Total)
+                </label>
                 <input
                   type="number"
                   step="0.01"
@@ -246,12 +286,14 @@ export default function ProductsPage() {
                   onChange={(e) =>
                     setEditingProduct({ ...editingProduct, cogs: parseFloat(e.target.value) || 0 })
                   }
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-sm font-semibold dark:text-white"
+                  className="w-full rounded-xl border border-slate-200 bg-white p-2.5 text-sm font-semibold dark:border-slate-800 dark:bg-[#0f1117] dark:text-white"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Shipping & Packaging Total</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Shipping & Packaging Total
+                </label>
                 <input
                   type="number"
                   step="0.01"
@@ -262,20 +304,25 @@ export default function ProductsPage() {
                       shippingCost: parseFloat(e.target.value) || 0,
                     })
                   }
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-sm font-semibold dark:text-white"
+                  className="w-full rounded-xl border border-slate-200 bg-white p-2.5 text-sm font-semibold dark:border-slate-800 dark:bg-[#0f1117] dark:text-white"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">TikTok Ads Spend Allocated</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  TikTok Ads Spend Allocated
+                </label>
                 <input
                   type="number"
                   step="0.01"
                   value={editingProduct.adCost}
                   onChange={(e) =>
-                    setEditingProduct({ ...editingProduct, adCost: parseFloat(e.target.value) || 0 })
+                    setEditingProduct({
+                      ...editingProduct,
+                      adCost: parseFloat(e.target.value) || 0,
+                    })
                   }
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] p-2.5 text-sm font-semibold dark:text-white"
+                  className="w-full rounded-xl border border-slate-200 bg-white p-2.5 text-sm font-semibold dark:border-slate-800 dark:bg-[#0f1117] dark:text-white"
                 />
               </div>
 
@@ -283,13 +330,13 @@ export default function ProductsPage() {
                 <button
                   type="button"
                   onClick={() => setEditingProduct(null)}
-                  className="rounded-xl border border-slate-200 dark:border-slate-800 px-4 py-2 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
+                  className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-bold text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-white/5"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-[#84cc16] px-4 py-2 text-xs font-bold text-black hover:bg-[#72b012] transition-colors"
+                  className="rounded-xl bg-[#84cc16] px-4 py-2 text-xs font-bold text-black transition-colors hover:bg-[#72b012]"
                 >
                   Save & Recalculate Profit
                 </button>

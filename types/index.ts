@@ -135,7 +135,8 @@ export interface CustomerTicket {
   orderNumber: string;
   storeName: string;
   subject: string;
-  category: 'Order Status' | 'Refund / Return' | 'Product Question' | 'Defect / Damage' | 'Shipping Delay';
+  category:
+    'Order Status' | 'Refund / Return' | 'Product Question' | 'Defect / Damage' | 'Shipping Delay';
   status: 'Open' | 'Pending AI' | 'AI Responded' | 'Escalated' | 'Resolved';
   priority: 'Low' | 'Medium' | 'High';
   messages: CustomerTicketMessage[];

@@ -23,9 +23,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { query, messages, storeContext } = body;
 
-    let chatMessages: any[] = [
-      { role: 'system', content: TIKTOK_FINANCIAL_SYSTEM_PROMPT },
-    ];
+    let chatMessages: any[] = [{ role: 'system', content: TIKTOK_FINANCIAL_SYSTEM_PROMPT }];
 
     if (Array.isArray(messages) && messages.length > 0) {
       chatMessages = [
@@ -55,7 +53,7 @@ export async function POST(request: Request) {
         success: false,
         error: error.message || 'Failed to process AI chat query',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

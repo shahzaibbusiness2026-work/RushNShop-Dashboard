@@ -52,7 +52,7 @@ export default function AIInsightsCard() {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-5 shadow-xs transition-colors overflow-hidden">
+    <div className="shadow-xs flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-5 transition-colors dark:border-slate-800/80 dark:bg-[#121620]">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -61,7 +61,7 @@ export default function AIInsightsCard() {
         </div>
         <Link
           href="/ai-assistant"
-          className="flex items-center gap-1 text-xs font-bold text-emerald-600 dark:text-[#4ade80] hover:underline"
+          className="flex items-center gap-1 text-xs font-bold text-emerald-600 hover:underline dark:text-[#4ade80]"
         >
           <span>Ask AI</span>
           <ArrowRight className="h-3 w-3" />
@@ -76,25 +76,25 @@ export default function AIInsightsCard() {
             <div
               key={insight.id}
               className={cn(
-                'group flex items-start gap-3 rounded-xl p-3 border transition-all duration-150 hover:shadow-xs',
+                'hover:shadow-xs group flex items-start gap-3 rounded-xl border p-3 transition-all duration-150',
                 style.bg,
-                style.border
+                style.border,
               )}
             >
               <div
                 className={cn(
-                  'flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white dark:bg-[#161b26] border border-slate-200/50 dark:border-slate-800 shadow-2xs mt-0.5',
-                  style.text
+                  'shadow-2xs mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-slate-200/50 bg-white dark:border-slate-800 dark:bg-[#161b26]',
+                  style.text,
                 )}
               >
                 {getIcon(insight.type)}
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 leading-snug">
+                <p className="text-xs font-semibold leading-snug text-slate-800 dark:text-slate-200">
                   {insight.text}
                 </p>
                 {insight.detail && (
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed line-clamp-2">
+                  <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
                     {insight.detail}
                   </p>
                 )}

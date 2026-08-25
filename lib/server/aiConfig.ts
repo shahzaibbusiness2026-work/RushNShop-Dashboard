@@ -1,6 +1,6 @@
 /**
  * Server-Side AI Configuration & Dispatcher
- * 
+ *
  * SECURITY: This file runs STRICTLY on the server (Node.js/Next.js runtime).
  * API keys are never leaked to client bundles or browser DOM.
  */
@@ -16,7 +16,7 @@ export interface AIProviderConfig {
 
 // In-memory server-side storage (fallback if process.env is not set directly)
 let runtimeConfig: AIProviderConfig = {
-  provider: (process.env.AI_PROVIDER as any) || 'openai',
+  provider: (process.env.AI_PROVIDER as AIProviderConfig['provider']) || 'openai',
   apiKey: process.env.OPENAI_API_KEY || process.env.GEMINI_API_KEY || process.env.AI_API_KEY || '',
   model: process.env.AI_MODEL || 'gpt-4o',
   customBaseUrl: process.env.AI_BASE_URL || '',
@@ -54,7 +54,7 @@ export interface ChatMessage {
  */
 export async function executeAIChat(
   messages: ChatMessage[],
-  storeContext?: any
+  storeContext?: any,
 ): Promise<{ text: string; provider: string; model: string }> {
   const config = getServerAIConfig();
 
@@ -70,7 +70,11 @@ export async function executeAIChat(
   const apiKey = config.apiKey || process.env.OPENAI_API_KEY || process.env.GEMINI_API_KEY || '';
 
   // 1. OpenAI / DeepSeek / Custom OpenAI-Compatible
-  if (config.provider === 'openai' || config.provider === 'deepseek' || config.provider === 'custom') {
+  if (
+    config.provider === 'openai' ||
+    config.provider === 'deepseek' ||
+    config.provider === 'custom'
+  ) {
     let baseUrl = 'https://api.openai.com/v1';
     if (config.provider === 'deepseek') baseUrl = 'https://api.deepseek.com/v1';
     if (config.provider === 'custom' && config.customBaseUrl) baseUrl = config.customBaseUrl;
@@ -198,7 +202,12 @@ function generateSmartFallback(query: string, storeContext?: any): string {
     return `🌟 **Top Performer Analysis**: **Portable Blender (SKU: RUSH-BLD-01)** generated the highest net profit across all stores this period with **$2,230.40 Net Profit** on **$4,245.80 Revenue** (52.5% Net Margin).\n\nKey growth drivers:\n- Blended TikTok Ads ROAS is strong at **4.31x** on the "Summer Sale" campaign.\n- Return rate is exceptionally low at only **0.8%**.\n- Average shipping cost is stable at **$3.00/unit**.\n\nRecommendation: Increase daily ad budget by **25%** on USA Store.`;
   }
 
-  if (lower.includes('stop') || lower.includes('pause') || lower.includes('bleed') || lower.includes('loss')) {
+  if (
+    lower.includes('stop') ||
+    lower.includes('pause') ||
+    lower.includes('bleed') ||
+    lower.includes('loss')
+  ) {
     return `⚠️ **Ad Optimization Alert**: You should pause or restructure **"Sunset Lamp Broad Test"** immediately.\n\nFinancial Diagnostics:\n- Total Ad Spend: **$210.00**\n- Revenue: **$260.00**\n- Net Loss: **-$110.00** after COGS & shipping\n- CPA is **$26.25**, which exceeds your maximum break-even CPA of **$14.80**.\n\nStopping this campaign will instantly recover **~$45/day in lost profit**.`;
   }
 

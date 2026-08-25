@@ -43,7 +43,7 @@ interface StoreContextType {
   setDateRange: (range: string) => void;
   datePreset: string;
   setDatePreset: (preset: string) => void;
-  
+
   stores: Store[];
   products: Product[];
   orders: Order[];
@@ -75,7 +75,7 @@ interface StoreContextType {
   storeInsights: AIInsight[];
   categoryBreakdown: CategoryBreakdown[];
   orderStatusCounts: { name: string; count: number; percentage: number; color: string }[];
-  
+
   // Dashboard Aggregates (Dynamically computed for selected store & date range)
   totalRevenue: number;
   netProfit: number;
@@ -110,12 +110,12 @@ const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 // Multipliers for date presets
 const DATE_MULTIPLIERS: Record<string, number> = {
-  'Today': 0.16,
-  'Yesterday': 0.14,
+  Today: 0.16,
+  Yesterday: 0.14,
   'Last 7 Days': 1.0,
   'Last 14 Days': 1.88,
   'Last 30 Days': 3.92,
-  'This Month': 3.10,
+  'This Month': 3.1,
 };
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
@@ -250,7 +250,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const toggleCampaignStatus = (campaignId: string) => {
     const updated = campaigns.map((c) =>
-      c.id === campaignId ? { ...c, status: c.status === 'Active' ? ('Paused' as const) : ('Active' as const) } : c
+      c.id === campaignId
+        ? { ...c, status: c.status === 'Active' ? ('Paused' as const) : ('Active' as const) }
+        : c,
     );
     setCampaigns(updated);
     saveToLocal('rush_campaigns', updated);
@@ -296,13 +298,17 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   const resolveTicket = (ticketId: string) => {
-    const updated = tickets.map((t) => (t.id === ticketId ? { ...t, status: 'Resolved' as const } : t));
+    const updated = tickets.map((t) =>
+      t.id === ticketId ? { ...t, status: 'Resolved' as const } : t,
+    );
     setTickets(updated);
     saveToLocal('rush_tickets', updated);
   };
 
   const escalateTicket = (ticketId: string) => {
-    const updated = tickets.map((t) => (t.id === ticketId ? { ...t, status: 'Escalated' as const } : t));
+    const updated = tickets.map((t) =>
+      t.id === ticketId ? { ...t, status: 'Escalated' as const } : t,
+    );
     setTickets(updated);
     saveToLocal('rush_tickets', updated);
   };
@@ -378,7 +384,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const totalAdsSpend = useMemo(() => {
     if (selectedStoreId === 'all') {
-      return Math.round(2340.50 * dateMultiplier * 100) / 100;
+      return Math.round(2340.5 * dateMultiplier * 100) / 100;
     }
     const sum = filteredCampaigns.reduce((acc, c) => acc + c.spend, 0);
     return Math.round(sum * dateMultiplier * 100) / 100;
@@ -386,7 +392,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const totalCogs = useMemo(() => {
     if (selectedStoreId === 'all') {
-      return Math.round(8430.20 * dateMultiplier * 100) / 100;
+      return Math.round(8430.2 * dateMultiplier * 100) / 100;
     }
     const sum = filteredProducts.reduce((acc, p) => acc + p.cogs, 0);
     return Math.round(sum * dateMultiplier * 100) / 100;
@@ -394,7 +400,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const totalFees = useMemo(() => {
     if (selectedStoreId === 'all') {
-      return Math.round(2340.10 * dateMultiplier * 100) / 100;
+      return Math.round(2340.1 * dateMultiplier * 100) / 100;
     }
     const sum = filteredProducts.reduce((acc, p) => acc + p.tiktokFees, 0);
     return Math.round(sum * dateMultiplier * 100) / 100;
@@ -402,10 +408,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const refunds = useMemo(() => {
     if (selectedStoreId === 'all') {
-      return Math.round(320.40 * dateMultiplier * 100) / 100;
+      return Math.round(320.4 * dateMultiplier * 100) / 100;
     }
-    const storeRefunds = filteredOrders.filter((o) => o.status === 'Refunded').reduce((acc, o) => acc + o.totalAmount, 0);
-    return Math.round((storeRefunds || 34.50) * dateMultiplier * 100) / 100;
+    const storeRefunds = filteredOrders
+      .filter((o) => o.status === 'Refunded')
+      .reduce((acc, o) => acc + o.totalAmount, 0);
+    return Math.round((storeRefunds || 34.5) * dateMultiplier * 100) / 100;
   }, [selectedStoreId, filteredOrders, dateMultiplier]);
 
   // Store-specific Growth Rates
@@ -432,7 +440,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   // Store-specific Sparklines
   const sparklines = useMemo(() => {
-    const ratio = selectedStore ? selectedStore.totalRevenue / 25430.80 : 1;
+    const ratio = selectedStore ? selectedStore.totalRevenue / 25430.8 : 1;
     return {
       revenue: [18, 22, 19, 28, 26, 35, 32, 42, 48].map((v) => Math.round(v * ratio * 10) / 10),
       profit: [12, 15, 14, 22, 20, 29, 27, 36, 42].map((v) => Math.round(v * ratio * 10) / 10),
@@ -445,7 +453,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   // Dynamic Profit Trend
   const profitTrend = useMemo(() => {
-    const ratio = selectedStore ? (selectedStore.totalRevenue / 25430.80) * dateMultiplier : dateMultiplier;
+    const ratio = selectedStore
+      ? (selectedStore.totalRevenue / 25430.8) * dateMultiplier
+      : dateMultiplier;
     return PROFIT_TREND_DATA.map((item) => ({
       date: item.date,
       profit: Math.round(item.profit * ratio),
@@ -461,8 +471,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       return stores.map((st, i) => ({
         name: st.name,
         value: Math.round(st.totalRevenue * dateMultiplier),
-        percentage: ((st.totalRevenue / 25430.80) * 100).toFixed(1),
-        color: colors[i % colors.length],
+        percentage: ((st.totalRevenue / 25430.8) * 100).toFixed(1),
+        color: colors[i % colors.length] ?? '#8b5cf6',
       }));
     }
 
@@ -479,7 +489,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       name,
       value: Math.round(val * dateMultiplier),
       percentage: ((val / totalCatRevenue) * 100).toFixed(1),
-      color: colors[i % colors.length],
+      color: colors[i % colors.length] ?? '#22c55e',
     }));
   }, [selectedStoreId, stores, filteredProducts, dateMultiplier]);
 
@@ -498,10 +508,30 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const refCount = Math.max(0, totalOrders - compCount - procCount - cancCount);
 
     return [
-      { name: 'Completed', count: compCount, percentage: Math.round((compCount / totalOrders) * 1000) / 10 || 81.9, color: '#22c55e' },
-      { name: 'Processing', count: procCount, percentage: Math.round((procCount / totalOrders) * 1000) / 10 || 12.1, color: '#3b82f6' },
-      { name: 'Canceled', count: cancCount, percentage: Math.round((cancCount / totalOrders) * 1000) / 10 || 3.6, color: '#ef4444' },
-      { name: 'Refunded', count: refCount, percentage: Math.round((refCount / totalOrders) * 1000) / 10 || 2.4, color: '#94a3b8' },
+      {
+        name: 'Completed',
+        count: compCount,
+        percentage: Math.round((compCount / totalOrders) * 1000) / 10 || 81.9,
+        color: '#22c55e',
+      },
+      {
+        name: 'Processing',
+        count: procCount,
+        percentage: Math.round((procCount / totalOrders) * 1000) / 10 || 12.1,
+        color: '#3b82f6',
+      },
+      {
+        name: 'Canceled',
+        count: cancCount,
+        percentage: Math.round((cancCount / totalOrders) * 1000) / 10 || 3.6,
+        color: '#ef4444',
+      },
+      {
+        name: 'Refunded',
+        count: refCount,
+        percentage: Math.round((refCount / totalOrders) * 1000) / 10 || 2.4,
+        color: '#94a3b8',
+      },
     ];
   }, [filteredOrders, totalOrders]);
 

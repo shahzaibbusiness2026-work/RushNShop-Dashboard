@@ -16,13 +16,19 @@ export default function OrdersOverviewChart() {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="pointer-events-none rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/95 dark:bg-[#161b26]/95 px-3 py-2 shadow-xl backdrop-blur-md text-xs z-50">
+        <div className="pointer-events-none z-50 rounded-xl border border-slate-200/80 bg-white/95 px-3 py-2 text-xs shadow-xl backdrop-blur-md dark:border-slate-800 dark:bg-[#161b26]/95">
           <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: data.color }} />
+            <span
+              className="h-2.5 w-2.5 shrink-0 rounded-full"
+              style={{ backgroundColor: data.color }}
+            />
             <p className="font-bold text-slate-800 dark:text-slate-100">{data.name}</p>
           </div>
-          <p className="mt-1 font-semibold text-slate-700 dark:text-slate-300 font-mono-numeric">
-            {data.count} orders <span className="text-slate-400 dark:text-slate-500 font-normal">({data.percentage}%)</span>
+          <p className="font-mono-numeric mt-1 font-semibold text-slate-700 dark:text-slate-300">
+            {data.count} orders{' '}
+            <span className="font-normal text-slate-400 dark:text-slate-500">
+              ({data.percentage}%)
+            </span>
           </p>
         </div>
       );
@@ -31,19 +37,22 @@ export default function OrdersOverviewChart() {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-4 sm:p-5 shadow-xs transition-colors overflow-hidden">
+    <div className="shadow-xs flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-4 transition-colors dark:border-slate-800/80 dark:bg-[#121620] sm:p-5">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">Orders Overview</h3>
-        <Link href="/orders" className="text-xs font-bold text-emerald-600 dark:text-[#4ade80] hover:underline">
+        <Link
+          href="/orders"
+          className="text-xs font-bold text-emerald-600 hover:underline dark:text-[#4ade80]"
+        >
           View all
         </Link>
       </div>
 
       {/* Donut Chart & Legend Stacked Cleanly */}
-      <div className="flex flex-col items-center justify-center my-auto py-2 w-full">
+      <div className="my-auto flex w-full flex-col items-center justify-center py-2">
         {/* Donut */}
-        <div className="relative h-36 w-36 shrink-0 mx-auto">
+        <div className="relative mx-auto h-36 w-36 shrink-0">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Tooltip
@@ -60,14 +69,14 @@ export default function OrdersOverviewChart() {
                 paddingAngle={3}
                 onMouseEnter={(_, idx) => setActiveIdx(idx)}
                 onMouseLeave={() => setActiveIdx(null)}
-                className="outline-none focus:outline-none cursor-pointer"
+                className="cursor-pointer outline-none focus:outline-none"
               >
                 {orderStatusCounts.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={entry.color}
                     opacity={activeIdx === null || activeIdx === index ? 1 : 0.45}
-                    className="transition-opacity duration-150 outline-none focus:outline-none"
+                    className="outline-none transition-opacity duration-150 focus:outline-none"
                   />
                 ))}
               </Pie>
@@ -75,18 +84,18 @@ export default function OrdersOverviewChart() {
           </ResponsiveContainer>
 
           {/* Center Text */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center font-mono-numeric">
-            <span className="text-base font-black text-slate-900 dark:text-slate-50 leading-none">
+          <div className="font-mono-numeric pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
+            <span className="text-base font-black leading-none text-slate-900 dark:text-slate-50">
               {activeItem ? activeItem.count : totalOrders}
             </span>
-            <span className="text-[9px] font-semibold text-slate-400 dark:text-slate-500 mt-0.5 font-sans truncate max-w-[80px]">
-              {activeItem ? activeItem.name : (selectedStore ? selectedStore.countryCode : 'Total')}
+            <span className="mt-0.5 max-w-[80px] truncate font-sans text-[9px] font-semibold text-slate-400 dark:text-slate-500">
+              {activeItem ? activeItem.name : selectedStore ? selectedStore.countryCode : 'Total'}
             </span>
           </div>
         </div>
 
         {/* Legend Grid - 2 columns for neat, zero-overflow compact fit */}
-        <div className="grid grid-cols-2 gap-2 mt-3 w-full pt-2 border-t border-slate-100 dark:border-slate-800/80 font-mono-numeric">
+        <div className="font-mono-numeric mt-3 grid w-full grid-cols-2 gap-2 border-t border-slate-100 pt-2 dark:border-slate-800/80">
           {orderStatusCounts.map((item, idx) => {
             const isHovered = activeIdx === idx;
             return (
@@ -95,21 +104,24 @@ export default function OrdersOverviewChart() {
                 onMouseEnter={() => setActiveIdx(idx)}
                 onMouseLeave={() => setActiveIdx(null)}
                 className={cn(
-                  'flex items-center justify-between rounded-lg px-2 py-1.5 text-[11px] transition-all cursor-pointer border',
+                  'flex cursor-pointer items-center justify-between rounded-lg border px-2 py-1.5 text-[11px] transition-all',
                   isHovered
-                    ? 'bg-slate-100 dark:bg-white/10 border-slate-300 dark:border-slate-700 shadow-2xs'
-                    : 'bg-slate-50/70 dark:bg-[#0f1117]/60 border-transparent hover:bg-slate-100/80 dark:hover:bg-white/5'
+                    ? 'shadow-2xs border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-white/10'
+                    : 'border-transparent bg-slate-50/70 hover:bg-slate-100/80 dark:bg-[#0f1117]/60 dark:hover:bg-white/5',
                 )}
               >
                 <div className="flex items-center gap-1.5 overflow-hidden">
-                  <span className="h-2 w-2 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                  <span className="font-semibold text-slate-700 dark:text-slate-300 truncate font-sans">{item.name}</span>
-                </div>
-                <div className="flex items-center gap-1 shrink-0 ml-1">
-                  <span className="font-bold text-slate-900 dark:text-white">
-                    {item.count}
+                  <span
+                    className="h-2 w-2 shrink-0 rounded-full"
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <span className="truncate font-sans font-semibold text-slate-700 dark:text-slate-300">
+                    {item.name}
                   </span>
-                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-normal">
+                </div>
+                <div className="ml-1 flex shrink-0 items-center gap-1">
+                  <span className="font-bold text-slate-900 dark:text-white">{item.count}</span>
+                  <span className="text-[10px] font-normal text-slate-400 dark:text-slate-500">
                     ({item.percentage}%)
                   </span>
                 </div>

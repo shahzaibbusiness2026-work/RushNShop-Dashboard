@@ -21,10 +21,30 @@ import NotificationsDrawer from './NotificationsDrawer';
 const datePresetsList = [
   { label: 'Today', short: 'Today', range: 'Today (May 23, 2024)', presetKey: 'Today' },
   { label: 'Yesterday', short: '1D', range: 'Yesterday (May 22, 2024)', presetKey: 'Yesterday' },
-  { label: 'Last 7 Days (Default)', short: '7D', range: 'May 17 - May 23, 2024', presetKey: 'Last 7 Days' },
-  { label: 'Last 14 Days', short: '14D', range: 'May 10 - May 23, 2024', presetKey: 'Last 14 Days' },
-  { label: 'Last 30 Days', short: '30D', range: 'Apr 24 - May 23, 2024', presetKey: 'Last 30 Days' },
-  { label: 'This Month (May 2024)', short: 'Month', range: 'May 01 - May 23, 2024', presetKey: 'This Month' },
+  {
+    label: 'Last 7 Days (Default)',
+    short: '7D',
+    range: 'May 17 - May 23, 2024',
+    presetKey: 'Last 7 Days',
+  },
+  {
+    label: 'Last 14 Days',
+    short: '14D',
+    range: 'May 10 - May 23, 2024',
+    presetKey: 'Last 14 Days',
+  },
+  {
+    label: 'Last 30 Days',
+    short: '30D',
+    range: 'Apr 24 - May 23, 2024',
+    presetKey: 'Last 30 Days',
+  },
+  {
+    label: 'This Month (May 2024)',
+    short: 'Month',
+    range: 'May 01 - May 23, 2024',
+    presetKey: 'This Month',
+  },
 ];
 
 const pageTitles: Record<string, { title: string; subtitle: string }> = {
@@ -89,40 +109,44 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
   };
 
   const selectedStoreObj = stores.find((s) => s.id === selectedStoreId);
-  const selectedPresetObj = datePresetsList.find((p) => p.presetKey === datePreset) || datePresetsList[2];
+  const selectedPresetObj =
+    datePresetsList.find((p) => p.presetKey === datePreset) ??
+    datePresetsList[2] ??
+    datePresetsList[0]!;
 
   return (
     <>
-      <header className="sticky top-0 z-30 flex h-16 sm:h-20 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#0f1117]/95 px-3 sm:px-8 backdrop-blur-md transition-colors">
+      <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 px-3 backdrop-blur-md transition-colors dark:border-slate-800 dark:bg-[#0f1117]/95 sm:h-20 sm:px-8">
         {/* Left: Hamburger (mobile) + Page Title & Subtitle */}
-        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <button
             onClick={onOpenMobileMenu}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 lg:hidden cursor-pointer"
+            className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-white/5 lg:hidden"
             aria-label="Open navigation menu"
           >
             <Menu className="h-5 w-5" />
           </button>
           <div className="min-w-0">
-            <h1 className="text-base sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white transition-colors truncate">
+            <h1 className="truncate text-base font-bold tracking-tight text-slate-900 transition-colors dark:text-white sm:text-2xl">
               {pageInfo.title}
             </h1>
-            <p className="hidden md:block text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 truncate">
+            <p className="hidden truncate text-xs font-medium text-slate-500 dark:text-slate-400 sm:text-sm md:block">
               {pageInfo.subtitle}
             </p>
           </div>
         </div>
 
         {/* Right: Actions (Theme Toggle, Store Selector, Date picker, Notifications, Add Store) */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
             title={theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
-            className="flex h-8.5 w-8.5 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/10 shadow-2xs transition-all cursor-pointer"
+            className="h-8.5 w-8.5 shadow-2xs flex cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-300 dark:hover:bg-white/10 sm:h-9 sm:w-9"
           >
             {theme === 'dark' ? (
-              <Sun className="h-4 w-4 text-amber-400 fill-amber-400/20" />
+              <Sun className="h-4 w-4 fill-amber-400/20 text-amber-400" />
             ) : (
               <Moon className="h-4 w-4 text-slate-700" />
             )}
@@ -135,10 +159,10 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                 setShowStorePicker(!showStorePicker);
                 setShowDatePicker(false);
               }}
-              className="flex items-center gap-1 sm:gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] px-2 sm:px-3 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-colors cursor-pointer"
+              className="shadow-2xs flex cursor-pointer items-center gap-1 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10 sm:gap-1.5 sm:px-3 sm:py-2"
             >
-              <StoreIcon className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400 hidden xs:inline" />
-              <span className="truncate max-w-[65px] xs:max-w-[90px] sm:max-w-none">
+              <StoreIcon className="hidden h-3.5 w-3.5 text-slate-500 dark:text-slate-400 xs:inline" />
+              <span className="max-w-[65px] truncate xs:max-w-[90px] sm:max-w-none">
                 {selectedStoreId === 'all' ? (
                   <>
                     <span className="xs:hidden">🌐 All</span>
@@ -148,35 +172,42 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                 ) : (
                   <>
                     <span>{selectedStoreObj?.flag}</span>
-                    <span className="hidden xs:inline ml-1">{selectedStoreObj?.name}</span>
+                    <span className="ml-1 hidden xs:inline">{selectedStoreObj?.name}</span>
                   </>
                 )}
               </span>
-              <ChevronDown className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-slate-400 shrink-0" />
+              <ChevronDown className="h-3 w-3 shrink-0 text-slate-400 sm:h-3.5 sm:w-3.5" />
             </button>
 
             {showStorePicker && (
-              <div className="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] p-2 shadow-xl z-50 animate-in fade-in slide-in-from-top-2">
-                <p className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Filter By Store</p>
+              <div className="animate-in fade-in slide-in-from-top-2 absolute right-0 top-full z-50 mt-2 w-64 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl dark:border-slate-800 dark:bg-[#161b26]">
+                <p className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Filter By Store
+                </p>
                 <button
                   onClick={() => {
                     setSelectedStoreId('all');
                     setShowStorePicker(false);
                   }}
                   className={cn(
-                    'flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium text-left transition-colors cursor-pointer',
+                    'flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs font-medium transition-colors',
                     selectedStoreId === 'all'
-                      ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-[#4ade80] font-bold'
-                      : 'hover:bg-slate-100 dark:hover:bg-white/5 text-slate-700 dark:text-slate-300'
+                      ? 'bg-emerald-50 font-bold text-emerald-700 dark:bg-emerald-950/50 dark:text-[#4ade80]'
+                      : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5',
                   )}
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-base">🌐</span>
-                    <span>All Accounts Combined</span>
+                    <div className="min-w-0">
+                      <p className="font-semibold leading-tight">All Stores Combined</p>
+                      <p className="text-[10px] text-slate-400">{stores.length} connected accounts</p>
+                    </div>
                   </div>
-                  {selectedStoreId === 'all' && <Check className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />}
+                  {selectedStoreId === 'all' && (
+                    <Check className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
+                  )}
                 </button>
-                <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
+                <div className="my-1.5 border-t border-slate-100 dark:border-slate-800" />
                 {stores.map((st) => (
                   <button
                     key={st.id}
@@ -185,17 +216,26 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                       setShowStorePicker(false);
                     }}
                     className={cn(
-                      'flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium text-left transition-colors cursor-pointer',
+                      'flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs font-medium transition-colors',
                       selectedStoreId === st.id
-                        ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-[#4ade80] font-bold'
-                        : 'hover:bg-slate-100 dark:hover:bg-white/5 text-slate-700 dark:text-slate-300'
+                        ? 'bg-emerald-50 font-bold text-emerald-700 dark:bg-emerald-950/50 dark:text-[#4ade80]'
+                        : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5',
                     )}
                   >
                     <div className="flex items-center gap-2">
                       <span className="text-base">{st.flag}</span>
-                      <span>{st.name}</span>
+                      <div className="min-w-0">
+                        <p className="truncate font-semibold leading-tight text-slate-900 dark:text-slate-100">
+                          {st.name}
+                        </p>
+                        <p className="text-[10px] text-slate-400">
+                          {st.currency} • {st.country}
+                        </p>
+                      </div>
                     </div>
-                    {selectedStoreId === st.id && <Check className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />}
+                    {selectedStoreId === st.id && (
+                      <Check className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
+                    )}
                   </button>
                 ))}
               </div>
@@ -209,17 +249,19 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                 setShowDatePicker(!showDatePicker);
                 setShowStorePicker(false);
               }}
-              className="flex items-center gap-1 sm:gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] px-2 sm:px-3.5 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-white/10 transition-all cursor-pointer"
+              className="shadow-2xs flex cursor-pointer items-center gap-1 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10 sm:gap-1.5 sm:px-3.5 sm:py-2"
             >
               <Calendar className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400" />
               <span className="hidden md:inline">{dateRange}</span>
-              <span className="md:hidden font-bold text-[11px]">{selectedPresetObj.short}</span>
-              <ChevronDown className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-slate-400 shrink-0" />
+              <span className="text-[11px] font-bold md:hidden">{selectedPresetObj.short}</span>
+              <ChevronDown className="h-3 w-3 shrink-0 text-slate-400 sm:h-3.5 sm:w-3.5" />
             </button>
 
             {showDatePicker && (
-              <div className="absolute right-0 top-full mt-2 w-64 max-w-[calc(100vw-24px)] rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] p-2 shadow-xl z-50 animate-in fade-in slide-in-from-top-2">
-                <p className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Date Presets</p>
+              <div className="animate-in fade-in slide-in-from-top-2 absolute right-0 top-full z-50 mt-2 w-64 max-w-[calc(100vw-24px)] rounded-2xl border border-slate-200 bg-white p-2 shadow-xl dark:border-slate-800 dark:bg-[#161b26]">
+                <p className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Date Presets
+                </p>
                 {datePresetsList.map((item) => (
                   <button
                     key={item.presetKey}
@@ -229,14 +271,16 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                       setShowDatePicker(false);
                     }}
                     className={cn(
-                      'flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium transition-colors text-left cursor-pointer',
+                      'flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs font-medium transition-colors',
                       datePreset === item.presetKey
-                        ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-[#4ade80] font-bold'
-                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
+                        ? 'bg-emerald-50 font-bold text-emerald-700 dark:bg-emerald-950/50 dark:text-[#4ade80]'
+                        : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5',
                     )}
                   >
                     <span>{item.label}</span>
-                    {datePreset === item.presetKey && <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-[#4ade80]" />}
+                    {datePreset === item.presetKey && (
+                      <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-[#4ade80]" />
+                    )}
                   </button>
                 ))}
               </div>
@@ -246,11 +290,12 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
           {/* Notifications Bell */}
           <button
             onClick={() => setShowNotifications(true)}
-            className="relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/10 shadow-2xs transition-all cursor-pointer"
+            aria-label={`View notifications and insights (${storeInsights.length} active)`}
+            className="shadow-2xs relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-300 dark:hover:bg-white/10 sm:h-9 sm:w-9"
             title="Notifications & Insights"
           >
             <Bell className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-lime-500 text-[9px] font-bold text-black ring-2 ring-white dark:ring-[#0f1117]">
+            <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-lime-500 text-[9px] font-bold text-black ring-2 ring-white dark:ring-[#0f1117]">
               {storeInsights.length}
             </span>
           </button>
@@ -258,9 +303,9 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
           {/* Add Store Button */}
           <button
             onClick={() => setShowAddStore(true)}
-            className="hidden xs:flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-bold text-black shadow-2xs hover:bg-[#72b012] transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            className="shadow-2xs hidden cursor-pointer items-center gap-1.5 rounded-xl bg-[#84cc16] px-2.5 py-1.5 text-xs font-bold text-black transition-all hover:scale-[1.02] hover:bg-[#72b012] active:scale-[0.98] xs:flex sm:px-4 sm:py-2"
           >
-            <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4 stroke-[2.5]" />
+            <Plus className="h-3.5 w-3.5 stroke-[2.5] sm:h-4 sm:w-4" />
             <span className="hidden sm:inline">Add Store</span>
           </button>
         </div>

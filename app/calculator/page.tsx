@@ -23,53 +23,53 @@ const PRESET_TEMPLATES = [
   {
     name: 'Viral Beauty Serum',
     price: 34.99,
-    cogs: 6.50,
-    shipping: 3.80,
-    packaging: 0.90,
+    cogs: 6.5,
+    shipping: 3.8,
+    packaging: 0.9,
     tiktokFee: 5.0,
     paymentFee: 2.9,
     affiliate: 15.0,
-    adCpa: 7.50,
-    overhead: 0.50,
+    adCpa: 7.5,
+    overhead: 0.5,
     targetMargin: 40.0,
   },
   {
     name: 'Kitchen Veggie Chopper',
     price: 29.99,
-    cogs: 5.20,
-    shipping: 4.50,
-    packaging: 1.10,
+    cogs: 5.2,
+    shipping: 4.5,
+    packaging: 1.1,
     tiktokFee: 5.0,
     paymentFee: 2.9,
     affiliate: 10.0,
-    adCpa: 6.80,
-    overhead: 0.40,
+    adCpa: 6.8,
+    overhead: 0.4,
     targetMargin: 38.0,
   },
   {
     name: 'Sunset Ambient Lamp',
     price: 24.99,
-    cogs: 4.10,
-    shipping: 3.90,
-    packaging: 0.80,
+    cogs: 4.1,
+    shipping: 3.9,
+    packaging: 0.8,
     tiktokFee: 5.0,
     paymentFee: 2.9,
     affiliate: 12.0,
-    adCpa: 5.50,
-    overhead: 0.30,
+    adCpa: 5.5,
+    overhead: 0.3,
     targetMargin: 42.0,
   },
   {
     name: 'High-Ticket Massage Gun',
     price: 79.99,
-    cogs: 18.50,
-    shipping: 7.20,
-    packaging: 2.20,
+    cogs: 18.5,
+    shipping: 7.2,
+    packaging: 2.2,
     tiktokFee: 5.0,
     paymentFee: 2.9,
     affiliate: 10.0,
-    adCpa: 16.50,
-    overhead: 1.50,
+    adCpa: 16.5,
+    overhead: 1.5,
     targetMargin: 35.0,
   },
 ];
@@ -80,15 +80,15 @@ export default function CalculatorPage() {
   // Inputs
   const [productName, setProductName] = useState('New Viral Product');
   const [sellingPrice, setSellingPrice] = useState<number>(39.99);
-  const [cogs, setCogs] = useState<number>(9.50);
-  const [shippingCost, setShippingCost] = useState<number>(4.20);
-  const [packagingCost, setPackagingCost] = useState<number>(1.00);
+  const [cogs, setCogs] = useState<number>(9.5);
+  const [shippingCost, setShippingCost] = useState<number>(4.2);
+  const [packagingCost, setPackagingCost] = useState<number>(1.0);
   const [tiktokFeePercent, setTiktokFeePercent] = useState<number>(5.0);
   const [paymentFeePercent, setPaymentFeePercent] = useState<number>(2.9);
-  const [paymentFeeFixed, setPaymentFeeFixed] = useState<number>(0.30);
+  const [paymentFeeFixed, setPaymentFeeFixed] = useState<number>(0.3);
   const [affiliatePercent, setAffiliatePercent] = useState<number>(10.0);
-  const [adCpa, setAdCpa] = useState<number>(8.50);
-  const [otherExpenses, setOtherExpenses] = useState<number>(0.50);
+  const [adCpa, setAdCpa] = useState<number>(8.5);
+  const [otherExpenses, setOtherExpenses] = useState<number>(0.5);
   const [targetMarginPercent, setTargetMarginPercent] = useState<number>(40.0);
 
   const [savedSuccess, setSavedSuccess] = useState(false);
@@ -109,7 +109,7 @@ export default function CalculatorPage() {
     targetMarginPercent,
   });
 
-  const handleApplyPreset = (preset: typeof PRESET_TEMPLATES[0]) => {
+  const handleApplyPreset = (preset: (typeof PRESET_TEMPLATES)[0]) => {
     setProductName(preset.name);
     setSellingPrice(preset.price);
     setCogs(preset.cogs);
@@ -153,7 +153,7 @@ export default function CalculatorPage() {
         cogs,
         netProfit: results.netProfit,
         profitMargin: results.profitMargin,
-      })
+      }),
     );
     router.push('/ai-assistant');
   };
@@ -161,28 +161,35 @@ export default function CalculatorPage() {
   const isProfitable = results.netProfit > 0;
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="mx-auto max-w-7xl space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">TikTok Shop Profit Margin Calculator</h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Simulate true unit economics, break-even price floor, and target profit margins before listing.
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">
+            TikTok Shop Profit Margin Calculator
+          </h2>
+          <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+            Simulate true unit economics, break-even price floor, and target profit margins before
+            listing.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={handleCopySummary}
-            className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-xs hover:bg-slate-50 dark:hover:bg-white/10 transition-colors"
+            className="shadow-xs flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10"
           >
-            {copySuccess ? <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-[#4ade80]" /> : <Copy className="h-3.5 w-3.5" />}
+            {copySuccess ? (
+              <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-[#4ade80]" />
+            ) : (
+              <Copy className="h-3.5 w-3.5" />
+            )}
             <span>{copySuccess ? 'Copied Summary!' : 'Copy Report'}</span>
           </button>
 
           <button
             onClick={handleSendToAIListing}
-            className="flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-4 py-2 text-xs font-bold text-black shadow-sm hover:bg-[#72b012] transition-all hover:scale-[1.02]"
+            className="flex items-center gap-1.5 rounded-xl bg-[#84cc16] px-4 py-2 text-xs font-bold text-black shadow-sm transition-all hover:scale-[1.02] hover:bg-[#72b012]"
           >
             <Sparkles className="h-3.5 w-3.5" />
             <span>Generate AI Listing</span>
@@ -192,12 +199,14 @@ export default function CalculatorPage() {
 
       {/* Preset Quick Bar */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1">
-        <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase shrink-0">Quick Presets:</span>
+        <span className="shrink-0 text-xs font-bold uppercase text-slate-400 dark:text-slate-500">
+          Quick Presets:
+        </span>
         {PRESET_TEMPLATES.map((tmpl) => (
           <button
             key={tmpl.name}
             onClick={() => handleApplyPreset(tmpl)}
-            className="whitespace-nowrap rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121620] px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-300 hover:border-lime-500 hover:text-lime-600 dark:hover:text-[#4ade80] transition-colors shadow-2xs"
+            className="shadow-2xs whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:border-lime-500 hover:text-lime-600 dark:border-slate-800 dark:bg-[#121620] dark:text-slate-300 dark:hover:text-[#4ade80]"
           >
             ⚡ {tmpl.name} (${tmpl.price})
           </button>
@@ -206,55 +215,65 @@ export default function CalculatorPage() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Left Column: Calculator Inputs (7 cols) */}
-        <div className="lg:col-span-7 space-y-5">
-          <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-6 shadow-xs space-y-5">
-            <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
+        <div className="space-y-5 lg:col-span-7">
+          <div className="shadow-xs space-y-5 rounded-3xl border border-slate-200/80 bg-white p-6 dark:border-slate-800/80 dark:bg-[#121620]">
+            <div className="border-b border-slate-100 pb-3 dark:border-slate-800">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                 1. Product & Pricing Strategy
               </h3>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Product Title / SKU Identifier</label>
+              <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                Product Title / SKU Identifier
+              </label>
               <input
                 type="text"
                 value={productName}
                 onChange={(e) => setProductName(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] px-3.5 py-2.5 text-sm font-bold text-slate-900 dark:text-white focus:border-lime-500 focus:outline-none"
+                className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm font-bold text-slate-900 focus:border-lime-500 focus:outline-none dark:border-slate-800 dark:bg-[#0f1117] dark:text-white"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Selling Price ($)</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Selling Price ($)
+                </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-2.5 text-sm font-bold text-slate-400">$</span>
+                  <span className="absolute left-3.5 top-2.5 text-sm font-bold text-slate-400">
+                    $
+                  </span>
                   <input
                     type="number"
                     step="0.01"
                     value={sellingPrice}
                     onChange={(e) => setSellingPrice(parseFloat(e.target.value) || 0)}
-                    className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] pl-8 pr-3 py-2.5 text-sm font-black text-slate-900 dark:text-white focus:border-lime-500 focus:outline-none font-mono-numeric"
+                    className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-8 pr-3 text-sm font-black text-slate-900 focus:border-lime-500 focus:outline-none dark:border-slate-800 dark:bg-[#0f1117] dark:text-white"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Product Cost (COGS) ($)</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Product Cost (COGS) ($)
+                </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-2.5 text-sm font-bold text-slate-400">$</span>
+                  <span className="absolute left-3.5 top-2.5 text-sm font-bold text-slate-400">
+                    $
+                  </span>
                   <input
                     type="number"
                     step="0.01"
                     value={cogs}
                     onChange={(e) => setCogs(parseFloat(e.target.value) || 0)}
-                    className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] pl-8 pr-3 py-2.5 text-sm font-black text-slate-900 dark:text-white focus:border-lime-500 focus:outline-none font-mono-numeric"
+                    className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-8 pr-3 text-sm font-black text-slate-900 focus:border-lime-500 focus:outline-none dark:border-slate-800 dark:bg-[#0f1117] dark:text-white"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="border-b border-slate-100 dark:border-slate-800 pb-3 pt-2">
+            <div className="border-b border-slate-100 pb-3 pt-2 dark:border-slate-800">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                 2. Shipping & Packaging
               </h3>
@@ -262,35 +281,43 @@ export default function CalculatorPage() {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Shipping Cost ($)</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Shipping Cost ($)
+                </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-2.5 text-sm font-bold text-slate-400">$</span>
+                  <span className="absolute left-3.5 top-2.5 text-sm font-bold text-slate-400">
+                    $
+                  </span>
                   <input
                     type="number"
                     step="0.01"
                     value={shippingCost}
                     onChange={(e) => setShippingCost(parseFloat(e.target.value) || 0)}
-                    className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] pl-8 pr-3 py-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200 font-mono-numeric"
+                    className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-8 pr-3 text-sm font-semibold text-slate-800 dark:border-slate-800 dark:bg-[#0f1117] dark:text-slate-200"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Packaging / Prep ($)</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Packaging / Prep ($)
+                </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-2.5 text-sm font-bold text-slate-400">$</span>
+                  <span className="absolute left-3.5 top-2.5 text-sm font-bold text-slate-400">
+                    $
+                  </span>
                   <input
                     type="number"
                     step="0.01"
                     value={packagingCost}
                     onChange={(e) => setPackagingCost(parseFloat(e.target.value) || 0)}
-                    className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] pl-8 pr-3 py-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200 font-mono-numeric"
+                    className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-8 pr-3 text-sm font-semibold text-slate-800 dark:border-slate-800 dark:bg-[#0f1117] dark:text-slate-200"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="border-b border-slate-100 dark:border-slate-800 pb-3 pt-2">
+            <div className="border-b border-slate-100 pb-3 pt-2 dark:border-slate-800">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                 3. TikTok Platform & Creator Affiliate
               </h3>
@@ -298,40 +325,46 @@ export default function CalculatorPage() {
 
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">TikTok Fee (%)</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  TikTok Fee (%)
+                </label>
                 <input
                   type="number"
                   step="0.1"
                   value={tiktokFeePercent}
                   onChange={(e) => setTiktokFeePercent(parseFloat(e.target.value) || 0)}
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] px-3 py-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200 font-mono-numeric"
+                  className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-semibold text-slate-800 dark:border-slate-800 dark:bg-[#0f1117] dark:text-slate-200"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Payment Fee (%)</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Payment Fee (%)
+                </label>
                 <input
                   type="number"
                   step="0.1"
                   value={paymentFeePercent}
                   onChange={(e) => setPaymentFeePercent(parseFloat(e.target.value) || 0)}
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] px-3 py-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200 font-mono-numeric"
+                  className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-semibold text-slate-800 dark:border-slate-800 dark:bg-[#0f1117] dark:text-slate-200"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Affiliate Rate (%)</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Affiliate Rate (%)
+                </label>
                 <input
                   type="number"
                   step="0.1"
                   value={affiliatePercent}
                   onChange={(e) => setAffiliatePercent(parseFloat(e.target.value) || 0)}
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] px-3 py-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200 font-mono-numeric"
+                  className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-semibold text-slate-800 dark:border-slate-800 dark:bg-[#0f1117] dark:text-slate-200"
                 />
               </div>
             </div>
 
-            <div className="border-b border-slate-100 dark:border-slate-800 pb-3 pt-2">
+            <div className="border-b border-slate-100 pb-3 pt-2 dark:border-slate-800">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                 4. TikTok Ads CPA & Target Margin
               </h3>
@@ -339,35 +372,41 @@ export default function CalculatorPage() {
 
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">TikTok Ads CPA ($)</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  TikTok Ads CPA ($)
+                </label>
                 <input
                   type="number"
                   step="0.1"
                   value={adCpa}
                   onChange={(e) => setAdCpa(parseFloat(e.target.value) || 0)}
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] px-3 py-2.5 text-sm font-bold text-purple-600 dark:text-[#c084fc] font-mono-numeric"
+                  className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-bold text-purple-600 dark:border-slate-800 dark:bg-[#0f1117] dark:text-[#c084fc]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Overhead ($)</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Overhead ($)
+                </label>
                 <input
                   type="number"
                   step="0.1"
                   value={otherExpenses}
                   onChange={(e) => setOtherExpenses(parseFloat(e.target.value) || 0)}
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] px-3 py-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200 font-mono-numeric"
+                  className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-semibold text-slate-800 dark:border-slate-800 dark:bg-[#0f1117] dark:text-slate-200"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Target Margin (%)</label>
+                <label className="mb-1 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Target Margin (%)
+                </label>
                 <input
                   type="number"
                   step="1"
                   value={targetMarginPercent}
                   onChange={(e) => setTargetMarginPercent(parseFloat(e.target.value) || 0)}
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1117] px-3 py-2.5 text-sm font-bold text-amber-600 dark:text-[#fb923c] font-mono-numeric"
+                  className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-bold text-amber-600 dark:border-slate-800 dark:bg-[#0f1117] dark:text-[#fb923c]"
                 />
               </div>
             </div>
@@ -375,17 +414,19 @@ export default function CalculatorPage() {
         </div>
 
         {/* Right Column: Live Output Cards & Unit Economics (5 cols) */}
-        <div className="lg:col-span-5 space-y-5">
+        <div className="space-y-5 lg:col-span-5">
           {/* Main Profit Card */}
-          <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#121620] p-6 shadow-xs space-y-4">
+          <div className="shadow-xs space-y-4 rounded-3xl border border-slate-200/80 bg-white p-6 dark:border-slate-800/80 dark:bg-[#121620]">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Unit Profitability</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                Unit Profitability
+              </span>
               <span
                 className={cn(
                   'rounded-full px-2.5 py-0.5 text-xs font-bold',
                   isProfitable
-                    ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-[#4ade80] border border-emerald-200/60 dark:border-emerald-800/60'
-                    : 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200/60 dark:border-rose-800/60'
+                    ? 'border border-emerald-200/60 bg-emerald-50 text-emerald-700 dark:border-emerald-800/60 dark:bg-emerald-950/60 dark:text-[#4ade80]'
+                    : 'border border-rose-200/60 bg-rose-50 text-rose-700 dark:border-rose-800/60 dark:bg-rose-950/60 dark:text-rose-300',
                 )}
               >
                 {isProfitable ? '✅ Profitable Unit' : '⚠️ Negative Unit'}
@@ -393,100 +434,146 @@ export default function CalculatorPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="rounded-2xl bg-slate-50 dark:bg-[#161b26] p-4 border border-slate-100 dark:border-slate-800 shadow-2xs">
-                <p className="text-xs font-semibold text-slate-400 dark:text-slate-500">Net Profit / Order</p>
+              <div className="shadow-2xs rounded-2xl border border-slate-100 bg-slate-50 p-4 dark:border-slate-800 dark:bg-[#161b26]">
+                <p className="text-xs font-semibold text-slate-400 dark:text-slate-500">
+                  Net Profit / Order
+                </p>
                 <p
                   className={cn(
-                    'text-2xl sm:text-3xl font-black mt-1 font-mono-numeric',
-                    isProfitable ? 'text-emerald-600 dark:text-[#4ade80]' : 'text-rose-600 dark:text-rose-400'
+                    'font-mono-numeric mt-1 text-2xl font-black sm:text-3xl',
+                    isProfitable
+                      ? 'text-emerald-600 dark:text-[#4ade80]'
+                      : 'text-rose-600 dark:text-rose-400',
                   )}
                 >
                   {formatCurrency(results.netProfit)}
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-slate-50 dark:bg-[#161b26] p-4 border border-slate-100 dark:border-slate-800 shadow-2xs">
-                <p className="text-xs font-semibold text-slate-400 dark:text-slate-500">Profit Margin</p>
-                <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mt-1 font-mono-numeric">
+              <div className="shadow-2xs rounded-2xl border border-slate-100 bg-slate-50 p-4 dark:border-slate-800 dark:bg-[#161b26]">
+                <p className="text-xs font-semibold text-slate-400 dark:text-slate-500">
+                  Profit Margin
+                </p>
+                <p className="font-mono-numeric mt-1 text-2xl font-black text-slate-900 dark:text-slate-50 sm:text-3xl">
                   {formatPercent(results.profitMargin)}
                 </p>
               </div>
             </div>
 
             {/* Cost Breakdown */}
-            <div className="rounded-2xl bg-slate-50/70 dark:bg-[#0f1117]/60 p-3.5 space-y-2 text-xs border border-slate-100 dark:border-slate-800 font-medium">
+            <div className="space-y-2 rounded-2xl border border-slate-100 bg-slate-50/70 p-3.5 text-xs font-medium dark:border-slate-800 dark:bg-[#0f1117]/60">
               <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Product COGS:</span>
-                <span className="font-bold text-slate-900 dark:text-white font-mono-numeric">{formatCurrency(results.cogs)}</span>
+                <span className="font-mono-numeric font-bold text-slate-900 dark:text-white">
+                  {formatCurrency(results.cogs)}
+                </span>
               </div>
               <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Shipping & Packaging:</span>
-                <span className="font-bold text-slate-900 dark:text-white font-mono-numeric">{formatCurrency(results.shipping + results.packaging)}</span>
+                <span className="font-mono-numeric font-bold text-slate-900 dark:text-white">
+                  {formatCurrency(results.shipping + results.packaging)}
+                </span>
               </div>
               <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>TikTok Shop Fee ({tiktokFeePercent}%):</span>
-                <span className="font-bold text-slate-900 dark:text-white font-mono-numeric">{formatCurrency(results.tiktokFee)}</span>
+                <span className="font-mono-numeric font-bold text-slate-900 dark:text-white">
+                  {formatCurrency(results.tiktokFee)}
+                </span>
               </div>
               <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Payment Processing Fee:</span>
-                <span className="font-bold text-slate-900 dark:text-white font-mono-numeric">{formatCurrency(results.paymentFee)}</span>
+                <span className="font-mono-numeric font-bold text-slate-900 dark:text-white">
+                  {formatCurrency(results.paymentFee)}
+                </span>
               </div>
               <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Affiliate Commission ({affiliatePercent}%):</span>
-                <span className="font-bold text-slate-900 dark:text-white font-mono-numeric">{formatCurrency(results.affiliateCommission)}</span>
+                <span className="font-mono-numeric font-bold text-slate-900 dark:text-white">
+                  {formatCurrency(results.affiliateCommission)}
+                </span>
               </div>
               <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>TikTok Ads CPA:</span>
-                <span className="font-bold text-purple-600 dark:text-[#c084fc] font-mono-numeric">{formatCurrency(results.adCpa)}</span>
+                <span className="font-mono-numeric font-bold text-purple-600 dark:text-[#c084fc]">
+                  {formatCurrency(results.adCpa)}
+                </span>
               </div>
-              <div className="border-t border-slate-200 dark:border-slate-800 pt-2 flex justify-between font-bold text-slate-900 dark:text-white text-sm">
+              <div className="flex justify-between border-t border-slate-200 pt-2 text-sm font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                 <span>Total Unit Cost:</span>
-                <span className="text-rose-600 dark:text-rose-400 font-mono-numeric">{formatCurrency(results.totalCost)}</span>
+                <span className="font-mono-numeric text-rose-600 dark:text-rose-400">
+                  {formatCurrency(results.totalCost)}
+                </span>
               </div>
             </div>
 
             {/* Strategic Pricing Insights */}
             <div className="space-y-2.5 pt-2">
-              <div className="flex items-center justify-between rounded-2xl bg-blue-50/70 dark:bg-blue-950/40 p-3 text-xs border border-blue-100 dark:border-blue-900/40">
+              <div className="flex items-center justify-between rounded-2xl border border-blue-100 bg-blue-50/70 p-3 text-xs dark:border-blue-900/40 dark:bg-blue-950/40">
                 <div>
-                  <p className="font-bold text-blue-900 dark:text-blue-200">Break-Even Selling Price</p>
-                  <p className="text-[11px] text-blue-600 dark:text-blue-400">Zero profit / loss floor</p>
+                  <p className="font-bold text-blue-900 dark:text-blue-200">
+                    Break-Even Selling Price
+                  </p>
+                  <p className="text-[11px] text-blue-600 dark:text-blue-400">
+                    Zero profit / loss floor
+                  </p>
                 </div>
-                <span className="text-base font-black text-blue-900 dark:text-blue-100 font-mono-numeric">{formatCurrency(results.breakEvenPrice)}</span>
+                <span className="font-mono-numeric text-base font-black text-blue-900 dark:text-blue-100">
+                  {formatCurrency(results.breakEvenPrice)}
+                </span>
               </div>
 
-              <div className="flex items-center justify-between rounded-2xl bg-purple-50/70 dark:bg-purple-950/40 p-3 text-xs border border-purple-100 dark:border-purple-900/40">
+              <div className="flex items-center justify-between rounded-2xl border border-purple-100 bg-purple-50/70 p-3 text-xs dark:border-purple-900/40 dark:bg-purple-950/40">
                 <div>
-                  <p className="font-bold text-purple-900 dark:text-purple-200">Max Allowable TikTok Ads CPA</p>
-                  <p className="text-[11px] text-purple-600 dark:text-purple-400">Highest ad spend before loss</p>
+                  <p className="font-bold text-purple-900 dark:text-purple-200">
+                    Max Allowable TikTok Ads CPA
+                  </p>
+                  <p className="text-[11px] text-purple-600 dark:text-purple-400">
+                    Highest ad spend before loss
+                  </p>
                 </div>
-                <span className="text-base font-black text-purple-900 dark:text-purple-100 font-mono-numeric">{formatCurrency(results.maxAllowableCpa)}</span>
+                <span className="font-mono-numeric text-base font-black text-purple-900 dark:text-purple-100">
+                  {formatCurrency(results.maxAllowableCpa)}
+                </span>
               </div>
 
-              <div className="flex items-center justify-between rounded-2xl bg-lime-50/70 dark:bg-lime-950/40 p-3 text-xs border border-lime-200 dark:border-lime-900/40">
+              <div className="flex items-center justify-between rounded-2xl border border-lime-200 bg-lime-50/70 p-3 text-xs dark:border-lime-900/40 dark:bg-lime-950/40">
                 <div>
-                  <p className="font-bold text-lime-950 dark:text-lime-200">Recommended Price ({targetMarginPercent}% Margin)</p>
-                  <p className="text-[11px] text-lime-700 dark:text-lime-400">Optimal target pricing</p>
+                  <p className="font-bold text-lime-950 dark:text-lime-200">
+                    Recommended Price ({targetMarginPercent}% Margin)
+                  </p>
+                  <p className="text-[11px] text-lime-700 dark:text-lime-400">
+                    Optimal target pricing
+                  </p>
                 </div>
-                <span className="text-base font-black text-lime-900 dark:text-[#4ade80] font-mono-numeric">{formatCurrency(results.recommendedPrice)}</span>
+                <span className="font-mono-numeric text-base font-black text-lime-900 dark:text-[#4ade80]">
+                  {formatCurrency(results.recommendedPrice)}
+                </span>
               </div>
             </div>
 
             {/* Volume Projection */}
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161b26] p-4">
-              <p className="text-xs font-bold text-slate-900 dark:text-slate-100 mb-2">Volume Profit Forecast</p>
+            <div className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-[#161b26]">
+              <p className="mb-2 text-xs font-bold text-slate-900 dark:text-slate-100">
+                Volume Profit Forecast
+              </p>
               <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                <div className="rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2">
+                <div className="rounded-xl bg-slate-50 p-2 dark:bg-[#0f1117]">
                   <p className="font-semibold text-slate-400 dark:text-slate-500">100 Orders</p>
-                  <p className="font-black text-slate-900 dark:text-white mt-0.5 font-mono-numeric">{formatCurrency(results.netProfit * 100)}</p>
+                  <p className="font-mono-numeric mt-0.5 font-black text-slate-900 dark:text-white">
+                    {formatCurrency(results.netProfit * 100)}
+                  </p>
                 </div>
-                <div className="rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2">
+                <div className="rounded-xl bg-slate-50 p-2 dark:bg-[#0f1117]">
                   <p className="font-semibold text-slate-400 dark:text-slate-500">500 Orders</p>
-                  <p className="font-black text-emerald-600 dark:text-[#4ade80] mt-0.5 font-mono-numeric">{formatCurrency(results.netProfit * 500)}</p>
+                  <p className="font-mono-numeric mt-0.5 font-black text-emerald-600 dark:text-[#4ade80]">
+                    {formatCurrency(results.netProfit * 500)}
+                  </p>
                 </div>
-                <div className="rounded-xl bg-slate-50 dark:bg-[#0f1117] p-2">
+                <div className="rounded-xl bg-slate-50 p-2 dark:bg-[#0f1117]">
                   <p className="font-semibold text-slate-400 dark:text-slate-500">1,000 Orders</p>
-                  <p className="font-black text-emerald-600 dark:text-[#4ade80] mt-0.5 font-mono-numeric">{formatCurrency(results.netProfit * 1000)}</p>
+                  <p className="font-mono-numeric mt-0.5 font-black text-emerald-600 dark:text-[#4ade80]">
+                    {formatCurrency(results.netProfit * 1000)}
+                  </p>
                 </div>
               </div>
             </div>
