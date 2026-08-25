@@ -188,19 +188,14 @@ export default function Sidebar({
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              title="RushNshop AI OS"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-lime-500 to-green-400 text-black shadow-lg shadow-green-500/20 transition-transform duration-200 hover:scale-105"
+              title="RushNshop"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-xs transition-transform duration-200 hover:scale-105"
             >
-              <Zap className="h-6 w-6 fill-current font-black text-black" />
+              <Zap className="h-5 w-5 fill-current" />
             </Link>
             {!isCollapsed && (
               <div className="overflow-hidden">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xl font-bold tracking-tight text-white">RushNshop</span>
-                </div>
-                <p className="text-[11px] font-medium tracking-wider text-slate-400">
-                  AI Operating System
-                </p>
+                <span className="text-base font-bold tracking-tight text-white">RushNshop</span>
               </div>
             )}
           </div>

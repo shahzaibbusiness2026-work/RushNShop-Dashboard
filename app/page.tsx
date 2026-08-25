@@ -156,9 +156,6 @@ export default function RootLandingPage() {
               <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
                 RushNshop
               </span>
-              <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400">
-                Studio OS
-              </span>
             </div>
           </Link>
 
@@ -928,9 +925,6 @@ export default function RootLandingPage() {
                 <div>
                   <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
                     RushNshop
-                  </span>
-                  <span className="ml-1.5 rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400">
-                    Studio OS
                   </span>
                 </div>
               </div>

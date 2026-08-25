@@ -12,6 +12,7 @@ import {
   Store as StoreIcon,
   Sun,
   Moon,
+  Sparkles,
 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import { cn } from '../../lib/utils';
@@ -48,26 +49,26 @@ const datePresetsList = [
 ];
 
 const pageTitles: Record<string, { title: string; subtitle: string }> = {
-  '/': { title: 'RushNshop Platform', subtitle: 'AI Operating System for TikTok Shop' },
-  '/dashboard': { title: 'Dashboard', subtitle: 'Real-time business performance' },
-  '/stores': { title: 'Multi-Store', subtitle: 'Manage accounts & permissions' },
+  '/': { title: 'RushNshop', subtitle: 'TikTok Shop Performance Platform' },
+  '/dashboard': { title: 'Dashboard', subtitle: 'Real-time performance & financials' },
+  '/stores': { title: 'Multi-Store', subtitle: 'Connected accounts & permissions' },
   '/products': { title: 'Products', subtitle: 'SKU profitability & COGS' },
   '/calculator': { title: 'Profit Calculator', subtitle: 'Unit economics simulator' },
-  '/compare': { title: 'Product Comparison', subtitle: '4-Way side-by-side profit evaluation' },
-  '/listings': { title: 'TikTok Listings', subtitle: 'Draft & catalog synchronization' },
+  '/compare': { title: 'Product Comparison', subtitle: 'Side-by-side profit evaluation' },
+  '/listings': { title: 'TikTok Listings', subtitle: 'Drafts & catalog synchronization' },
   '/history': { title: 'Audit History', subtitle: 'Historical margin calculations log' },
   '/pricing': { title: 'Pricing & Plans', subtitle: 'SaaS subscriptions & tier upgrades' },
   '/orders': { title: 'Orders', subtitle: 'Live sync & fulfillment' },
   '/profit-analytics': { title: 'TrueProfit', subtitle: 'Waterfall deductions & margin' },
   '/ads-analytics': { title: 'TikTok Ads', subtitle: 'ROAS & CPA tracking' },
-  '/expenses': { title: 'Expenses', subtitle: 'Operating costs & payroll' },
+  '/expenses': { title: 'Expenses', subtitle: 'Operating costs & overhead' },
   '/customers': { title: 'Customers', subtitle: 'LTV & cohort retention' },
-  '/ai-assistant': { title: 'AI Assistant', subtitle: 'Conversational business AI' },
-  '/ai-customer-service': { title: 'AI Helpdesk', subtitle: 'Automated CS inquiry replies' },
-  '/marketing': { title: 'Marketing', subtitle: 'Channel & creator ROI' },
+  '/ai-assistant': { title: 'AI Assistant', subtitle: 'Conversational business intelligence' },
+  '/ai-customer-service': { title: 'AI Helpdesk', subtitle: 'Automated inquiry resolution' },
+  '/marketing': { title: 'Marketing', subtitle: 'Creator affiliate ROI' },
   '/reports': { title: 'P&L Reports', subtitle: 'GAAP statements & exports' },
-  '/settings': { title: 'Settings', subtitle: 'API tokens & webhooks' },
-  '/landing': { title: 'RushNshop Platform', subtitle: 'AI Operating System for TikTok Shop' },
+  '/settings': { title: 'Settings', subtitle: 'API credentials & webhooks' },
+  '/landing': { title: 'RushNshop', subtitle: 'TikTok Shop Performance Platform' },
 };
 
 export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () => void }) {
@@ -108,8 +109,8 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
   }, []);
 
   const pageInfo = pageTitles[pathname] || {
-    title: 'RushNshop OS',
-    subtitle: 'TikTok Shop Business Management',
+    title: 'RushNshop',
+    subtitle: 'TikTok Shop Performance Platform',
   };
 
   const selectedStoreObj = stores.find((s) => s.id === selectedStoreId);
@@ -120,37 +121,37 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
 
   return (
     <>
-      <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 px-3 backdrop-blur-md transition-colors dark:border-slate-800 dark:bg-[#0f1117]/95 sm:h-20 sm:px-8">
-        {/* Left: Hamburger (mobile) + Page Title & Subtitle */}
-        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+      <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200/80 bg-white/80 px-4 backdrop-blur-xl transition-colors dark:border-slate-800/80 dark:bg-[#090d16]/80 sm:px-8">
+        {/* Left: Mobile Trigger + Page Header */}
+        <div className="flex min-w-0 items-center gap-3">
           <button
             onClick={onOpenMobileMenu}
             className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-white/5 lg:hidden"
             aria-label="Open navigation menu"
           >
-            <Menu className="h-5 w-5" />
+            <Menu className="h-4 w-4" />
           </button>
           <div className="min-w-0">
-            <h1 className="truncate text-base font-bold tracking-tight text-slate-900 transition-colors dark:text-white sm:text-2xl">
+            <h1 className="truncate text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
               {pageInfo.title}
             </h1>
-            <p className="hidden truncate text-xs font-medium text-slate-500 dark:text-slate-400 sm:text-sm md:block">
+            <p className="hidden truncate text-xs font-normal text-slate-500 dark:text-slate-400 sm:block">
               {pageInfo.subtitle}
             </p>
           </div>
         </div>
 
-        {/* Right: Actions (Theme Toggle, Store Selector, Date picker, Notifications, Add Store) */}
-        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
+        {/* Right: Controls & Actions */}
+        <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
             aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
             title={theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
-            className="h-8.5 w-8.5 shadow-2xs flex cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-300 dark:hover:bg-white/10 sm:h-9 sm:w-9"
+            className="flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-xl border border-slate-200/80 bg-white text-slate-600 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-300 dark:hover:bg-white/5 sm:h-9 sm:w-9"
           >
             {theme === 'dark' ? (
-              <Sun className="h-4 w-4 fill-amber-400/20 text-amber-400" />
+              <Sun className="h-4 w-4 text-amber-400" />
             ) : (
               <Moon className="h-4 w-4 text-slate-700" />
             )}
@@ -163,30 +164,23 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                 setShowStorePicker(!showStorePicker);
                 setShowDatePicker(false);
               }}
-              className="shadow-2xs flex cursor-pointer items-center gap-1 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10 sm:gap-1.5 sm:px-3 sm:py-2"
+              className="flex cursor-pointer items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-200 dark:hover:bg-white/5 sm:px-3 sm:py-2"
             >
-              <StoreIcon className="hidden h-3.5 w-3.5 text-slate-500 dark:text-slate-400 xs:inline" />
-              <span className="max-w-[65px] truncate xs:max-w-[90px] sm:max-w-none">
+              <StoreIcon className="h-3.5 w-3.5 text-slate-400" />
+              <span className="max-w-[70px] truncate sm:max-w-none">
                 {selectedStoreId === 'all' ? (
-                  <>
-                    <span className="xs:hidden">🌐 All</span>
-                    <span className="hidden xs:inline sm:hidden">All</span>
-                    <span className="hidden sm:inline">All Stores ({stores.length})</span>
-                  </>
+                  <span>All Stores ({stores.length})</span>
                 ) : (
-                  <>
-                    <span>{selectedStoreObj?.flag}</span>
-                    <span className="ml-1 hidden xs:inline">{selectedStoreObj?.name}</span>
-                  </>
+                  <span>{selectedStoreObj?.flag} {selectedStoreObj?.name}</span>
                 )}
               </span>
-              <ChevronDown className="h-3 w-3 shrink-0 text-slate-400 sm:h-3.5 sm:w-3.5" />
+              <ChevronDown className="h-3 w-3 shrink-0 text-slate-400" />
             </button>
 
             {showStorePicker && (
-              <div className="animate-in fade-in slide-in-from-top-2 absolute right-0 top-full z-50 mt-2 w-64 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl dark:border-slate-800 dark:bg-[#161b26]">
-                <p className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                  Filter By Store
+              <div className="animate-in fade-in slide-in-from-top-2 absolute right-0 top-full z-50 mt-2 w-64 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-xl dark:border-slate-800 dark:bg-[#0f1420]">
+                <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  Select Active Account
                 </p>
                 <button
                   onClick={() => {
@@ -194,24 +188,24 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                     setShowStorePicker(false);
                   }}
                   className={cn(
-                    'flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs font-medium transition-colors',
+                    'flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs transition-colors',
                     selectedStoreId === 'all'
-                      ? 'bg-emerald-50 font-bold text-emerald-700 dark:bg-emerald-950/50 dark:text-[#4ade80]'
-                      : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5',
+                      ? 'bg-emerald-50 font-semibold text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400'
+                      : 'text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-white/5',
                   )}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-base">🌐</span>
+                    <span className="text-sm">🌐</span>
                     <div className="min-w-0">
-                      <p className="font-semibold leading-tight">All Stores Combined</p>
-                      <p className="text-[10px] text-slate-400">{stores.length} connected accounts</p>
+                      <p className="font-medium leading-tight">All Connected Stores</p>
+                      <p className="text-[10px] text-slate-400">{stores.length} regional accounts</p>
                     </div>
                   </div>
                   {selectedStoreId === 'all' && (
-                    <Check className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
+                    <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                   )}
                 </button>
-                <div className="my-1.5 border-t border-slate-100 dark:border-slate-800" />
+                <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
                 {stores.map((st) => (
                   <button
                     key={st.id}
@@ -220,16 +214,16 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                       setShowStorePicker(false);
                     }}
                     className={cn(
-                      'flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs font-medium transition-colors',
+                      'flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs transition-colors',
                       selectedStoreId === st.id
-                        ? 'bg-emerald-50 font-bold text-emerald-700 dark:bg-emerald-950/50 dark:text-[#4ade80]'
-                        : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5',
+                        ? 'bg-emerald-50 font-semibold text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400'
+                        : 'text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-white/5',
                     )}
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-base">{st.flag}</span>
+                      <span className="text-sm">{st.flag}</span>
                       <div className="min-w-0">
-                        <p className="truncate font-semibold leading-tight text-slate-900 dark:text-slate-100">
+                        <p className="truncate font-medium leading-tight text-slate-900 dark:text-slate-100">
                           {st.name}
                         </p>
                         <p className="text-[10px] text-slate-400">
@@ -238,7 +232,7 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                       </div>
                     </div>
                     {selectedStoreId === st.id && (
-                      <Check className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
+                      <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                     )}
                   </button>
                 ))}
@@ -246,24 +240,24 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
             )}
           </div>
 
-          {/* Date Range Selector Pill */}
+          {/* Date Range Selector */}
           <div className="relative" ref={datePickerRef}>
             <button
               onClick={() => {
                 setShowDatePicker(!showDatePicker);
                 setShowStorePicker(false);
               }}
-              className="shadow-2xs flex cursor-pointer items-center gap-1 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10 sm:gap-1.5 sm:px-3.5 sm:py-2"
+              className="flex cursor-pointer items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-200 dark:hover:bg-white/5 sm:px-3.5 sm:py-2"
             >
-              <Calendar className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400" />
+              <Calendar className="h-3.5 w-3.5 text-slate-400" />
               <span className="hidden md:inline">{dateRange}</span>
-              <span className="text-[11px] font-bold md:hidden">{selectedPresetObj.short}</span>
-              <ChevronDown className="h-3 w-3 shrink-0 text-slate-400 sm:h-3.5 sm:w-3.5" />
+              <span className="text-[11px] font-medium md:hidden">{selectedPresetObj.short}</span>
+              <ChevronDown className="h-3 w-3 shrink-0 text-slate-400" />
             </button>
 
             {showDatePicker && (
-              <div className="animate-in fade-in slide-in-from-top-2 absolute right-0 top-full z-50 mt-2 w-64 max-w-[calc(100vw-24px)] rounded-2xl border border-slate-200 bg-white p-2 shadow-xl dark:border-slate-800 dark:bg-[#161b26]">
-                <p className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+              <div className="animate-in fade-in slide-in-from-top-2 absolute right-0 top-full z-50 mt-2 w-60 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-xl dark:border-slate-800 dark:bg-[#0f1420]">
+                <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                   Date Presets
                 </p>
                 {datePresetsList.map((item) => (
@@ -275,15 +269,15 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
                       setShowDatePicker(false);
                     }}
                     className={cn(
-                      'flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs font-medium transition-colors',
+                      'flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-xs transition-colors',
                       datePreset === item.presetKey
-                        ? 'bg-emerald-50 font-bold text-emerald-700 dark:bg-emerald-950/50 dark:text-[#4ade80]'
-                        : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5',
+                        ? 'bg-emerald-50 font-semibold text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400'
+                        : 'text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-white/5',
                     )}
                   >
                     <span>{item.label}</span>
                     {datePreset === item.presetKey && (
-                      <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-[#4ade80]" />
+                      <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                     )}
                   </button>
                 ))}
@@ -294,12 +288,12 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
           {/* Notifications Bell */}
           <button
             onClick={() => setShowNotifications(true)}
-            aria-label={`View notifications and insights (${storeInsights.length} active)`}
-            className="shadow-2xs relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-300 dark:hover:bg-white/10 sm:h-9 sm:w-9"
+            aria-label={`View notifications (${storeInsights.length} active)`}
+            className="relative flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-xl border border-slate-200/80 bg-white text-slate-600 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-300 dark:hover:bg-white/5 sm:h-9 sm:w-9"
             title="Notifications & Insights"
           >
-            <Bell className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-lime-500 text-[9px] font-bold text-black ring-2 ring-white dark:ring-[#0f1117]">
+            <Bell className="h-4 w-4" />
+            <span className="absolute -right-0.5 -top-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-emerald-500 text-[8px] font-bold text-white ring-2 ring-white dark:ring-[#090d16]">
               {storeInsights.length}
             </span>
           </button>
@@ -307,9 +301,9 @@ export default function TopHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () =
           {/* Add Store Button */}
           <button
             onClick={() => setShowAddStore(true)}
-            className="shadow-2xs hidden cursor-pointer items-center gap-1.5 rounded-xl bg-[#84cc16] px-2.5 py-1.5 text-xs font-bold text-black transition-all hover:scale-[1.02] hover:bg-[#72b012] active:scale-[0.98] xs:flex sm:px-4 sm:py-2"
+            className="hidden cursor-pointer items-center gap-1.5 rounded-xl bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition-all hover:bg-emerald-500 xs:flex sm:px-3.5 sm:py-2"
           >
-            <Plus className="h-3.5 w-3.5 stroke-[2.5] sm:h-4 sm:w-4" />
+            <Plus className="h-3.5 w-3.5 stroke-[2.5]" />
             <span className="hidden sm:inline">Add Store</span>
           </button>
         </div>
