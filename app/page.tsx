@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
-import { ButtonPrimary } from '../components/ui/ButtonPrimary';
 import {
   Zap,
   TrendingUp,
@@ -44,6 +43,9 @@ import {
   Lock,
   Menu,
   X,
+  Scale,
+  CreditCard,
+  HeartHandshake,
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 import { formatCurrency, formatPercent, cn, calculateUnitEconomics } from '../lib/utils';
@@ -138,66 +140,66 @@ export default function RootLandingPage() {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 selection:bg-lime-400 selection:text-black dark:bg-[#0b0e14] dark:text-slate-100">
-      {/* Navigation Bar */}
-      <nav className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 px-4 py-3 backdrop-blur-md transition-colors dark:border-slate-800/80 dark:bg-[#0b0e14]/90 sm:px-6 lg:px-8">
+    <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-[#090d16] dark:text-slate-100">
+      {/* Navigation Bar with Direct Page Navigation */}
+      <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur-md transition-colors dark:border-slate-800 dark:bg-[#090d16]/90 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           {/* Brand Logo */}
           <Link
             href="/"
             className="flex shrink-0 items-center gap-2.5 transition-opacity hover:opacity-90"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-lime-500 to-green-400 text-black shadow-md shadow-green-500/20">
-              <Zap className="h-5 w-5 fill-current font-black text-black" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-xs">
+              <Zap className="h-5 w-5 fill-current" />
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white">
+              <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
                 RushNshop
               </span>
-              <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold text-emerald-800 dark:bg-emerald-950/60 dark:text-[#4ade80]">
-                AI OS
+              <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400">
+                Studio OS
               </span>
             </div>
           </Link>
 
-          {/* Desktop & Tablet Navigation Links */}
-          <div className="hidden items-center gap-1 text-xs font-semibold text-slate-600 dark:text-slate-300 md:flex lg:gap-2">
-            <a
-              href="#features"
-              className="rounded-lg px-3 py-1.5 transition-all hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white"
+          {/* Desktop & Tablet Navigation Links - Direct Page Routes */}
+          <div className="hidden items-center gap-1 text-xs font-semibold text-slate-600 dark:text-slate-300 md:flex lg:gap-1.5">
+            <Link
+              href="/dashboard"
+              className="rounded-lg px-3 py-1.5 transition-all hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/5 dark:hover:text-white"
             >
-              Features
-            </a>
-            <a
-              href="#trueprofit"
-              className="rounded-lg px-3 py-1.5 transition-all hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white"
+              Dashboard
+            </Link>
+            <Link
+              href="/profit-analytics"
+              className="rounded-lg px-3 py-1.5 transition-all hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/5 dark:hover:text-white"
             >
-              TrueProfit
-            </a>
-            <a
-              href="#calculator"
-              className="rounded-lg px-3 py-1.5 transition-all hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white"
+              Profit Analytics
+            </Link>
+            <Link
+              href="/calculator"
+              className="rounded-lg px-3 py-1.5 transition-all hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/5 dark:hover:text-white"
             >
               Calculator
-            </a>
-            <a
-              href="#roi"
-              className="rounded-lg px-3 py-1.5 transition-all hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white"
+            </Link>
+            <Link
+              href="/compare"
+              className="rounded-lg px-3 py-1.5 transition-all hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/5 dark:hover:text-white"
             >
-              ROI Estimator
-            </a>
-            <a
-              href="#pricing"
-              className="rounded-lg px-3 py-1.5 transition-all hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white"
+              Compare SKUs
+            </Link>
+            <Link
+              href="/ai-assistant"
+              className="rounded-lg px-3 py-1.5 transition-all hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/5 dark:hover:text-white"
+            >
+              AI Studio
+            </Link>
+            <Link
+              href="/pricing"
+              className="rounded-lg px-3 py-1.5 transition-all hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/5 dark:hover:text-white"
             >
               Pricing
-            </a>
-            <a
-              href="#faq"
-              className="rounded-lg px-3 py-1.5 transition-all hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white"
-            >
-              FAQ
-            </a>
+            </Link>
           </div>
 
           {/* Actions: Theme Toggle, Dashboard Button, Mobile Menu Button */}
@@ -206,10 +208,10 @@ export default function RootLandingPage() {
               onClick={toggleTheme}
               aria-label="Toggle Theme"
               title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              className="shadow-2xs flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-300 dark:hover:bg-white/10"
+              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-300 dark:hover:bg-white/5"
             >
               {theme === 'dark' ? (
-                <Sun className="h-4 w-4 fill-amber-400/20 text-amber-400" />
+                <Sun className="h-4 w-4 text-amber-400" />
               ) : (
                 <Moon className="h-4 w-4 text-slate-700" />
               )}
@@ -218,10 +220,10 @@ export default function RootLandingPage() {
             {/* Dashboard App Link */}
             <Link
               href="/dashboard"
-              className="shadow-2xs hidden items-center gap-1.5 rounded-xl bg-[#84cc16] px-3.5 py-2 text-xs font-bold text-black transition-all hover:bg-[#72b012] hover:shadow-rush-glow active:scale-95 sm:inline-flex"
+              className="hidden items-center gap-1.5 rounded-xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition-all hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white sm:inline-flex"
             >
-              <Zap className="h-3.5 w-3.5 fill-current" />
-              <span>Launch Dashboard</span>
+              <Zap className="h-3.5 w-3.5 fill-current text-emerald-400 dark:text-emerald-600" />
+              <span>Open Dashboard</span>
             </Link>
 
             {/* Mobile Hamburger Toggle Button */}
@@ -229,13 +231,9 @@ export default function RootLandingPage() {
               type="button"
               onClick={() => setMobileNavOpen(!mobileNavOpen)}
               aria-label="Toggle mobile navigation menu"
-              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/5 md:hidden"
+              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-200 md:hidden"
             >
-              {mobileNavOpen ? (
-                <X className="h-4 w-4" />
-              ) : (
-                <Menu className="h-4 w-4" />
-              )}
+              {mobileNavOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
           </div>
         </div>
@@ -247,62 +245,62 @@ export default function RootLandingPage() {
               className="fixed inset-0 top-[61px] z-40 bg-black/60 backdrop-blur-sm md:hidden"
               onClick={() => setMobileNavOpen(false)}
             />
-            <div className="animate-in fade-in slide-in-from-top-2 relative z-50 mt-3 space-y-3 rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-2xl backdrop-blur-xl dark:border-slate-800/90 dark:bg-[#121620]/95 md:hidden">
+            <div className="animate-in fade-in slide-in-from-top-2 relative z-50 mt-3 space-y-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl dark:border-slate-800 dark:bg-[#0f1420] md:hidden">
               <div className="grid grid-cols-2 gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
-                <a
-                  href="#features"
+                <Link
+                  href="/dashboard"
                   onClick={() => setMobileNavOpen(false)}
                   className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 transition-colors hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10"
                 >
-                  <span>⚡ Features</span>
+                  <span>📊 Dashboard</span>
                   <ArrowRight className="h-3 w-3 text-slate-400" />
-                </a>
-                <a
-                  href="#trueprofit"
+                </Link>
+                <Link
+                  href="/profit-analytics"
                   onClick={() => setMobileNavOpen(false)}
                   className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 transition-colors hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10"
                 >
-                  <span>📊 TrueProfit</span>
+                  <span>📈 Profit Analytics</span>
                   <ArrowRight className="h-3 w-3 text-slate-400" />
-                </a>
-                <a
-                  href="#calculator"
+                </Link>
+                <Link
+                  href="/calculator"
                   onClick={() => setMobileNavOpen(false)}
                   className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 transition-colors hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10"
                 >
                   <span>🧮 Calculator</span>
                   <ArrowRight className="h-3 w-3 text-slate-400" />
-                </a>
-                <a
-                  href="#roi"
+                </Link>
+                <Link
+                  href="/compare"
                   onClick={() => setMobileNavOpen(false)}
                   className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 transition-colors hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10"
                 >
-                  <span>💰 ROI Estimator</span>
+                  <span>⚖️ Compare SKUs</span>
                   <ArrowRight className="h-3 w-3 text-slate-400" />
-                </a>
-                <a
-                  href="#pricing"
+                </Link>
+                <Link
+                  href="/ai-assistant"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 transition-colors hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10"
+                >
+                  <span>✨ AI Studio</span>
+                  <ArrowRight className="h-3 w-3 text-slate-400" />
+                </Link>
+                <Link
+                  href="/pricing"
                   onClick={() => setMobileNavOpen(false)}
                   className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 transition-colors hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10"
                 >
                   <span>🏷️ Pricing</span>
                   <ArrowRight className="h-3 w-3 text-slate-400" />
-                </a>
-                <a
-                  href="#faq"
-                  onClick={() => setMobileNavOpen(false)}
-                  className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 transition-colors hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10"
-                >
-                  <span>❓ FAQ</span>
-                  <ArrowRight className="h-3 w-3 text-slate-400" />
-                </a>
+                </Link>
               </div>
               <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
                 <Link
                   href="/dashboard"
                   onClick={() => setMobileNavOpen(false)}
-                  className="shadow-xs flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-[#84cc16] py-3 text-xs font-bold text-black transition-colors hover:bg-[#72b012]"
+                  className="flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-emerald-600 py-3 text-xs font-semibold text-white transition-colors hover:bg-emerald-500"
                 >
                   <Zap className="h-3.5 w-3.5 fill-current" />
                   <span>Launch Live Dashboard</span>
@@ -314,174 +312,133 @@ export default function RootLandingPage() {
         )}
       </nav>
 
-      {/* Hero Section with TikTok Shop Creator Background & Interactive Spotlight */}
+      {/* Hero Section */}
       <section
         ref={heroRef}
         onMouseMove={handleMouseMove}
-        className="relative mx-auto max-w-7xl overflow-hidden px-4 pb-20 pt-14 text-center sm:px-6 sm:pb-32 sm:pt-20"
+        className="relative mx-auto max-w-7xl overflow-hidden px-4 pb-20 pt-14 text-center sm:px-6 sm:pb-28 sm:pt-20"
       >
-        {/* TikTok Shop Live Streamer & Creator Commerce Background Layer */}
-        <div className="pointer-events-none absolute inset-0 -z-10 select-none overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=1200&auto=format&fit=crop&q=75"
-            alt="TikTok Shop Creator Studio"
-            priority
-            fill
-            className="h-full w-full transform-gpu object-cover object-center opacity-10 mix-blend-luminosity dark:opacity-20"
-          />
-          <div className="dark:via-[#0b0e14]/92 absolute inset-0 bg-gradient-to-b from-slate-50/85 via-slate-50/95 to-slate-50 dark:from-[#0b0e14]/80 dark:to-[#0b0e14]" />
-          <div className="bg-linear-grid absolute inset-0 opacity-50" />
-        </div>
+        {/* Subtle Background Glow */}
+        <div className="pointer-events-none absolute left-1/2 top-1/4 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/10 blur-3xl sm:h-[400px] sm:w-[600px]" />
 
-        {/* Interactive Radial Spotlight Background */}
-        <div
-          className="pointer-events-none absolute -inset-px hidden opacity-60 transition-opacity duration-300 md:block"
-          style={{
-            background: `radial-gradient(650px circle at ${mousePos.x}px ${mousePos.y}px, rgba(132, 204, 22, 0.15), transparent 80%)`,
-          }}
-        />
-
-        {/* Ambient Top Glow Orbs */}
-        <div className="animate-pulse-glow pointer-events-none absolute left-1/2 top-1/4 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-lime-500/20 via-emerald-500/15 to-teal-500/0 blur-3xl sm:h-[450px] sm:w-[700px]" />
-
-        {/* Floating Interactive Badge 1 (Left) */}
-        <div className="animate-float font-mono-numeric card-hover-lift absolute left-6 top-20 z-20 hidden items-center gap-2.5 rounded-2xl border border-slate-200/80 bg-white/90 p-3 text-left shadow-xl backdrop-blur-md dark:border-slate-800 dark:bg-[#121620]/90 lg:flex">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-[#4ade80]">
+        {/* Floating Stat Badge 1 (Left) */}
+        <div className="font-mono-numeric absolute left-6 top-20 z-20 hidden items-center gap-2.5 rounded-2xl border border-slate-200 bg-white/95 p-3 text-left shadow-md dark:border-slate-800 dark:bg-[#0f1420]/95 lg:flex">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
             <Flame className="h-5 w-5 fill-current" />
           </div>
           <div>
-            <p className="font-sans text-[11px] font-bold text-slate-900 dark:text-white">
-              🔥 Viral Product Alert
+            <p className="font-sans text-[11px] font-semibold text-slate-900 dark:text-slate-100">
+              Top Profit SKU
             </p>
-            <p className="text-xs font-black text-emerald-600 dark:text-[#4ade80]">
+            <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400">
               +$14,820 Net Profit
             </p>
           </div>
         </div>
 
-        {/* Floating Interactive Badge 2 (Right) */}
-        <div className="animate-float-delayed font-mono-numeric card-hover-lift absolute right-6 top-24 z-20 hidden items-center gap-2.5 rounded-2xl border border-slate-200/80 bg-white/90 p-3 text-left shadow-xl backdrop-blur-md dark:border-slate-800 dark:bg-[#121620]/90 lg:flex">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-600 dark:bg-purple-950/60 dark:text-[#c084fc]">
+        {/* Floating Stat Badge 2 (Right) */}
+        <div className="font-mono-numeric absolute right-6 top-24 z-20 hidden items-center gap-2.5 rounded-2xl border border-slate-200 bg-white/95 p-3 text-left shadow-md dark:border-slate-800 dark:bg-[#0f1420]/95 lg:flex">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
             <Megaphone className="h-5 w-5" />
           </div>
           <div>
-            <p className="font-sans text-[11px] font-bold text-slate-900 dark:text-white">
-              ⚡ Spark Ads Auto-Scaled
+            <p className="font-sans text-[11px] font-semibold text-slate-900 dark:text-slate-100">
+              Spark Ads Scaled
             </p>
-            <p className="text-xs font-black text-purple-600 dark:text-[#c084fc]">4.82x ROAS</p>
-          </div>
-        </div>
-
-        {/* Floating Interactive Badge 3 (Bottom Left) */}
-        <div className="animate-float card-hover-lift absolute bottom-16 left-12 z-20 hidden items-center gap-2.5 rounded-2xl border border-slate-200/80 bg-white/90 p-3 text-left shadow-xl backdrop-blur-md dark:border-slate-800 dark:bg-[#121620]/90 xl:flex">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-[#38bdf8]">
-            <Bot className="h-5 w-5" />
-          </div>
-          <div>
-            <p className="text-[11px] font-bold text-slate-900 dark:text-white">
-              🤖 AI Helpdesk Active
-            </p>
-            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-              142 Inquiries Auto-Resolved
-            </p>
+            <p className="text-xs font-bold text-blue-600 dark:text-blue-400">4.82x Blended ROAS</p>
           </div>
         </div>
 
         {/* Main Hero Header */}
         <div className="relative z-10">
-          <div className="shadow-xs animate-in fade-in slide-in-from-top-4 mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-50/90 px-4 py-1.5 text-xs font-bold text-emerald-800 backdrop-blur-md dark:bg-emerald-950/50 dark:text-[#4ade80]">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
-            <span>The All-In-One AI Operating System for TikTok Shop</span>
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            <span>The Operating System for High-Growth TikTok Shop Brands</span>
           </div>
 
-          <h1 className="mx-auto max-w-4xl text-3xl font-black leading-tight tracking-tight text-slate-900 dark:text-white sm:text-5xl sm:leading-none md:text-6xl">
-            Scale Multi-Store TikTok Empires with{' '}
-            <span className="bg-gradient-to-r from-lime-500 via-emerald-400 to-teal-400 bg-clip-text text-transparent">
+          <h1 className="mx-auto max-w-4xl text-3xl font-bold leading-tight tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl md:text-6xl">
+            Scale Multi-Store TikTok Operations with{' '}
+            <span className="text-emerald-600 dark:text-emerald-400">
               100% Real Profit Visibility
             </span>
           </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
-            Stop losing money on hidden TikTok platform fees, uncalculated returns, and runaway ad
-            spend. Combine TrueProfit real-time accounting, viral AI video scripts, customer service
-            automation, and multi-store intelligence in one interface.
+          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">
+            Eliminate guesswork on hidden TikTok platform take-rates, shipping charges, creator affiliate splits, and ad CPA. Real-time accounting, viral AI video scripts, and multi-store intelligence in one place.
           </p>
 
           {/* CTA Buttons */}
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
             <Link
               href="/dashboard"
-              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#84cc16] px-8 py-4 text-sm font-bold text-black shadow-lg shadow-lime-500/25 transition-all hover:scale-[1.03] hover:bg-[#72b012] sm:w-auto"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-7 py-3.5 text-xs font-semibold text-white shadow-xs transition-all hover:bg-emerald-500 sm:w-auto"
             >
               <Zap className="h-4 w-4 fill-current" />
-              <span>Launch Live Dashboard Demo</span>
+              <span>Launch Live Dashboard</span>
             </Link>
-            <a
-              href="#calculator"
-              className="shadow-xs flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white/90 px-6 py-4 text-sm font-bold text-slate-800 backdrop-blur-md transition-all hover:scale-[1.01] hover:bg-slate-50 dark:border-slate-800 dark:bg-[#121620]/90 dark:text-slate-200 dark:hover:bg-white/5 sm:w-auto"
+            <Link
+              href="/calculator"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-xs font-semibold text-slate-800 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-200 dark:hover:bg-white/5 sm:w-auto"
             >
-              <Calculator className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
+              <Calculator className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
               <span>Test Profit Simulator</span>
-            </a>
+            </Link>
           </div>
 
           {/* Hero Interactive App Window Preview */}
-          <div className="card-hover-lift relative mx-auto mt-14 max-w-5xl rounded-3xl border border-slate-200/80 bg-white/95 p-3 shadow-2xl backdrop-blur-xl dark:border-slate-800/80 dark:bg-[#121620]/95 sm:p-4">
-            {/* Window Top Controls */}
-            <div className="flex items-center justify-between border-b border-slate-100 px-2 pb-3 dark:border-slate-800/80">
+          <div className="relative mx-auto mt-12 max-w-5xl rounded-3xl border border-slate-200 bg-white p-3 shadow-xl dark:border-slate-800 dark:bg-[#0f1420] sm:p-4">
+            <div className="flex items-center justify-between border-b border-slate-100 px-2 pb-3 dark:border-slate-800">
               <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-rose-500/80" />
-                <span className="h-3 w-3 rounded-full bg-amber-500/80" />
-                <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
-                <span className="ml-2 text-[11px] font-semibold text-slate-400">
-                  app.rushnshop.com/dashboard
+                <span className="h-2.5 w-2.5 rounded-full bg-slate-300 dark:bg-slate-700" />
+                <span className="h-2.5 w-2.5 rounded-full bg-slate-300 dark:bg-slate-700" />
+                <span className="h-2.5 w-2.5 rounded-full bg-slate-300 dark:bg-slate-700" />
+                <span className="ml-2 text-[11px] font-medium text-slate-400">
+                  rushnshop.com/dashboard
                 </span>
               </div>
-              <span className="rounded-md bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800 dark:bg-emerald-950/60 dark:text-[#4ade80]">
+              <span className="rounded-md bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400">
                 ● Live TikTok Sync Active
               </span>
             </div>
 
             {/* Simulated Live Grid inside Mockup */}
             <div className="font-mono-numeric mt-3 grid grid-cols-2 gap-3 text-left sm:grid-cols-4">
-              <div className="rounded-xl border border-slate-100 bg-slate-50 p-3 dark:border-slate-800 dark:bg-[#0f1117]">
+              <div className="rounded-xl border border-slate-100 bg-slate-50 p-3 dark:border-slate-800 dark:bg-[#141a29]">
                 <p className="font-sans text-[10px] text-slate-400">Gross Revenue</p>
-                <p className="mt-0.5 text-base font-bold text-slate-900 dark:text-white sm:text-xl">
+                <p className="mt-0.5 text-base font-bold text-slate-900 dark:text-slate-100 sm:text-lg">
                   $25,430.80
                 </p>
-                <p className="font-sans text-[10px] font-bold text-emerald-600 dark:text-[#4ade80]">
+                <p className="font-sans text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
                   ↑ 18.6% MTD
                 </p>
               </div>
-              <div className="rounded-xl border border-slate-100 bg-slate-50 p-3 dark:border-slate-800 dark:bg-[#0f1117]">
+              <div className="rounded-xl border border-slate-100 bg-slate-50 p-3 dark:border-slate-800 dark:bg-[#141a29]">
                 <p className="font-sans text-[10px] text-slate-400">True Net Profit</p>
-                <p className="mt-0.5 text-base font-bold text-emerald-600 dark:text-[#4ade80] sm:text-xl">
+                <p className="mt-0.5 text-base font-bold text-emerald-600 dark:text-emerald-400 sm:text-lg">
                   $13,224.00
                 </p>
-                <p className="font-sans text-[10px] font-bold text-slate-400">52.0% Real Margin</p>
+                <p className="font-sans text-[10px] text-slate-400">52.0% Real Margin</p>
               </div>
-              <div className="rounded-xl border border-slate-100 bg-slate-50 p-3 dark:border-slate-800 dark:bg-[#0f1117]">
+              <div className="rounded-xl border border-slate-100 bg-slate-50 p-3 dark:border-slate-800 dark:bg-[#141a29]">
                 <p className="font-sans text-[10px] text-slate-400">Total Orders</p>
-                <p className="mt-0.5 text-base font-bold text-slate-900 dark:text-white sm:text-xl">
+                <p className="mt-0.5 text-base font-bold text-slate-900 dark:text-slate-100 sm:text-lg">
                   840 Orders
                 </p>
-                <p className="font-sans text-[10px] font-bold text-blue-500">4 Global Stores</p>
+                <p className="font-sans text-[10px] text-slate-400">4 Global Stores</p>
               </div>
-              <div className="rounded-xl border border-slate-100 bg-slate-50 p-3 dark:border-slate-800 dark:bg-[#0f1117]">
+              <div className="rounded-xl border border-slate-100 bg-slate-50 p-3 dark:border-slate-800 dark:bg-[#141a29]">
                 <p className="font-sans text-[10px] text-slate-400">AI Automation</p>
-                <p className="mt-0.5 text-base font-bold text-purple-600 dark:text-[#c084fc] sm:text-xl">
+                <p className="mt-0.5 text-base font-bold text-slate-900 dark:text-slate-100 sm:text-lg">
                   94% Rate
                 </p>
-                <p className="font-sans text-[10px] font-bold text-purple-500">
-                  Instant Resolution
-                </p>
+                <p className="font-sans text-[10px] text-slate-400">Instant Resolution</p>
               </div>
             </div>
 
             {/* Clickable Overlay to Open Real Dashboard */}
             <Link
               href="/dashboard"
-              className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-slate-900 py-2.5 text-xs font-bold text-white transition-all hover:scale-[1.01] hover:bg-black dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+              className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-slate-900 py-2.5 text-xs font-semibold text-white transition-all hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
             >
               <span>Click to Enter Interactive Dashboard</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -490,9 +447,9 @@ export default function RootLandingPage() {
         </div>
       </section>
 
-      {/* Infinite Animated Store Region Marquee Ribbon */}
-      <section className="select-none overflow-hidden border-y border-slate-200 bg-white/70 py-6 backdrop-blur-sm dark:border-slate-800 dark:bg-[#0f1117]/70">
-        <div className="animate-marquee flex items-center gap-8 text-xs font-bold text-slate-600 dark:text-slate-300">
+      {/* Infinite Region Ribbon */}
+      <section className="select-none overflow-hidden border-y border-slate-200 bg-white/70 py-4 dark:border-slate-800 dark:bg-[#0f1420]/70">
+        <div className="animate-marquee flex items-center gap-8 text-xs font-medium text-slate-600 dark:text-slate-300">
           <span className="flex items-center gap-2">🇺🇸 TikTok Shop US Partner</span>
           <span className="text-slate-300 dark:text-slate-700">•</span>
           <span className="flex items-center gap-2">🇬🇧 TikTok Shop UK Active</span>
@@ -501,144 +458,104 @@ export default function RootLandingPage() {
           <span className="text-slate-300 dark:text-slate-700">•</span>
           <span className="flex items-center gap-2">🇨🇦 TikTok Shop CA Sync</span>
           <span className="text-slate-300 dark:text-slate-700">•</span>
-          <span className="flex items-center gap-2">⚡ Real-Time Spark Ads API</span>
+          <span className="flex items-center gap-2">⚡ Spark Ads API Attribution</span>
           <span className="text-slate-300 dark:text-slate-700">•</span>
           <span className="flex items-center gap-2">🔒 256-Bit SSL Encrypted</span>
           <span className="text-slate-300 dark:text-slate-700">•</span>
-          <span className="flex items-center gap-2">📦 USPS / 3PL Auto-Tracking</span>
+          <span className="flex items-center gap-2">📦 3PL & Carrier Tracking</span>
           <span className="text-slate-300 dark:text-slate-700">•</span>
           <span className="flex items-center gap-2">🇺🇸 TikTok Shop US Partner</span>
           <span className="text-slate-300 dark:text-slate-700">•</span>
           <span className="flex items-center gap-2">🇬🇧 TikTok Shop UK Active</span>
-          <span className="text-slate-300 dark:text-slate-700">•</span>
-          <span className="flex items-center gap-2">🇩🇪 TikTok Shop DE Cross-Border</span>
         </div>
       </section>
 
-      {/* Problem vs Solution Comparison Section with High-Performance Grid */}
-      <section
-        id="trueprofit"
-        className="relative mx-auto max-w-6xl scroll-mt-24 space-y-12 overflow-hidden px-4 py-16 sm:px-6 sm:py-20"
-      >
-        {/* Subtle Background Grid Texture */}
-        <div className="bg-linear-grid pointer-events-none absolute inset-0 -z-10 overflow-hidden opacity-30" />
-
+      {/* Core Solutions Grid */}
+      <section className="mx-auto max-w-6xl space-y-12 px-4 py-16 sm:px-6 sm:py-20">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">
-            Why RushNshop?
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            Why RushNshop
           </span>
-          <h2 className="mt-1 text-2xl font-black text-slate-900 dark:text-white sm:text-3xl">
-            Built Specifically for the Realities of TikTok Commerce
+          <h2 className="mt-1 text-2xl font-bold text-slate-900 dark:text-slate-100 sm:text-3xl">
+            Built for the Realities of TikTok Commerce
           </h2>
           <p className="mt-2 text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
-            Most e-commerce analytics were built for Amazon or Shopify. TikTok Shop has unique
-            platform commission structures, creator affiliate cuts, and Spark Ads attribution.
+            Standard e-commerce analytics ignore TikTok's platform take-rates, creator commissions, and Spark Ads attribution.
           </p>
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {/* The Old Way */}
-          <div className="shadow-xs card-hover-lift space-y-4 rounded-3xl border border-rose-200 bg-white/95 p-6 dark:border-rose-900/40 dark:bg-[#121620]/95 sm:p-8">
+          <div className="space-y-4 rounded-3xl border border-rose-200 bg-white p-6 dark:border-rose-900/40 dark:bg-[#0f1420] sm:p-8">
             <div className="flex items-center gap-2">
-              <span className="rounded-lg bg-rose-100 p-2 text-xs font-bold text-rose-700 dark:bg-rose-950/60 dark:text-rose-400">
-                ❌ The Old Chaotic Way
+              <span className="rounded-lg bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-700 dark:bg-rose-950/60 dark:text-rose-400">
+                ❌ Traditional Fragmented Tools
               </span>
             </div>
-            <ul className="space-y-3.5 text-xs font-medium text-slate-600 dark:text-slate-300">
+            <ul className="space-y-3.5 text-xs font-normal text-slate-600 dark:text-slate-300">
               <li className="flex items-start gap-2.5">
-                <span className="text-sm font-bold text-rose-500">✕</span>
-                <span>
-                  Guessing profit margins while 5% TikTok fees, payment gateway cuts, and
-                  uncalculated return shipping drain your payout.
-                </span>
+                <span className="font-bold text-rose-500">✕</span>
+                <span>Guessing profit margins while platform commissions and return shipping drain your payouts.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-sm font-bold text-rose-500">✕</span>
-                <span>
-                  Constantly logging in and out of multiple seller centers to check order status
-                  across different regions.
-                </span>
+                <span className="font-bold text-rose-500">✕</span>
+                <span>Constantly switching between seller accounts across different global regions.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-sm font-bold text-rose-500">✕</span>
-                <span>
-                  Spending hours writing TikTok video hooks and product descriptions that fail to
-                  convert.
-                </span>
+                <span className="font-bold text-rose-500">✕</span>
+                <span>Hours writing hooks and descriptions that fail to gain organic TikTok traction.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-sm font-bold text-rose-500">✕</span>
-                <span>
-                  Customer support backlog leading to late dispatch rates, cancellation penalties,
-                  and store health warnings.
-                </span>
+                <span className="font-bold text-rose-500">✕</span>
+                <span>Customer support delays leading to cancellation penalties and store health degradation.</span>
               </li>
             </ul>
           </div>
 
           {/* The RushNshop Way */}
-          <div className="card-hover-lift space-y-4 rounded-3xl border-2 border-emerald-400 bg-white/95 p-6 shadow-xl dark:border-emerald-700 dark:bg-[#121620]/95 sm:p-8">
+          <div className="space-y-4 rounded-3xl border border-emerald-500/50 bg-white p-6 dark:border-emerald-500/40 dark:bg-[#0f1420] sm:p-8">
             <div className="flex items-center gap-2">
-              <span className="rounded-lg bg-emerald-100 p-2 text-xs font-bold text-emerald-800 dark:bg-emerald-950/60 dark:text-[#4ade80]">
-                ⚡ The RushNshop AI Operating System
+              <span className="rounded-lg bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400">
+                ⚡ The RushNshop Operating System
               </span>
             </div>
-            <ul className="space-y-3.5 text-xs font-medium text-slate-600 dark:text-slate-300">
+            <ul className="space-y-3.5 text-xs font-normal text-slate-600 dark:text-slate-300">
               <li className="flex items-start gap-2.5">
-                <span className="text-sm font-bold text-emerald-500">✓</span>
-                <span>
-                  <strong>TrueProfit Waterfall Accounting:</strong> Real-time deduction of COGS,
-                  fees, ads, and OPEX to penny-level accuracy.
-                </span>
+                <span className="font-bold text-emerald-500">✓</span>
+                <span><strong>TrueProfit Waterfall Accounting:</strong> Real-time deduction of COGS, fees, ads, and expenses.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-sm font-bold text-emerald-500">✓</span>
-                <span>
-                  <strong>Unified Multi-Account Hub:</strong> Switch stores in 1 click or see global
-                  blended financials across all global shops.
-                </span>
+                <span className="font-bold text-emerald-500">✓</span>
+                <span><strong>Unified Multi-Account Hub:</strong> Switch stores in 1 click or view global blended financials.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-sm font-bold text-emerald-500">✓</span>
-                <span>
-                  <strong>AI Viral Script Studio:</strong> Generate high-converting 3s visual hooks,
-                  30s scene scripts, and SEO titles in 2 seconds.
-                </span>
+                <span className="font-bold text-emerald-500">✓</span>
+                <span><strong>AI Viral Script Studio:</strong> Generate high-converting hooks, scene scripts, and SEO titles instantly.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-sm font-bold text-emerald-500">✓</span>
-                <span>
-                  <strong>Autonomous Customer Helpdesk:</strong> Smart auto-replies trained on live
-                  USPS tracking & return policies.
-                </span>
+                <span className="font-bold text-emerald-500">✓</span>
+                <span><strong>Autonomous Customer Helpdesk:</strong> Smart auto-replies trained on live carrier tracking coordinates.</span>
               </li>
             </ul>
           </div>
         </div>
       </section>
 
-      {/* Interactive Feature Deep-Dive Tabs with High-Performance Grid Texture */}
-      <section
-        id="features"
-        className="relative mx-auto max-w-7xl scroll-mt-24 space-y-12 overflow-hidden px-4 py-20 sm:px-6"
-      >
-        {/* Subtle AI Network Background Texture */}
-        <div className="bg-linear-grid pointer-events-none absolute inset-0 -z-10 overflow-hidden opacity-30" />
-
+      {/* Feature Deep-Dive Modules */}
+      <section className="mx-auto max-w-7xl space-y-10 px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">
-            Feature Deep Dive
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            Platform Modules
           </span>
-          <h2 className="mt-1 text-3xl font-black text-slate-900 dark:text-white sm:text-4xl">
+          <h2 className="mt-1 text-3xl font-bold text-slate-900 dark:text-slate-100">
             Engineered for High-Volume Sellers
           </h2>
           <p className="mt-2 text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
-            Click through the core modules below to explore how RushNshop automates your TikTok
-            operations.
+            Explore the core features designed to automate and scale your TikTok operations.
           </p>
         </div>
 
-        {/* Feature Interactive Tabs */}
+        {/* Feature Tabs */}
         <div className="flex flex-wrap items-center justify-center gap-2">
           {[
             { id: 'profit', label: 'TrueProfit Waterfall', icon: Layers },
@@ -654,10 +571,10 @@ export default function RootLandingPage() {
                 key={tab.id}
                 onClick={() => setActiveFeatureTab(tab.id as any)}
                 className={cn(
-                  'flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold transition-all',
+                  'flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold transition-all cursor-pointer',
                   isActive
-                    ? 'scale-[1.02] bg-[#84cc16] text-black shadow-md shadow-lime-500/20'
-                    : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-800 dark:bg-[#121620] dark:text-slate-400 dark:hover:bg-white/5',
+                    ? 'bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900'
+                    : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-400 dark:hover:bg-white/5',
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -668,41 +585,40 @@ export default function RootLandingPage() {
         </div>
 
         {/* Active Tab Preview Card */}
-        <div className="shadow-xs card-hover-lift mx-auto max-w-5xl rounded-3xl border border-slate-200/80 bg-white/95 p-6 backdrop-blur-sm dark:border-slate-800 dark:bg-[#121620]/95 sm:p-10">
+        <div className="mx-auto max-w-5xl rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0f1420] sm:p-10">
           {activeFeatureTab === 'profit' && (
             <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
               <div className="space-y-4">
-                <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800 dark:bg-emerald-950/60 dark:text-[#4ade80]">
+                <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400">
                   Real-Time GAAP Deductions
                 </span>
-                <h3 className="text-2xl font-black text-slate-900 dark:text-white">
-                  Stop Guessing Your True Take-Home Profit
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+                  Accurate Take-Home Profit Accounting
                 </h3>
-                <p className="text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-sm">
-                  RushNshop’s waterfall deduction model subtracts every single micro-fee before
-                  declaring profit:
+                <p className="text-xs font-normal leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
+                  RushNshop’s waterfall deduction model subtracts every single micro-fee before declaring net profit:
                 </p>
-                <div className="space-y-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <div className="space-y-2 text-xs font-medium text-slate-700 dark:text-slate-300">
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                     <span>Gross GMV & TikTok Discounts</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                     <span>Product COGS & 3PL Shipping Prep</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                    <span>TikTok 5% Commission + Stripe 2.9% + $0.30</span>
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    <span>TikTok 5% Commission + Merchant Processing</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                    <span>Creator Affiliate Revenue Splits & Spark Ad CPA</span>
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    <span>Creator Affiliate Splits & Spark Ad CPA</span>
                   </div>
                 </div>
                 <Link
                   href="/profit-analytics"
-                  className="inline-flex items-center gap-1.5 pt-2 text-xs font-bold text-emerald-600 hover:underline dark:text-[#4ade80]"
+                  className="inline-flex items-center gap-1.5 pt-2 text-xs font-semibold text-emerald-600 hover:underline dark:text-emerald-400"
                 >
                   <span>Explore Profit Analytics Engine</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -710,41 +626,41 @@ export default function RootLandingPage() {
               </div>
 
               {/* Visual Demo Card */}
-              <div className="font-mono-numeric space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-[#0f1117]">
+              <div className="font-mono-numeric space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-[#141a29]">
                 <div className="flex items-center justify-between border-b border-slate-200 pb-2 text-xs dark:border-slate-800">
-                  <span className="font-sans font-bold text-slate-800 dark:text-slate-200">
-                    Order #TK-84920 Waterfall
+                  <span className="font-sans font-semibold text-slate-800 dark:text-slate-200">
+                    Order Waterfall Sample
                   </span>
-                  <span className="font-bold text-emerald-600 dark:text-[#4ade80]">
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400">
                     +$18.42 Net Profit
                   </span>
                 </div>
                 <div className="space-y-2 text-xs">
                   <div className="flex justify-between font-sans text-slate-600 dark:text-slate-400">
                     <span>Gross Selling Price</span>
-                    <span className="font-bold text-slate-900 dark:text-white">$34.99</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100">$34.99</span>
                   </div>
                   <div className="flex justify-between font-sans text-rose-500">
                     <span>- Supplier COGS</span>
-                    <span className="font-bold">-$6.50</span>
+                    <span className="font-medium">-$6.50</span>
                   </div>
                   <div className="flex justify-between font-sans text-rose-500">
-                    <span>- 3PL Shipping</span>
-                    <span className="font-bold">-$3.80</span>
+                    <span>- Inbound Freight & Courier Delivery</span>
+                    <span className="font-medium">-$3.80</span>
                   </div>
                   <div className="flex justify-between font-sans text-rose-500">
                     <span>- TikTok 5% Commission</span>
-                    <span className="font-bold">-$1.75</span>
+                    <span className="font-medium">-$1.75</span>
                   </div>
                   <div className="flex justify-between font-sans text-rose-500">
                     <span>- Payment Gateway (2.9% + $0.30)</span>
-                    <span className="font-bold">-$1.31</span>
+                    <span className="font-medium">-$1.31</span>
                   </div>
-                  <div className="flex justify-between font-sans text-purple-600 dark:text-[#c084fc]">
+                  <div className="flex justify-between font-sans text-blue-500">
                     <span>- TikTok Spark Ad CPA</span>
-                    <span className="font-bold">-$3.21</span>
+                    <span className="font-medium">-$3.21</span>
                   </div>
-                  <div className="flex justify-between border-t border-slate-200 pt-2 font-sans text-sm font-bold text-emerald-600 dark:border-slate-800 dark:text-[#4ade80]">
+                  <div className="flex justify-between border-t border-slate-200 pt-2 font-sans text-sm font-bold text-emerald-600 dark:border-slate-800 dark:text-emerald-400">
                     <span>Final Net Profit Margin</span>
                     <span>52.6% ($18.42)</span>
                   </div>
@@ -756,42 +672,39 @@ export default function RootLandingPage() {
           {activeFeatureTab === 'ai' && (
             <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
               <div className="space-y-4">
-                <span className="rounded-full bg-pink-100 px-3 py-1 text-xs font-bold text-pink-800 dark:bg-pink-950/60 dark:text-[#f472b6]">
-                  Generative Video Prompts
+                <span className="rounded-full bg-purple-50 px-3 py-1 text-xs font-semibold text-purple-700 dark:bg-purple-950/60 dark:text-purple-400">
+                  Generative Video Studio
                 </span>
-                <h3 className="text-2xl font-black text-slate-900 dark:text-white">
-                  Generate 3-Second Viral Video Hooks in Seconds
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+                  Generate High-Converting Video Scripts
                 </h3>
-                <p className="text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-sm">
-                  Trained on millions of organic TikTok views. Generates scene-by-scene audio
-                  voiceovers, on-screen text overlays, and SEO product bullet points.
+                <p className="text-xs font-normal leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
+                  Generates scene-by-scene audio voiceovers, on-screen text overlays, and SEO product bullet points tailored for TikTok.
                 </p>
                 <Link
                   href="/ai-assistant"
-                  className="inline-flex items-center gap-1.5 pt-2 text-xs font-bold text-pink-600 hover:underline dark:text-[#f472b6]"
+                  className="inline-flex items-center gap-1.5 pt-2 text-xs font-semibold text-purple-600 hover:underline dark:text-purple-400"
                 >
                   <span>Open AI Video Studio</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
 
-              <div className="space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-5 text-xs dark:border-slate-800 dark:bg-[#0f1117]">
-                <div className="rounded-xl border border-pink-200 bg-pink-50 p-3 dark:border-pink-900/50 dark:bg-pink-950/30">
-                  <p className="mb-1 font-bold text-pink-900 dark:text-pink-200">
+              <div className="space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-5 text-xs dark:border-slate-800 dark:bg-[#141a29]">
+                <div className="rounded-xl border border-purple-200 bg-purple-50 p-3 dark:border-purple-900/50 dark:bg-purple-950/30">
+                  <p className="mb-1 font-bold text-purple-900 dark:text-purple-200">
                     🎯 3-Second Visual Hook:
                   </p>
                   <p className="italic text-slate-700 dark:text-slate-300">
-                    "Stop scrolling if you’re still wasting 20 minutes cleaning your blender every
-                    morning!"
+                    "Stop scrolling if you’re still wasting 20 minutes cleaning your blender every morning!"
                   </p>
                 </div>
                 <div className="space-y-1 rounded-xl bg-slate-100 p-3 dark:bg-white/5">
-                  <p className="font-bold text-slate-800 dark:text-slate-200">
+                  <p className="font-semibold text-slate-800 dark:text-slate-200">
                     🎬 Scene 1 (0:00 - 0:08):
                   </p>
                   <p className="text-slate-600 dark:text-slate-400">
-                    Close up pouring water & pressing turbo button. Audio: upbeat trending lofi
-                    beat.
+                    Close up pouring water & pressing turbo button. Audio: upbeat trending lofi beat.
                   </p>
                 </div>
               </div>
@@ -801,46 +714,45 @@ export default function RootLandingPage() {
           {activeFeatureTab === 'ads' && (
             <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
               <div className="space-y-4">
-                <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-bold text-purple-800 dark:bg-purple-950/60 dark:text-[#c084fc]">
+                <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 dark:bg-blue-950/60 dark:text-blue-400">
                   Marketing API Sync
                 </span>
-                <h3 className="text-2xl font-black text-slate-900 dark:text-white">
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
                   TikTok Spark Ads & Creator Attribution
                 </h3>
-                <p className="text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-sm">
-                  Track blended ROAS, individual creator affiliate performance, and receive
-                  automated budget scaling alerts when a campaign hits target CPA.
+                <p className="text-xs font-normal leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
+                  Track blended ROAS, individual creator affiliate performance, and receive automated budget scaling alerts.
                 </p>
                 <Link
                   href="/ads-analytics"
-                  className="inline-flex items-center gap-1.5 pt-2 text-xs font-bold text-purple-600 hover:underline dark:text-[#c084fc]"
+                  className="inline-flex items-center gap-1.5 pt-2 text-xs font-semibold text-blue-600 hover:underline dark:text-blue-400"
                 >
                   <span>View Ads Analytics</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
 
-              <div className="font-mono-numeric space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-[#0f1117]">
+              <div className="font-mono-numeric space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-[#141a29]">
                 <div className="flex items-center justify-between border-b border-slate-200 pb-2 text-xs dark:border-slate-800">
-                  <span className="font-sans font-bold text-slate-800 dark:text-slate-200">
-                    Campaign: Sunset Lamp Spark #4
+                  <span className="font-sans font-semibold text-slate-800 dark:text-slate-200">
+                    Campaign Performance
                   </span>
-                  <span className="rounded-md bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800 dark:bg-emerald-950/60 dark:text-[#4ade80]">
+                  <span className="rounded-md bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400">
                     Scale +20% Budget
                   </span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-xs">
                   <div>
                     <p className="font-sans text-[10px] text-slate-400">Spend</p>
-                    <p className="font-bold text-slate-900 dark:text-white">$840.00</p>
+                    <p className="font-bold text-slate-900 dark:text-slate-100">$840.00</p>
                   </div>
                   <div>
                     <p className="font-sans text-[10px] text-slate-400">Revenue</p>
-                    <p className="font-bold text-emerald-600 dark:text-[#4ade80]">$4,048.80</p>
+                    <p className="font-bold text-emerald-600 dark:text-emerald-400">$4,048.80</p>
                   </div>
                   <div>
                     <p className="font-sans text-[10px] text-slate-400">ROAS</p>
-                    <p className="font-bold text-purple-600 dark:text-[#c084fc]">4.82x</p>
+                    <p className="font-bold text-blue-600 dark:text-blue-400">4.82x</p>
                   </div>
                 </div>
               </div>
@@ -850,19 +762,18 @@ export default function RootLandingPage() {
           {activeFeatureTab === 'stores' && (
             <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
               <div className="space-y-4">
-                <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-800 dark:bg-blue-950/60 dark:text-[#38bdf8]">
+                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                   Global Accounts
                 </span>
-                <h3 className="text-2xl font-black text-slate-900 dark:text-white">
-                  Multi-Store Account Management & RBAC
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+                  Multi-Store Account Management
                 </h3>
-                <p className="text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-sm">
+                <p className="text-xs font-normal leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
                   Manage accounts in USA, UK, Germany, and Canada from a single master dashboard.
-                  Grant team members store-level permissions.
                 </p>
                 <Link
                   href="/stores"
-                  className="inline-flex items-center gap-1.5 pt-2 text-xs font-bold text-blue-600 hover:underline dark:text-[#38bdf8]"
+                  className="inline-flex items-center gap-1.5 pt-2 text-xs font-semibold text-emerald-600 hover:underline dark:text-emerald-400"
                 >
                   <span>Manage Stores</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -871,28 +782,21 @@ export default function RootLandingPage() {
 
               <div className="space-y-2.5">
                 {[
-                  {
-                    name: 'RushNshop US Official',
-                    flag: '🇺🇸',
-                    rev: '$14,200.50',
-                    status: 'Healthy',
-                  },
+                  { name: 'RushNshop US Official', flag: '🇺🇸', rev: '$14,200.50', status: 'Healthy' },
                   { name: 'RushNshop UK Direct', flag: '🇬🇧', rev: '£6,450.00', status: 'Healthy' },
                   { name: 'RushNshop DE Store', flag: '🇩🇪', rev: '€4,780.30', status: 'Healthy' },
                 ].map((s) => (
                   <div
                     key={s.name}
-                    className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs dark:border-slate-800 dark:bg-[#0f1117]"
+                    className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs dark:border-slate-800 dark:bg-[#141a29]"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-lg">{s.flag}</span>
-                      <span className="font-bold text-slate-900 dark:text-white">{s.name}</span>
+                      <span className="text-base">{s.flag}</span>
+                      <span className="font-semibold text-slate-900 dark:text-slate-100">{s.name}</span>
                     </div>
                     <div className="font-mono-numeric flex items-center gap-3">
-                      <span className="font-bold text-emerald-600 dark:text-[#4ade80]">
-                        {s.rev}
-                      </span>
-                      <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 font-sans text-[10px] font-bold text-emerald-800 dark:bg-emerald-950/60 dark:text-[#4ade80]">
+                      <span className="font-bold text-emerald-600 dark:text-emerald-400">{s.rev}</span>
+                      <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 font-sans text-[10px] font-semibold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400">
                         {s.status}
                       </span>
                     </div>
@@ -905,39 +809,36 @@ export default function RootLandingPage() {
           {activeFeatureTab === 'helpdesk' && (
             <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
               <div className="space-y-4">
-                <span className="rounded-full bg-teal-100 px-3 py-1 text-xs font-bold text-teal-800 dark:bg-teal-950/60 dark:text-[#2dd4bf]">
+                <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700 dark:bg-teal-950/60 dark:text-teal-400">
                   Autonomous Customer Support
                 </span>
-                <h3 className="text-2xl font-black text-slate-900 dark:text-white">
-                  94% Automated Resolution with USPS Lookups
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+                  Automated Resolution with Tracking Lookups
                 </h3>
-                <p className="text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 sm:text-sm">
-                  AI scans customer inquiries, pulls live tracking coordinates, and drafts
-                  personalized replies ready for 1-click dispatch.
+                <p className="text-xs font-normal leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
+                  Scans customer inquiries, retrieves live tracking coordinates, and drafts replies ready for dispatch.
                 </p>
                 <Link
                   href="/ai-customer-service"
-                  className="inline-flex items-center gap-1.5 pt-2 text-xs font-bold text-teal-600 hover:underline dark:text-[#2dd4bf]"
+                  className="inline-flex items-center gap-1.5 pt-2 text-xs font-semibold text-teal-600 hover:underline dark:text-teal-400"
                 >
                   <span>Open AI Customer Helpdesk</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
 
-              <div className="space-y-2.5 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-xs dark:border-slate-800 dark:bg-[#0f1117]">
+              <div className="space-y-2.5 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-xs dark:border-slate-800 dark:bg-[#141a29]">
                 <div className="rounded-xl bg-slate-100 p-3 dark:bg-white/5">
-                  <p className="font-bold text-slate-900 dark:text-white">
+                  <p className="font-semibold text-slate-900 dark:text-slate-100">
                     Customer: "Where is my order #TK-9821?"
                   </p>
                 </div>
                 <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 dark:border-emerald-900/50 dark:bg-emerald-950/40">
-                  <p className="mb-1 font-bold text-emerald-900 dark:text-[#4ade80]">
-                    🤖 AI Auto-Drafted Reply:
+                  <p className="mb-1 font-semibold text-emerald-900 dark:text-emerald-400">
+                    🤖 Auto-Drafted Reply:
                   </p>
                   <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-                    "Hi Sarah! Your package was dispatched via USPS Priority (Tracking
-                    #940011189956). It is currently Out for Delivery and will arrive today by 4:00
-                    PM!"
+                    "Hi Sarah! Your package was dispatched via USPS Priority (Tracking #940011189956). It is currently Out for Delivery and will arrive today by 4:00 PM!"
                   </p>
                 </div>
               </div>
@@ -946,416 +847,38 @@ export default function RootLandingPage() {
         </div>
       </section>
 
-      {/* Interactive Pre-Listing Calculator Section with High-Performance Background */}
-      <section
-        id="calculator"
-        className="relative scroll-mt-24 overflow-hidden border-y border-slate-200 bg-slate-100/60 px-4 py-20 dark:border-slate-800 dark:bg-[#0f1117] sm:px-6"
-      >
-        {/* Subtle Financial Chart Gradient Texture */}
-        <div className="bg-linear-grid pointer-events-none absolute inset-0 -z-10 overflow-hidden opacity-25" />
-
-        <div className="mx-auto max-w-5xl space-y-10">
-          <div className="mx-auto max-w-2xl text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">
-              Live Interactive Demo
-            </span>
-            <h2 className="mt-1 text-2xl font-black text-slate-900 dark:text-white sm:text-3xl">
-              Try the TikTok Profit Calculator
-            </h2>
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-              Test viral product economics live. Select a product preset or adjust the sliders.
-            </p>
-          </div>
-
-          {/* Preset Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <span className="mr-1 text-xs font-bold text-slate-400">Product Presets:</span>
-            <button
-              type="button"
-              onClick={() => applyPreset('sunset', 34.99, 6.5, 3.8, 7.5)}
-              className={cn(
-                'cursor-pointer rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all hover:scale-[1.02]',
-                activePreset === 'sunset'
-                  ? 'shadow-xs border-lime-500 bg-lime-500/10 font-bold text-lime-600 dark:text-[#4ade80]'
-                  : 'border-slate-200 bg-white text-slate-700 hover:border-lime-500 dark:border-slate-800 dark:bg-[#121620] dark:text-slate-300',
-              )}
-            >
-              🌅 Sunset Lamp ($34.99)
-            </button>
-            <button
-              type="button"
-              onClick={() => applyPreset('mic', 49.99, 11.2, 4.2, 10.0)}
-              className={cn(
-                'cursor-pointer rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all hover:scale-[1.02]',
-                activePreset === 'mic'
-                  ? 'shadow-xs border-lime-500 bg-lime-500/10 font-bold text-lime-600 dark:text-[#4ade80]'
-                  : 'border-slate-200 bg-white text-slate-700 hover:border-lime-500 dark:border-slate-800 dark:bg-[#121620] dark:text-slate-300',
-              )}
-            >
-              🎙️ Lavalier Mic ($49.99)
-            </button>
-            <button
-              type="button"
-              onClick={() => applyPreset('guasha', 24.99, 3.9, 3.5, 5.0)}
-              className={cn(
-                'cursor-pointer rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all hover:scale-[1.02]',
-                activePreset === 'guasha'
-                  ? 'shadow-xs border-lime-500 bg-lime-500/10 font-bold text-lime-600 dark:text-[#4ade80]'
-                  : 'border-slate-200 bg-white text-slate-700 hover:border-lime-500 dark:border-slate-800 dark:bg-[#121620] dark:text-slate-300',
-              )}
-            >
-              ✨ Gua Sha Set ($24.99)
-            </button>
-          </div>
-
-          <div className="shadow-xs card-hover-lift grid grid-cols-1 gap-8 rounded-3xl border border-slate-200/80 bg-white/95 p-6 dark:border-slate-800 dark:bg-[#121620]/95 sm:p-8 md:grid-cols-2">
-            {/* Calculator Controls */}
-            <div className="space-y-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Unit Cost Parameters
-              </h3>
-
-              <div>
-                <div className="mb-1 flex justify-between text-xs font-bold">
-                  <span>Selling Price:</span>
-                  <span className="text-emerald-600 dark:text-[#4ade80]">
-                    ${calcPrice.toFixed(2)}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min="10"
-                  max="150"
-                  step="1"
-                  value={calcPrice}
-                  onChange={(e) => setCalcPrice(parseFloat(e.target.value))}
-                  className="w-full cursor-pointer accent-lime-500"
-                />
-              </div>
-
-              <div>
-                <div className="mb-1 flex justify-between text-xs font-bold">
-                  <span>Product COGS:</span>
-                  <span className="text-slate-800 dark:text-slate-200">${calcCogs.toFixed(2)}</span>
-                </div>
-                <input
-                  type="range"
-                  min="2"
-                  max="50"
-                  step="0.5"
-                  value={calcCogs}
-                  onChange={(e) => setCalcCogs(parseFloat(e.target.value))}
-                  className="w-full cursor-pointer accent-lime-500"
-                />
-              </div>
-
-              <div>
-                <div className="mb-1 flex justify-between text-xs font-bold">
-                  <span>3PL Shipping & Prep:</span>
-                  <span className="text-slate-800 dark:text-slate-200">
-                    ${calcShipping.toFixed(2)}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min="2"
-                  max="20"
-                  step="0.2"
-                  value={calcShipping}
-                  onChange={(e) => setCalcShipping(parseFloat(e.target.value))}
-                  className="w-full cursor-pointer accent-lime-500"
-                />
-              </div>
-
-              <div>
-                <div className="mb-1 flex justify-between text-xs font-bold">
-                  <span>TikTok Ads CPA:</span>
-                  <span className="text-purple-600 dark:text-[#c084fc]">
-                    ${calcAdCpa.toFixed(2)}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="30"
-                  step="0.5"
-                  value={calcAdCpa}
-                  onChange={(e) => setCalcAdCpa(parseFloat(e.target.value))}
-                  className="w-full cursor-pointer accent-lime-500"
-                />
-              </div>
-            </div>
-
-            {/* Results Live Waterfall Card */}
-            <div className="font-mono-numeric flex flex-col justify-between space-y-4 rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-[#161b26]">
-              <div className="flex items-center justify-between">
-                <span className="font-sans text-xs font-bold uppercase text-slate-400">
-                  Live Unit Economics
-                </span>
-                <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800 dark:bg-emerald-950/60 dark:text-[#4ade80]">
-                  {formatPercent(calcResults.profitMargin)} Margin
-                </span>
-              </div>
-
-              <div>
-                <p className="font-sans text-xs text-slate-400">Net Profit Per Order:</p>
-                <p className="mt-0.5 text-3xl font-black text-emerald-600 dark:text-[#4ade80]">
-                  {formatCurrency(calcResults.netProfit)}
-                </p>
-              </div>
-
-              <div className="space-y-1.5 border-t border-slate-200 pt-3 text-xs dark:border-slate-800">
-                <div className="flex justify-between font-sans text-slate-500">
-                  <span>Break-Even Price Floor:</span>
-                  <span className="font-mono-numeric font-bold text-slate-900 dark:text-white">
-                    {formatCurrency(calcResults.breakEvenPrice)}
-                  </span>
-                </div>
-                <div className="flex justify-between font-sans text-slate-500">
-                  <span>Max Allowable Ad CPA:</span>
-                  <span className="font-mono-numeric font-bold text-purple-600 dark:text-[#c084fc]">
-                    {formatCurrency(calcResults.maxAllowableCpa)}
-                  </span>
-                </div>
-                <div className="flex justify-between font-sans text-slate-500">
-                  <span>TikTok Platform Fees:</span>
-                  <span className="font-mono-numeric font-bold text-slate-900 dark:text-white">
-                    {formatCurrency(calcResults.tiktokFee + calcResults.paymentFee)}
-                  </span>
-                </div>
-              </div>
-
-              <Link
-                href="/calculator"
-                className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#84cc16] py-2.5 text-xs font-bold text-black transition-all hover:scale-[1.01] hover:bg-[#72b012]"
-              >
-                <span>Open Full Unit Economics Studio</span>
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ROI Estimator Section */}
-      <section id="roi" className="mx-auto max-w-5xl scroll-mt-24 space-y-10 px-4 py-20 sm:px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-[#c084fc]">
-            Value Estimator
+      {/* Pricing Navigation Banner */}
+      <section className="border-t border-slate-200 bg-white px-4 py-16 dark:border-slate-800 dark:bg-[#0f1420] sm:px-6">
+        <div className="mx-auto max-w-4xl text-center space-y-6">
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            Simple Pricing
           </span>
-          <h2 className="mt-1 text-2xl font-black text-slate-900 dark:text-white sm:text-3xl">
-            How Much Money Does RushNshop Save You?
-          </h2>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-            Calculate your estimated annual profit recovery based on order volume.
-          </p>
-        </div>
-
-        <div className="shadow-xs card-hover-lift grid grid-cols-1 items-center gap-8 rounded-3xl border border-slate-200/80 bg-white/95 p-6 dark:border-slate-800 dark:bg-[#121620]/95 sm:p-8 md:grid-cols-2">
-          <div className="space-y-4">
-            <div className="flex justify-between text-xs font-bold">
-              <span>Monthly Order Volume:</span>
-              <span className="font-mono-numeric text-sm text-purple-600 dark:text-[#c084fc]">
-                {monthlyOrders.toLocaleString()} Orders / mo
-              </span>
-            </div>
-            <input
-              type="range"
-              min="500"
-              max="20000"
-              step="500"
-              value={monthlyOrders}
-              onChange={(e) => setMonthlyOrders(parseInt(e.target.value))}
-              className="w-full cursor-pointer accent-purple-500"
-            />
-            <p className="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-              Based on historical e-commerce recovery rates from uncalculated shipping overcharges,
-              hidden platform fees, and saved virtual assistant hours.
-            </p>
-          </div>
-
-          <div className="font-mono-numeric space-y-3 rounded-2xl border border-purple-200 bg-purple-50/50 p-5 dark:border-purple-900/50 dark:bg-purple-950/20">
-            <div>
-              <p className="font-sans text-xs font-bold text-purple-800 dark:text-purple-300">
-                Estimated Annual Profit Recovery:
-              </p>
-              <p className="mt-1 text-3xl font-black text-purple-600 dark:text-[#c084fc]">
-                ${(monthlyOrders * 1.85 * 12).toLocaleString('en-US', { maximumFractionDigits: 0 })}{' '}
-                / yr
-              </p>
-            </div>
-            <div className="space-y-1 font-sans text-xs text-slate-600 dark:text-slate-300">
-              <p>✓ ~{(monthlyOrders * 0.04).toFixed(0)} hours saved on CS & VA operations</p>
-              <p>
-                ✓ ~${(monthlyOrders * 0.95 * 12).toLocaleString()} saved from TikTok ad CPA
-                misallocations
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section
-        id="pricing"
-        className="mx-auto max-w-7xl scroll-mt-24 space-y-12 px-4 py-20 sm:px-6"
-      >
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">
-            Transparent Pricing
-          </span>
-          <h2 className="mt-1 text-3xl font-black text-slate-900 dark:text-white sm:text-4xl">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100">
             Predictable Plans for Growing Brands
           </h2>
-          <p className="mt-2 text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
-            No hidden percentage cuts. Unlimited order syncing and GAAP P&L statement generation.
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
+            Transparent pricing without percentage cuts. Unlock multi-store synchronization, unit economics studio, and automated reporting.
           </p>
-        </div>
-
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
-          {/* Starter Plan */}
-          <div className="shadow-xs card-hover-lift flex flex-col justify-between space-y-6 rounded-3xl border border-slate-200/80 bg-white/95 p-6 dark:border-slate-800 dark:bg-[#121620]/95 sm:p-8">
-            <div className="space-y-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Starter
-              </span>
-              <div className="font-mono-numeric flex items-baseline gap-1">
-                <span className="text-4xl font-black text-slate-900 dark:text-white">$29</span>
-                <span className="font-sans text-xs text-slate-400">/month</span>
-              </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                Perfect for single store operators validating viral products.
-              </p>
-
-              <div className="space-y-2.5 border-t border-slate-100 pt-4 text-xs text-slate-600 dark:border-slate-800 dark:text-slate-300">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                  <span>1 Connected TikTok Shop Account</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                  <span>Real-Time TrueProfit Waterfall</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                  <span>Pre-Listing Profit Calculator</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                  <span>CSV Financial P&L Exports</span>
-                </div>
-              </div>
-            </div>
-
+          <div className="pt-2">
             <Link
-              href="/dashboard"
-              className="flex w-full items-center justify-center rounded-xl border border-slate-200 py-2.5 text-xs font-bold text-slate-900 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:text-white dark:hover:bg-white/5"
+              href="/pricing"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white text-white rounded-xl text-xs font-semibold transition-all shadow-xs"
             >
-              Start Free Trial
-            </Link>
-          </div>
-
-          {/* Growth Plan (Featured) */}
-          <div className="card-hover-lift relative flex flex-col justify-between space-y-6 rounded-3xl border-2 border-[#84cc16] bg-white/95 p-6 shadow-xl dark:bg-[#121620]/95 sm:p-8">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#84cc16] px-3 py-0.5 text-[10px] font-black uppercase tracking-wider text-black">
-              Most Popular
-            </div>
-
-            <div className="space-y-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">
-                Growth Empire
-              </span>
-              <div className="font-mono-numeric flex items-baseline gap-1">
-                <span className="text-4xl font-black text-slate-900 dark:text-white">$79</span>
-                <span className="font-sans text-xs text-slate-400">/month</span>
-              </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                For multi-account sellers scaling with TikTok Spark Ads.
-              </p>
-
-              <div className="space-y-2.5 border-t border-slate-100 pt-4 text-xs text-slate-600 dark:border-slate-800 dark:text-slate-300">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                  <span>Up to 5 Connected TikTok Shop Accounts</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                  <span>Live TikTok Ads API & Spark ROAS Sync</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                  <span>Full AI Viral Video Script & Listing Studio</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                  <span>Autonomous AI Customer Service Helpdesk</span>
-                </div>
-              </div>
-            </div>
-
-            <Link
-              href="/dashboard"
-              className="flex w-full items-center justify-center rounded-xl bg-[#84cc16] py-3 text-xs font-bold text-black shadow-md transition-all hover:scale-[1.02] hover:bg-[#72b012]"
-            >
-              Get Started with Growth
-            </Link>
-          </div>
-
-          {/* Scale & Agency Plan */}
-          <div className="shadow-xs card-hover-lift flex flex-col justify-between space-y-6 rounded-3xl border border-slate-200/80 bg-white/95 p-6 dark:border-slate-800 dark:bg-[#121620]/95 sm:p-8">
-            <div className="space-y-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-[#c084fc]">
-                Scale & Agency
-              </span>
-              <div className="font-mono-numeric flex items-baseline gap-1">
-                <span className="text-4xl font-black text-slate-900 dark:text-white">$199</span>
-                <span className="font-sans text-xs text-slate-400">/month</span>
-              </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                For 8-figure agencies managing massive cross-border operations.
-              </p>
-
-              <div className="space-y-2.5 border-t border-slate-100 pt-4 text-xs text-slate-600 dark:border-slate-800 dark:text-slate-300">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                  <span>Unlimited TikTok Shop Accounts</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                  <span>Role-Based Staff Access (RBAC)</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                  <span>Dedicated Webhook Endpoints & API Access</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-[#4ade80]" />
-                  <span>Dedicated Account Manager & Priority Support</span>
-                </div>
-              </div>
-            </div>
-
-            <Link
-              href="/stores"
-              className="flex w-full items-center justify-center rounded-xl border border-slate-200 py-2.5 text-xs font-bold text-slate-900 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:text-white dark:hover:bg-white/5"
-            >
-              Manage Multi-Stores
+              <span>View All Pricing Plans</span>
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
       </section>
 
       {/* Frequently Asked Questions */}
-      <section
-        id="faq"
-        className="scroll-mt-24 border-t border-slate-200 bg-slate-100/60 px-4 py-20 dark:border-slate-800 dark:bg-[#0f1117] sm:px-6"
-      >
+      <section className="border-t border-slate-200 bg-slate-50 px-4 py-16 dark:border-slate-800 dark:bg-[#090d16] sm:px-6">
         <div className="mx-auto max-w-3xl space-y-8">
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-[#4ade80]">
-              Got Questions?
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+              Questions & Answers
             </span>
-            <h2 className="mt-1 text-2xl font-black text-slate-900 dark:text-white sm:text-3xl">
+            <h2 className="mt-1 text-2xl font-bold text-slate-900 dark:text-slate-100 sm:text-3xl">
               Frequently Asked Questions
             </h2>
           </div>
@@ -1366,11 +889,11 @@ export default function RootLandingPage() {
               return (
                 <div
                   key={idx}
-                  className="shadow-2xs overflow-hidden rounded-2xl border border-slate-200/80 bg-white dark:border-slate-800 dark:bg-[#121620]"
+                  className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-[#0f1420]"
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="flex w-full items-center justify-between p-4 text-left text-xs font-bold text-slate-900 dark:text-white sm:text-sm"
+                    className="flex w-full items-center justify-between p-4 text-left text-xs font-semibold text-slate-900 dark:text-slate-100 sm:text-sm cursor-pointer"
                   >
                     <span>{faq.q}</span>
                     <ChevronDown
@@ -1381,7 +904,7 @@ export default function RootLandingPage() {
                     />
                   </button>
                   {isOpen && (
-                    <div className="border-t border-slate-100 px-4 pb-4 pt-1 text-xs font-medium leading-relaxed text-slate-600 dark:border-slate-800/60 dark:text-slate-300">
+                    <div className="border-t border-slate-100 px-4 pb-4 pt-2 text-xs font-normal leading-relaxed text-slate-600 dark:border-slate-800/60 dark:text-slate-400">
                       {faq.a}
                     </div>
                   )}
@@ -1392,28 +915,27 @@ export default function RootLandingPage() {
         </div>
       </section>
 
-      {/* Comprehensive Enterprise SaaS Footer */}
+      {/* Comprehensive Footer */}
       <footer className="border-t border-slate-200 bg-white px-4 pb-12 pt-16 dark:border-slate-800 dark:bg-[#080a0f] sm:px-8">
         <div className="mx-auto max-w-7xl space-y-12">
           {/* Top Row: Brand & Newsletter */}
           <div className="grid grid-cols-1 gap-8 border-b border-slate-100 pb-12 dark:border-slate-800/80 lg:grid-cols-12">
             <div className="space-y-4 lg:col-span-5">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-lime-500 to-green-400 text-black shadow-md shadow-green-500/20">
-                  <Zap className="h-6 w-6 fill-current font-black text-black" />
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-xs">
+                  <Zap className="h-5 w-5 fill-current" />
                 </div>
                 <div>
-                  <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white">
+                  <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
                     RushNshop
                   </span>
-                  <span className="ml-1.5 rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold text-emerald-800 dark:bg-emerald-950/60 dark:text-[#4ade80]">
-                    AI OS
+                  <span className="ml-1.5 rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400">
+                    Studio OS
                   </span>
                 </div>
               </div>
               <p className="max-w-sm text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                The leading TikTok Shop multi-account operating system. Combining TrueProfit
-                waterfall accounting, generative AI listing studio, and customer service automation.
+                The operating system for multi-account TikTok Shop operators. Real-time waterfall accounting, generative AI listing studio, and multi-store intelligence.
               </p>
               {/* Trust Badges */}
               <div className="flex items-center gap-4 pt-2 text-[11px] font-semibold text-slate-400">
@@ -1426,7 +948,7 @@ export default function RootLandingPage() {
                   SOC2 Type II
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <Award className="h-3.5 w-3.5 text-purple-500" />
+                  <Award className="h-3.5 w-3.5 text-emerald-500" />
                   TikTok Open API
                 </span>
               </div>
@@ -1434,17 +956,16 @@ export default function RootLandingPage() {
 
             {/* Newsletter */}
             <div className="flex flex-col justify-center space-y-3 lg:col-span-7">
-              <p className="text-xs font-bold text-slate-900 dark:text-white">
-                Subscribe to TikTok Shop Operator Insights
+              <p className="text-xs font-bold text-slate-900 dark:text-slate-100">
+                Subscribe to Operator Insights
               </p>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Receive weekly breakdown of trending viral SKUs, platform policy changes, and unit
-                economics tactics.
+                Weekly breakdown of trending viral SKUs, platform policy shifts, and unit economics benchmarks.
               </p>
               {subscribed ? (
-                <div className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs font-bold text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-[#4ade80]">
+                <div className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs font-semibold text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-400">
                   <CheckCircle2 className="h-4 w-4" />
-                  <span>Thank you for subscribing to RushNshop Insights!</span>
+                  <span>Thank you for subscribing!</span>
                 </div>
               ) : (
                 <form
@@ -1457,11 +978,11 @@ export default function RootLandingPage() {
                     placeholder="Enter work email..."
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
-                    className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:border-lime-500 focus:outline-none dark:border-slate-800 dark:bg-[#121620] dark:text-white"
+                    className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:outline-none dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-100"
                   />
                   <button
                     type="submit"
-                    className="flex shrink-0 items-center gap-1.5 rounded-xl bg-[#84cc16] px-4 py-2.5 text-xs font-bold text-black transition-colors hover:bg-[#72b012]"
+                    className="flex shrink-0 items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-emerald-500 cursor-pointer"
                   >
                     <span>Subscribe</span>
                     <Send className="h-3.5 w-3.5" />
@@ -1471,142 +992,92 @@ export default function RootLandingPage() {
             </div>
           </div>
 
-          {/* Middle Row: 4-Column Directory */}
+          {/* Directory Links */}
           <div className="grid grid-cols-2 gap-8 text-xs md:grid-cols-4">
-            {/* Col 1 */}
             <div className="space-y-3">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-white">
-                Product
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
+                Product & Tools
               </p>
-              <ul className="space-y-2 font-medium text-slate-500 dark:text-slate-400">
+              <ul className="space-y-2 font-normal text-slate-500 dark:text-slate-400">
                 <li>
-                  <Link
-                    href="/dashboard"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    TrueProfit Analytics
+                  <Link href="/dashboard" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Dashboard Overview
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/stores"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    Multi-Store Hub
+                  <Link href="/profit-analytics" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Profit Analytics
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/calculator"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    Unit Economics Calculator
+                  <Link href="/calculator" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Unit Margin Calculator
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/ads-analytics"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    TikTok Spark Ads API
+                  <Link href="/compare" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Product Comparison Studio
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/ai-assistant"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    AI Video Script Studio
+                  <Link href="/listings" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    TikTok Shop Listings Hub
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/ai-customer-service"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    AI Customer Helpdesk
+                  <Link href="/ai-assistant" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    AI Script Generator
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Col 2 */}
             <div className="space-y-3">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-white">
-                Solutions
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
+                Management
               </p>
-              <ul className="space-y-2 font-medium text-slate-500 dark:text-slate-400">
+              <ul className="space-y-2 font-normal text-slate-500 dark:text-slate-400">
                 <li>
-                  <Link
-                    href="/dashboard"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    TikTok Shop US Sellers
+                  <Link href="/stores" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Multi-Store Accounts
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/dashboard"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    UK & EU Cross-Border
+                  <Link href="/orders" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Orders Hub
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/dashboard"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    Multi-Account Agencies
+                  <Link href="/ads-analytics" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    TikTok Spark Ads
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/dashboard"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    3PL High-Volume Brands
+                  <Link href="/ai-customer-service" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    AI Customer Service
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/dashboard"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    Creator Affiliate Networks
+                  <Link href="/history" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Audit History
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Col 3 */}
             <div className="space-y-3">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-white">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
                 Resources
               </p>
-              <ul className="space-y-2 font-medium text-slate-500 dark:text-slate-400">
+              <ul className="space-y-2 font-normal text-slate-500 dark:text-slate-400">
                 <li>
-                  <Link
-                    href="/reports"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    GAAP P&L Statement Guide
+                  <Link href="/reports" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    GAAP Financial Reports
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/calculator"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    Break-Even Calculator Tool
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/settings"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    TikTok API Webhook Specs
+                  <Link href="/pricing" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Pricing Plans
                   </Link>
                 </li>
                 <li>
@@ -1614,55 +1085,37 @@ export default function RootLandingPage() {
                     href="https://github.com/shahzaibbusiness2026-work/RushNShop-Dashboard.git"
                     target="_blank"
                     rel="noreferrer"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
+                    className="hover:text-slate-900 dark:hover:text-white transition-colors"
                   >
                     GitHub Repository
                   </a>
                 </li>
                 <li>
-                  <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-[#4ade80]">
+                  <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
                     ● Systems 99.99% Operational
                   </span>
                 </li>
               </ul>
             </div>
 
-            {/* Col 4 */}
             <div className="space-y-3">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-white">
-                Company
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
+                Account & Settings
               </p>
-              <ul className="space-y-2 font-medium text-slate-500 dark:text-slate-400">
+              <ul className="space-y-2 font-normal text-slate-500 dark:text-slate-400">
                 <li>
-                  <Link
-                    href="/dashboard"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    About RushNshop
+                  <Link href="/settings" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Store Settings & Webhooks
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/settings"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    Privacy & Data Security
+                  <Link href="/customers" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Customer Directory
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/settings"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    Terms of Service
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/ai-customer-service"
-                    className="transition-colors hover:text-slate-900 dark:hover:text-white"
-                  >
-                    Contact Support
+                  <Link href="/expenses" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Operating Expenses
                   </Link>
                 </li>
               </ul>
@@ -1672,12 +1125,11 @@ export default function RootLandingPage() {
           {/* Bottom Copyright & Back to Top */}
           <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-100 pt-8 text-xs text-slate-400 dark:border-slate-800/80 sm:flex-row">
             <p>
-              © 2024 RushNshop AI Operating System. All rights reserved. TikTok is a registered
-              trademark of ByteDance Ltd.
+              © 2026 RushNshop Operating System. All rights reserved. TikTok is a registered trademark of ByteDance Ltd.
             </p>
             <button
               onClick={scrollToTop}
-              className="flex items-center gap-1 font-semibold text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+              className="flex items-center gap-1 font-medium text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-white cursor-pointer"
             >
               <span>Back to Top</span>
               <ChevronUp className="h-4 w-4" />
