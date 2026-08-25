@@ -10,13 +10,13 @@ export default function StorePerformanceList() {
   const { stores, selectedStoreId, setSelectedStoreId } = useStore();
 
   return (
-    <div className="shadow-xs flex h-full flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-4 transition-colors dark:border-slate-800/80 dark:bg-[#121620] sm:p-5">
+    <div className="shadow-xs flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-4 transition-colors dark:border-slate-800/80 dark:bg-[#121620] sm:p-5">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50">Store Performance</h3>
+      <div className="flex items-center justify-between gap-2">
+        <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50 truncate">Store Performance</h3>
         <Link
           href="/stores"
-          className="text-xs font-bold text-emerald-600 hover:underline dark:text-[#4ade80]"
+          className="text-xs font-bold text-emerald-600 hover:underline dark:text-[#4ade80] shrink-0"
         >
           Manage
         </Link>
@@ -32,15 +32,15 @@ export default function StorePerformanceList() {
               key={store.id}
               onClick={() => setSelectedStoreId(isSelected ? 'all' : store.id)}
               className={cn(
-                'flex w-full items-center justify-between rounded-xl p-2.5 text-left transition-all',
+                'flex w-full items-center justify-between gap-2 rounded-xl p-2.5 text-left transition-all min-w-0',
                 isSelected
                   ? 'shadow-xs border border-emerald-300/80 bg-emerald-50/80 dark:border-emerald-800/80 dark:bg-emerald-950/40'
                   : 'border border-transparent hover:bg-slate-50 dark:hover:bg-white/5',
               )}
             >
-              <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
+              <div className="flex min-w-0 flex-1 items-center gap-2.5 overflow-hidden">
                 <span className="drop-shadow-xs shrink-0 text-xl sm:text-2xl">{store.flag}</span>
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1 overflow-hidden">
                   <div className="flex items-center gap-1.5">
                     <p className="truncate text-xs font-bold text-slate-900 dark:text-white">
                       {store.name}
@@ -51,13 +51,13 @@ export default function StorePerformanceList() {
                       </span>
                     )}
                   </div>
-                  <p className="text-[11px] text-slate-400 dark:text-slate-500">
+                  <p className="text-[11px] text-slate-400 dark:text-slate-500 truncate">
                     {store.totalOrders} Orders
                   </p>
                 </div>
               </div>
 
-              <div className="font-mono-numeric flex shrink-0 items-center gap-2">
+              <div className="font-mono-numeric flex shrink-0 items-center gap-1.5 sm:gap-2">
                 <span className="text-xs font-bold text-slate-900 dark:text-white">
                   {formatCurrency(store.totalRevenue, store.currency)}
                 </span>

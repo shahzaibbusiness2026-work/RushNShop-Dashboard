@@ -84,9 +84,9 @@ export default function RevenueByStoreChart() {
       </div>
 
       {/* Chart & Legend Grid */}
-      <div className="my-auto flex flex-col items-center justify-between gap-4 py-3 sm:flex-row">
+      <div className="my-auto flex flex-col items-center justify-between gap-4 py-3 sm:flex-row lg:flex-col xl:flex-row">
         {/* Donut Chart with Center GMV Total */}
-        <div className="relative mx-auto h-36 w-36 shrink-0 sm:h-40 sm:w-40">
+        <div className="relative mx-auto h-36 w-36 shrink-0">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Tooltip content={<CustomTooltip />} />
@@ -124,7 +124,7 @@ export default function RevenueByStoreChart() {
         </div>
 
         {/* Store / Category List with Visual Progress Bars */}
-        <div className="w-full flex-1 space-y-2">
+        <div className="w-full flex-1 space-y-1.5 min-w-0">
           {categoryBreakdown.map((item, idx) => {
             const correspondingStore = isAll ? stores.find((s) => s.name === item.name) : null;
             const isHovered = activeIndex === idx;
@@ -140,18 +140,18 @@ export default function RevenueByStoreChart() {
                   }
                 }}
                 className={cn(
-                  'group/item rounded-xl p-2 transition-all duration-150',
+                  'group/item rounded-xl p-2 transition-all duration-150 min-w-0',
                   isAll ? 'cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5' : '',
                   isHovered ? 'bg-slate-50 dark:bg-white/5 ring-1 ring-slate-200 dark:ring-slate-700/80' : '',
                 )}
               >
-                <div className="flex items-center justify-between text-xs min-w-0">
-                  <div className="flex items-center gap-2 overflow-hidden min-w-0">
+                <div className="flex items-center justify-between gap-2 text-xs min-w-0">
+                  <div className="flex items-center gap-1.5 overflow-hidden min-w-0 flex-1">
                     {correspondingStore ? (
                       <span className="text-sm shrink-0">{correspondingStore.flag}</span>
                     ) : (
                       <span
-                        className="h-2.5 w-2.5 shrink-0 rounded-full"
+                        className="h-2 w-2 shrink-0 rounded-full"
                         style={{ backgroundColor: item.color }}
                       />
                     )}
@@ -160,11 +160,11 @@ export default function RevenueByStoreChart() {
                     </span>
                   </div>
 
-                  <div className="flex shrink-0 items-center gap-2 font-mono-numeric">
-                    <span className="font-bold text-slate-900 dark:text-white">
+                  <div className="flex shrink-0 items-center gap-1.5 font-mono-numeric">
+                    <span className="font-bold text-slate-900 dark:text-white text-xs">
                       {formatCurrency(item.value, selectedStore?.currency)}
                     </span>
-                    <span className="w-8 text-right text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+                    <span className="w-9 text-right text-[10px] font-semibold text-slate-500 dark:text-slate-400">
                       {item.percentage}%
                     </span>
                   </div>
