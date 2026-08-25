@@ -1,14 +1,27 @@
 import React from 'react';
 import type { Metadata, Viewport } from 'next';
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { StoreProvider } from '../context/StoreContext';
 import AppShell from '../components/layout/AppShell';
 import ErrorBoundary from '../components/ErrorBoundary';
 
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-sans',
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-heading',
+});
+
 export const metadata: Metadata = {
-  title: 'RushNshop - AI Operating System for TikTok Shop',
+  title: 'RushNshop - TikTok Shop Performance Platform',
   description:
-    'AI-powered TikTok Shop management dashboard for RushNshop with profit analytics, listing generator, customer service automation, and multi-store intelligence.',
+    'High-performance TikTok Shop management platform with real-time TrueProfit waterfall analytics, SKU margin simulator, automated customer service helpdesk, and multi-store intelligence.',
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>",
   },
@@ -18,14 +31,18 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#0b0e14',
+  themeColor: '#090d16',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`dark ${inter.variable} ${plusJakartaSans.variable}`}
+      suppressHydrationWarning
+    >
       <body
-        className="min-h-screen bg-slate-50 text-slate-900 antialiased selection:bg-lime-400 selection:text-black dark:bg-[#0b0e14] dark:text-slate-100"
+        className="min-h-screen font-sans bg-slate-50 text-slate-900 antialiased selection:bg-emerald-500 selection:text-white dark:bg-[#090d16] dark:text-slate-100"
         suppressHydrationWarning
       >
         {/* Skip to content link for keyboard/screen-reader users */}
