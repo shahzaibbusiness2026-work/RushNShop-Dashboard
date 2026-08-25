@@ -12,9 +12,9 @@
   }
 
   .dark {
-    --background: #0b0e14;
-    --foreground: #f8fafc;
-    --card-bg: #151b26;
+    --background: #090d16;
+    --foreground: #f1f5f9;
+    --card-bg: #0f1420;
     --card-border: #1e293b;
     --muted: #94a3b8;
   }
@@ -23,13 +23,18 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', Helvetica, Arial, sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Enhanced typography & contrast */
@@ -39,7 +44,12 @@ h3,
 h4,
 h5,
 h6 {
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+  text-shadow: none !important;
+}
+
+p, span, div, a, button, input, label {
+  text-shadow: none !important;
 }
 
 .dark input,

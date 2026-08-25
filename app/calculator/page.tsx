@@ -214,21 +214,21 @@ export default function CalculatorPage() {
       {/* Header Banner */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-lime-500/10 text-[#84cc16] border border-lime-500/20 shadow-xs">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
               <Calculator className="h-5 w-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+              <div className="flex items-center gap-2.5">
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
                   Unit Economics & Margin Studio
                 </h1>
-                <span className="rounded-full border border-lime-500/30 bg-lime-500/10 px-2.5 py-0.5 text-[11px] font-bold text-lime-700 dark:text-[#84cc16]">
-                  v2.0 Pro
+                <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
+                  Interactive Simulator
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
-                Accurately simulate inbound freight shipment charges, customer delivery shipping, TikTok fees, and net profit margins.
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-normal mt-0.5">
+                Simulate inbound freight shipment charges, customer delivery shipping, TikTok fees, and net profit margins.
               </p>
             </div>
           </div>
@@ -237,7 +237,7 @@ export default function CalculatorPage() {
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => setBulkModalOpen(true)}
-            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 shadow-2xs transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10 cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-200 dark:hover:bg-white/5 cursor-pointer"
           >
             <Upload className="h-3.5 w-3.5 text-slate-400" />
             <span>Bulk CSV</span>
@@ -245,7 +245,7 @@ export default function CalculatorPage() {
 
           <button
             onClick={() => router.push('/compare')}
-            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 shadow-2xs transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10 cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-200 dark:hover:bg-white/5 cursor-pointer"
           >
             <Scale className="h-3.5 w-3.5 text-slate-400" />
             <span>Compare Matrix</span>
@@ -253,10 +253,10 @@ export default function CalculatorPage() {
 
           <button
             onClick={handleSaveToAuditHistory}
-            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 shadow-2xs transition-all hover:bg-emerald-50 hover:text-emerald-700 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:text-[#4ade80] cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 transition-all hover:bg-emerald-50 hover:text-emerald-700 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-200 dark:hover:text-emerald-400 cursor-pointer"
           >
             {savedSuccess ? (
-              <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-[#4ade80]" />
+              <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
             ) : (
               <Save className="h-3.5 w-3.5" />
             )}
@@ -265,21 +265,21 @@ export default function CalculatorPage() {
 
           <button
             onClick={handleCopySummary}
-            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 shadow-2xs transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#161b26] dark:text-slate-200 dark:hover:bg-white/10 cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 transition-all hover:bg-slate-50 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-200 dark:hover:bg-white/5 cursor-pointer"
           >
             {copySuccess ? (
-              <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-[#4ade80]" />
+              <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
             ) : (
               <Copy className="h-3.5 w-3.5" />
             )}
-            <span>{copySuccess ? 'Copied Report!' : 'Copy Summary'}</span>
+            <span>{copySuccess ? 'Copied!' : 'Copy Summary'}</span>
           </button>
 
           <button
             onClick={() => setListingModalOpen(true)}
-            className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 px-4 py-2 text-xs font-bold text-white shadow-sm transition-all cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white px-4 py-2 text-xs font-semibold text-white dark:text-slate-900 transition-all cursor-pointer"
           >
-            <Sparkles className="h-3.5 w-3.5" />
+            <Sparkles className="h-3.5 w-3.5 text-emerald-400 dark:text-emerald-600" />
             <span>Create TikTok Listing</span>
           </button>
         </div>
@@ -287,14 +287,14 @@ export default function CalculatorPage() {
 
       {/* Preset Quick Bar */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 dark-scrollbar">
-        <span className="shrink-0 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-          ⚡ Quick Presets:
+        <span className="shrink-0 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          Presets:
         </span>
         {PRESET_TEMPLATES.map((tmpl) => (
           <button
             key={tmpl.name}
             onClick={() => handleApplyPreset(tmpl)}
-            className="whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs transition-all hover:border-[#84cc16] hover:text-lime-600 dark:border-slate-800 dark:bg-[#121620] dark:text-slate-300 dark:hover:border-[#84cc16] dark:hover:text-[#4ade80] cursor-pointer"
+            className="whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition-all hover:border-emerald-500 hover:text-emerald-600 dark:border-slate-800 dark:bg-[#0f1420] dark:text-slate-300 dark:hover:border-emerald-500 dark:hover:text-emerald-400 cursor-pointer"
           >
             {tmpl.name} (${tmpl.price})
           </button>
@@ -304,61 +304,61 @@ export default function CalculatorPage() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Left Column: Inputs (7 cols) */}
         <div className="space-y-5 lg:col-span-7">
-          <div className="space-y-6 rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs dark:border-slate-800/80 dark:bg-[#121620]">
+          <div className="space-y-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white p-6 dark:bg-[#0f1420]">
             
             {/* Section 1: Product & Pricing */}
             <div>
               <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
-                <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   1. Product & Pricing Strategy
                 </h3>
-                <span className="text-[11px] font-bold text-slate-400">Base Unit Retail</span>
+                <span className="text-[11px] font-medium text-slate-400">Base Unit Retail</span>
               </div>
 
               <div className="mt-4 space-y-4">
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  <label className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Product Title / SKU Identifier
                   </label>
                   <input
                     type="text"
                     value={productName}
                     onChange={(e) => setProductName(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-bold text-slate-900 transition-all focus:border-[#84cc16] focus:bg-white focus:outline-none dark:border-slate-800 dark:bg-[#0b0e14] dark:text-white dark:focus:border-[#84cc16]"
+                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm font-semibold text-slate-900 transition-all focus:border-emerald-500 focus:bg-white focus:outline-none dark:border-slate-800 dark:bg-[#090d16] dark:text-slate-100 dark:focus:border-emerald-500"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="mb-1.5 flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
+                    <label className="mb-1.5 flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-300">
                       <span>Selling Price ($)</span>
-                      <span className="text-[10px] text-slate-400">Customer checkout price</span>
+                      <span className="text-[10px] text-slate-400">Checkout price</span>
                     </label>
                     <div className="relative">
-                      <span className="absolute left-3.5 top-2.5 text-sm font-black text-slate-400">$</span>
+                      <span className="absolute left-3.5 top-2.5 text-sm font-bold text-slate-400">$</span>
                       <input
                         type="number"
                         step="0.01"
                         value={sellingPrice}
                         onChange={(e) => setSellingPrice(parseFloat(e.target.value) || 0)}
-                        className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white py-2.5 pl-8 pr-3 text-sm font-black text-slate-900 transition-all focus:border-[#84cc16] focus:outline-none dark:border-slate-800 dark:bg-[#0b0e14] dark:text-white dark:focus:border-[#84cc16]"
+                        className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white py-2.5 pl-8 pr-3 text-sm font-bold text-slate-900 transition-all focus:border-emerald-500 focus:outline-none dark:border-slate-800 dark:bg-[#090d16] dark:text-slate-100 dark:focus:border-emerald-500"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="mb-1.5 flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
+                    <label className="mb-1.5 flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-300">
                       <span>Product Cost (COGS) ($)</span>
-                      <span className="text-[10px] text-slate-400">Supplier factory cost</span>
+                      <span className="text-[10px] text-slate-400">Factory cost</span>
                     </label>
                     <div className="relative">
-                      <span className="absolute left-3.5 top-2.5 text-sm font-black text-slate-400">$</span>
+                      <span className="absolute left-3.5 top-2.5 text-sm font-bold text-slate-400">$</span>
                       <input
                         type="number"
                         step="0.01"
                         value={cogs}
                         onChange={(e) => setCogs(parseFloat(e.target.value) || 0)}
-                        className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white py-2.5 pl-8 pr-3 text-sm font-black text-slate-900 transition-all focus:border-[#84cc16] focus:outline-none dark:border-slate-800 dark:bg-[#0b0e14] dark:text-white dark:focus:border-[#84cc16]"
+                        className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white py-2.5 pl-8 pr-3 text-sm font-bold text-slate-900 transition-all focus:border-emerald-500 focus:outline-none dark:border-slate-800 dark:bg-[#090d16] dark:text-slate-100 dark:focus:border-emerald-500"
                       />
                     </div>
                   </div>
@@ -370,76 +370,76 @@ export default function CalculatorPage() {
             <div>
               <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
                 <div className="flex items-center gap-2">
-                  <Truck className="h-4 w-4 text-[#84cc16]" />
-                  <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
+                  <Truck className="h-4 w-4 text-emerald-500" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
                     2. Shipment Charges & Shipping Costs
                   </h3>
                 </div>
-                <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 text-[11px] font-mono-numeric font-bold text-slate-600 dark:text-slate-300">
+                <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 text-[11px] font-mono-numeric font-semibold text-slate-600 dark:text-slate-300">
                   Total Logistics: {formatCurrency(totalLogistics)}
                 </span>
               </div>
 
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {/* Inbound Shipment Charges */}
-                <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-3 dark:border-slate-800 dark:bg-[#161b26]/50">
-                  <div className="flex items-center gap-1.5 mb-1.5">
+                <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-3.5 dark:border-slate-800 dark:bg-[#141a29]/50">
+                  <div className="flex items-center gap-1.5 mb-1">
                     <Ship className="h-3.5 w-3.5 text-blue-500" />
-                    <label className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                    <label className="text-xs font-semibold text-slate-800 dark:text-slate-200">
                       Shipment Charges ($)
                     </label>
                   </div>
                   <p className="text-[10px] text-slate-400 mb-2">Inbound factory freight & prep</p>
                   <div className="relative">
-                    <span className="absolute left-3 top-2 text-xs font-bold text-slate-400">$</span>
+                    <span className="absolute left-3 top-2 text-xs font-semibold text-slate-400">$</span>
                     <input
                       type="number"
                       step="0.01"
                       value={shipmentCharges}
                       onChange={(e) => setShipmentCharges(parseFloat(e.target.value) || 0)}
-                      className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white py-2 pl-7 pr-2.5 text-xs font-bold text-slate-900 transition-all focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-[#0b0e14] dark:text-white"
+                      className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white py-2 pl-7 pr-2.5 text-xs font-bold text-slate-900 transition-all focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-[#090d16] dark:text-slate-100"
                     />
                   </div>
                 </div>
 
                 {/* Outbound Customer Shipping Cost */}
-                <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-3 dark:border-slate-800 dark:bg-[#161b26]/50">
-                  <div className="flex items-center gap-1.5 mb-1.5">
+                <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-3.5 dark:border-slate-800 dark:bg-[#141a29]/50">
+                  <div className="flex items-center gap-1.5 mb-1">
                     <Truck className="h-3.5 w-3.5 text-emerald-500" />
-                    <label className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                    <label className="text-xs font-semibold text-slate-800 dark:text-slate-200">
                       Shipping Cost ($)
                     </label>
                   </div>
                   <p className="text-[10px] text-slate-400 mb-2">3PL courier customer delivery</p>
                   <div className="relative">
-                    <span className="absolute left-3 top-2 text-xs font-bold text-slate-400">$</span>
+                    <span className="absolute left-3 top-2 text-xs font-semibold text-slate-400">$</span>
                     <input
                       type="number"
                       step="0.01"
                       value={shippingCost}
                       onChange={(e) => setShippingCost(parseFloat(e.target.value) || 0)}
-                      className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white py-2 pl-7 pr-2.5 text-xs font-bold text-slate-900 transition-all focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-[#0b0e14] dark:text-white"
+                      className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white py-2 pl-7 pr-2.5 text-xs font-bold text-slate-900 transition-all focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-[#090d16] dark:text-slate-100"
                     />
                   </div>
                 </div>
 
                 {/* Packaging & Prep */}
-                <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-3 dark:border-slate-800 dark:bg-[#161b26]/50">
-                  <div className="flex items-center gap-1.5 mb-1.5">
+                <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-3.5 dark:border-slate-800 dark:bg-[#141a29]/50">
+                  <div className="flex items-center gap-1.5 mb-1">
                     <Package className="h-3.5 w-3.5 text-amber-500" />
-                    <label className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                    <label className="text-xs font-semibold text-slate-800 dark:text-slate-200">
                       Packaging / Prep ($)
                     </label>
                   </div>
                   <p className="text-[10px] text-slate-400 mb-2">Box, poly mailer, inserts</p>
                   <div className="relative">
-                    <span className="absolute left-3 top-2 text-xs font-bold text-slate-400">$</span>
+                    <span className="absolute left-3 top-2 text-xs font-semibold text-slate-400">$</span>
                     <input
                       type="number"
                       step="0.01"
                       value={packagingCost}
                       onChange={(e) => setPackagingCost(parseFloat(e.target.value) || 0)}
-                      className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white py-2 pl-7 pr-2.5 text-xs font-bold text-slate-900 transition-all focus:border-amber-500 focus:outline-none dark:border-slate-700 dark:bg-[#0b0e14] dark:text-white"
+                      className="font-mono-numeric w-full rounded-xl border border-slate-200 bg-white py-2 pl-7 pr-2.5 text-xs font-bold text-slate-900 transition-all focus:border-amber-500 focus:outline-none dark:border-slate-700 dark:bg-[#090d16] dark:text-slate-100"
                     />
                   </div>
                 </div>
@@ -449,15 +449,15 @@ export default function CalculatorPage() {
             {/* Section 3: TikTok Platform Fees & Creator Commissions */}
             <div>
               <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
-                <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   3. TikTok Platform Fees & Creator Commission
                 </h3>
-                <span className="text-[11px] font-bold text-slate-400">Variable Take Rates</span>
+                <span className="text-[11px] font-medium text-slate-400">Variable Take Rates</span>
               </div>
 
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  <label className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-300">
                     TikTok Take Rate (%)
                   </label>
                   <div className="relative">
@@ -466,14 +466,14 @@ export default function CalculatorPage() {
                       step="0.1"
                       value={tiktokFeePercent}
                       onChange={(e) => setTiktokFeePercent(parseFloat(e.target.value) || 0)}
-                      className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-bold text-slate-900 focus:border-[#84cc16] focus:outline-none dark:border-slate-800 dark:bg-[#0b0e14] dark:text-white"
+                      className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-bold text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-800 dark:bg-[#090d16] dark:text-slate-100"
                     />
-                    <span className="absolute right-3.5 top-2.5 text-xs font-bold text-slate-400">%</span>
+                    <span className="absolute right-3.5 top-2.5 text-xs font-semibold text-slate-400">%</span>
                   </div>
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  <label className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Payment Gateway (%)
                   </label>
                   <div className="relative">
@@ -482,14 +482,14 @@ export default function CalculatorPage() {
                       step="0.1"
                       value={paymentFeePercent}
                       onChange={(e) => setPaymentFeePercent(parseFloat(e.target.value) || 0)}
-                      className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-bold text-slate-900 focus:border-[#84cc16] focus:outline-none dark:border-slate-800 dark:bg-[#0b0e14] dark:text-white"
+                      className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-bold text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-800 dark:bg-[#090d16] dark:text-slate-100"
                     />
-                    <span className="absolute right-3.5 top-2.5 text-xs font-bold text-slate-400">%</span>
+                    <span className="absolute right-3.5 top-2.5 text-xs font-semibold text-slate-400">%</span>
                   </div>
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  <label className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Creator Affiliate (%)
                   </label>
                   <div className="relative">
@@ -498,9 +498,9 @@ export default function CalculatorPage() {
                       step="0.1"
                       value={affiliatePercent}
                       onChange={(e) => setAffiliatePercent(parseFloat(e.target.value) || 0)}
-                      className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-bold text-slate-900 focus:border-[#84cc16] focus:outline-none dark:border-slate-800 dark:bg-[#0b0e14] dark:text-white"
+                      className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-bold text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-800 dark:bg-[#090d16] dark:text-slate-100"
                     />
-                    <span className="absolute right-3.5 top-2.5 text-xs font-bold text-slate-400">%</span>
+                    <span className="absolute right-3.5 top-2.5 text-xs font-semibold text-slate-400">%</span>
                   </div>
                 </div>
               </div>
@@ -509,47 +509,47 @@ export default function CalculatorPage() {
             {/* Section 4: Marketing & Target Profit */}
             <div>
               <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
-                <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   4. TikTok Ads CPA & Target Margin
                 </h3>
-                <span className="text-[11px] font-bold text-slate-400">Performance Optimization</span>
+                <span className="text-[11px] font-medium text-slate-400">Performance Optimization</span>
               </div>
 
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold text-purple-600 dark:text-[#c084fc]">
+                  <label className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-300">
                     TikTok Ads CPA ($)
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-2.5 text-xs font-bold text-purple-400">$</span>
+                    <span className="absolute left-3 top-2.5 text-xs font-semibold text-slate-400">$</span>
                     <input
                       type="number"
                       step="0.1"
                       value={adCpa}
                       onChange={(e) => setAdCpa(parseFloat(e.target.value) || 0)}
-                      className="font-mono-numeric w-full rounded-2xl border border-purple-200 bg-purple-50/40 py-2.5 pl-7 pr-3 text-xs font-black text-purple-700 focus:border-purple-500 focus:outline-none dark:border-purple-900/60 dark:bg-[#1f1730] dark:text-[#c084fc]"
+                      className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white py-2.5 pl-7 pr-3 text-xs font-bold text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-800 dark:bg-[#090d16] dark:text-slate-100"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold text-slate-700 dark:text-slate-300">
+                  <label className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Overhead / Other ($)
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">$</span>
+                    <span className="absolute left-3 top-2.5 text-xs font-semibold text-slate-400">$</span>
                     <input
                       type="number"
                       step="0.1"
                       value={otherExpenses}
                       onChange={(e) => setOtherExpenses(parseFloat(e.target.value) || 0)}
-                      className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white py-2.5 pl-7 pr-3 text-xs font-bold text-slate-900 focus:border-[#84cc16] focus:outline-none dark:border-slate-800 dark:bg-[#0b0e14] dark:text-white"
+                      className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white py-2.5 pl-7 pr-3 text-xs font-bold text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-800 dark:bg-[#090d16] dark:text-slate-100"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold text-amber-600 dark:text-[#fb923c]">
+                  <label className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Target Margin Goal (%)
                   </label>
                   <div className="relative">
@@ -558,9 +558,9 @@ export default function CalculatorPage() {
                       step="1"
                       value={targetMarginPercent}
                       onChange={(e) => setTargetMarginPercent(parseFloat(e.target.value) || 0)}
-                      className="font-mono-numeric w-full rounded-2xl border border-amber-200 bg-amber-50/40 px-3.5 py-2.5 text-xs font-black text-amber-700 focus:border-amber-500 focus:outline-none dark:border-amber-900/60 dark:bg-[#281a10] dark:text-[#fb923c]"
+                      className="font-mono-numeric w-full rounded-2xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-bold text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-800 dark:bg-[#090d16] dark:text-slate-100"
                     />
-                    <span className="absolute right-3.5 top-2.5 text-xs font-bold text-amber-500">%</span>
+                    <span className="absolute right-3.5 top-2.5 text-xs font-semibold text-slate-400">%</span>
                   </div>
                 </div>
               </div>
@@ -571,17 +571,17 @@ export default function CalculatorPage() {
         {/* Right Column: Real-Time Profit Engine & Unit Economics (5 cols) */}
         <div className="space-y-5 lg:col-span-5">
           {/* Main Profit Card */}
-          <div className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-800/80 dark:bg-[#121620]">
+          <div className="relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-white p-6 dark:bg-[#0f1420]">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Unit Profit Engine
               </span>
               <span
                 className={cn(
-                  'rounded-full px-3 py-1 text-xs font-black tracking-wide',
+                  'rounded-full px-3 py-1 text-xs font-semibold tracking-wide border',
                   isProfitable
-                    ? 'border border-emerald-300/60 bg-emerald-50 text-emerald-700 dark:border-emerald-800/60 dark:bg-emerald-950/60 dark:text-[#4ade80]'
-                    : 'border border-rose-300/60 bg-rose-50 text-rose-700 dark:border-rose-800/60 dark:bg-rose-950/60 dark:text-rose-300',
+                    ? 'border-emerald-500/30 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400'
+                    : 'border-rose-500/30 bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-400',
                 )}
               >
                 {isProfitable ? '✓ Profitable SKU' : '⚠️ Net Loss Warning'}
@@ -589,13 +589,13 @@ export default function CalculatorPage() {
             </div>
 
             <div className="mt-4 grid grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-[#161b26]">
-                <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400">Net Profit / Order</p>
+              <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4 dark:border-slate-800/80 dark:bg-[#141a29]">
+                <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Net Profit / Order</p>
                 <p
                   className={cn(
-                    'font-mono-numeric mt-1.5 text-2xl sm:text-3xl font-black tracking-tight',
+                    'font-mono-numeric mt-1 text-2xl sm:text-3xl font-bold tracking-tight',
                     isProfitable
-                      ? 'text-emerald-600 dark:text-[#4ade80]'
+                      ? 'text-emerald-600 dark:text-emerald-400'
                       : 'text-rose-600 dark:text-rose-400',
                   )}
                 >
@@ -603,15 +603,15 @@ export default function CalculatorPage() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-[#161b26]">
-                <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400">Net Margin %</p>
+              <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4 dark:border-slate-800/80 dark:bg-[#141a29]">
+                <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Net Margin %</p>
                 <p
                   className={cn(
-                    'font-mono-numeric mt-1.5 text-2xl sm:text-3xl font-black tracking-tight',
+                    'font-mono-numeric mt-1 text-2xl sm:text-3xl font-bold tracking-tight',
                     results.profitMargin >= 35
-                      ? 'text-emerald-600 dark:text-[#4ade80]'
+                      ? 'text-emerald-600 dark:text-emerald-400'
                       : results.profitMargin > 0
-                        ? 'text-amber-500'
+                        ? 'text-amber-600 dark:text-amber-400'
                         : 'text-rose-600 dark:text-rose-400',
                   )}
                 >
@@ -622,18 +622,18 @@ export default function CalculatorPage() {
 
             {/* Visual Margin Bar */}
             <div className="mt-4 space-y-1.5">
-              <div className="flex justify-between text-[11px] font-bold">
+              <div className="flex justify-between text-[11px] font-medium">
                 <span className="text-slate-500 dark:text-slate-400">Profit Share of Selling Price</span>
-                <span className="font-mono-numeric text-slate-800 dark:text-white">
+                <span className="font-mono-numeric font-bold text-slate-800 dark:text-slate-200">
                   {results.profitMargin > 0 ? formatPercent(results.profitMargin) : '0%'}
                 </span>
               </div>
-              <div className="h-2.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+              <div className="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
                 <div
                   className={cn(
-                    'h-full transition-all duration-300 rounded-full',
+                    'h-full rounded-full transition-all duration-300',
                     results.profitMargin >= 35
-                      ? 'bg-gradient-to-r from-emerald-500 to-[#84cc16]'
+                      ? 'bg-emerald-500'
                       : results.profitMargin > 0
                         ? 'bg-amber-500'
                         : 'bg-rose-500',
@@ -646,95 +646,95 @@ export default function CalculatorPage() {
 
           {/* Pricing Milestones & Safeguards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-2xs dark:border-slate-800/80 dark:bg-[#121620]">
+            <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white p-4 dark:bg-[#0f1420]">
               <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
                 <ShieldCheck className="h-4 w-4 text-amber-500" />
-                <span className="text-[11px] font-bold uppercase tracking-wider">Break-Even Price</span>
+                <span className="text-[11px] font-semibold uppercase tracking-wider">Break-Even Price</span>
               </div>
-              <p className="font-mono-numeric mt-2 text-xl font-black text-slate-900 dark:text-white">
+              <p className="font-mono-numeric mt-2 text-xl font-bold text-slate-900 dark:text-slate-100">
                 {formatCurrency(results.breakEvenPrice)}
               </p>
-              <p className="mt-1 text-[10px] text-slate-400">Minimum price floor before loss</p>
+              <p className="mt-0.5 text-[10px] text-slate-400">Minimum price floor before loss</p>
             </div>
 
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-2xs dark:border-slate-800/80 dark:bg-[#121620]">
+            <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white p-4 dark:bg-[#0f1420]">
               <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
-                <Target className="h-4 w-4 text-[#84cc16]" />
-                <span className="text-[11px] font-bold uppercase tracking-wider">Target {targetMarginPercent}% Price</span>
+                <Target className="h-4 w-4 text-emerald-500" />
+                <span className="text-[11px] font-semibold uppercase tracking-wider">Target {targetMarginPercent}% Price</span>
               </div>
-              <p className="font-mono-numeric mt-2 text-xl font-black text-[#84cc16]">
+              <p className="font-mono-numeric mt-2 text-xl font-bold text-emerald-600 dark:text-emerald-400">
                 {formatCurrency(results.recommendedPrice)}
               </p>
-              <p className="mt-1 text-[10px] text-slate-400">Price for {targetMarginPercent}% profit margin</p>
+              <p className="mt-0.5 text-[10px] text-slate-400">Price for {targetMarginPercent}% profit margin</p>
             </div>
           </div>
 
           {/* Itemized Cost Breakdown Waterfall */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs dark:border-slate-800/80 dark:bg-[#121620]">
+          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white p-6 dark:bg-[#0f1420]">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
-              <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
                 Itemized Cost Breakdown
               </h4>
-              <span className="text-[11px] font-mono-numeric font-bold text-slate-500 dark:text-slate-400">
+              <span className="text-[11px] font-mono-numeric font-semibold text-slate-500 dark:text-slate-400">
                 Total: {formatCurrency(results.totalCost)}
               </span>
             </div>
 
             <div className="mt-4 space-y-2.5 text-xs font-mono-numeric">
               <div className="flex items-center justify-between text-slate-600 dark:text-slate-300">
-                <span className="font-sans">Product COGS (Factory)</span>
-                <span className="font-bold">{formatCurrency(cogs)}</span>
+                <span className="font-sans text-slate-500 dark:text-slate-400">Product COGS (Factory)</span>
+                <span className="font-medium text-slate-900 dark:text-slate-100">{formatCurrency(cogs)}</span>
               </div>
 
-              <div className="flex items-center justify-between text-blue-600 dark:text-blue-400">
-                <span className="font-sans flex items-center gap-1">
-                  <Ship className="h-3 w-3" /> Shipment Charges (Inbound Freight)
+              <div className="flex items-center justify-between text-slate-600 dark:text-slate-300">
+                <span className="font-sans text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                  <Ship className="h-3 w-3 text-blue-500" /> Shipment Charges (Inbound Freight)
                 </span>
-                <span className="font-bold">{formatCurrency(shipmentCharges)}</span>
+                <span className="font-medium text-slate-900 dark:text-slate-100">{formatCurrency(shipmentCharges)}</span>
               </div>
 
-              <div className="flex items-center justify-between text-emerald-600 dark:text-emerald-400">
-                <span className="font-sans flex items-center gap-1">
-                  <Truck className="h-3 w-3" /> Shipping Cost (3PL Courier)
+              <div className="flex items-center justify-between text-slate-600 dark:text-slate-300">
+                <span className="font-sans text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                  <Truck className="h-3 w-3 text-emerald-500" /> Shipping Cost (3PL Courier)
                 </span>
-                <span className="font-bold">{formatCurrency(shippingCost)}</span>
+                <span className="font-medium text-slate-900 dark:text-slate-100">{formatCurrency(shippingCost)}</span>
               </div>
 
-              <div className="flex items-center justify-between text-amber-600 dark:text-amber-400">
-                <span className="font-sans flex items-center gap-1">
-                  <Package className="h-3 w-3" /> Packaging & Prep Materials
+              <div className="flex items-center justify-between text-slate-600 dark:text-slate-300">
+                <span className="font-sans text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                  <Package className="h-3 w-3 text-amber-500" /> Packaging & Prep Materials
                 </span>
-                <span className="font-bold">{formatCurrency(packagingCost)}</span>
+                <span className="font-medium text-slate-900 dark:text-slate-100">{formatCurrency(packagingCost)}</span>
               </div>
 
               <div className="flex items-center justify-between text-slate-600 dark:text-slate-300">
-                <span className="font-sans">TikTok Shop Platform Fee ({tiktokFeePercent}%)</span>
-                <span className="font-bold">{formatCurrency(results.tiktokFee)}</span>
+                <span className="font-sans text-slate-500 dark:text-slate-400">TikTok Shop Fee ({tiktokFeePercent}%)</span>
+                <span className="font-medium text-slate-900 dark:text-slate-100">{formatCurrency(results.tiktokFee)}</span>
               </div>
 
               <div className="flex items-center justify-between text-slate-600 dark:text-slate-300">
-                <span className="font-sans">Payment Processing Fee</span>
-                <span className="font-bold">{formatCurrency(results.paymentFee)}</span>
+                <span className="font-sans text-slate-500 dark:text-slate-400">Payment Processing Fee</span>
+                <span className="font-medium text-slate-900 dark:text-slate-100">{formatCurrency(results.paymentFee)}</span>
               </div>
 
               <div className="flex items-center justify-between text-slate-600 dark:text-slate-300">
-                <span className="font-sans">Creator Affiliate Commission ({affiliatePercent}%)</span>
-                <span className="font-bold">{formatCurrency(results.affiliateCommission)}</span>
-              </div>
-
-              <div className="flex items-center justify-between text-purple-600 dark:text-[#c084fc]">
-                <span className="font-sans">TikTok Ads CPA Budget</span>
-                <span className="font-bold">{formatCurrency(adCpa)}</span>
+                <span className="font-sans text-slate-500 dark:text-slate-400">Creator Affiliate ({affiliatePercent}%)</span>
+                <span className="font-medium text-slate-900 dark:text-slate-100">{formatCurrency(results.affiliateCommission)}</span>
               </div>
 
               <div className="flex items-center justify-between text-slate-600 dark:text-slate-300">
-                <span className="font-sans">Operating Overhead</span>
-                <span className="font-bold">{formatCurrency(otherExpenses)}</span>
+                <span className="font-sans text-slate-500 dark:text-slate-400">TikTok Ads CPA Budget</span>
+                <span className="font-medium text-slate-900 dark:text-slate-100">{formatCurrency(adCpa)}</span>
               </div>
 
-              <div className="border-t border-slate-200/80 pt-3 dark:border-slate-800 flex items-center justify-between text-sm font-black">
-                <span className="font-sans text-slate-900 dark:text-white">Net Retained Profit</span>
-                <span className={cn(isProfitable ? 'text-emerald-600 dark:text-[#4ade80]' : 'text-rose-500')}>
+              <div className="flex items-center justify-between text-slate-600 dark:text-slate-300">
+                <span className="font-sans text-slate-500 dark:text-slate-400">Operating Overhead</span>
+                <span className="font-medium text-slate-900 dark:text-slate-100">{formatCurrency(otherExpenses)}</span>
+              </div>
+
+              <div className="border-t border-slate-200 dark:border-slate-800 pt-3 flex items-center justify-between text-sm font-bold">
+                <span className="font-sans text-slate-900 dark:text-slate-100">Net Retained Profit</span>
+                <span className={cn(isProfitable ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400')}>
                   {formatCurrency(results.netProfit)}
                 </span>
               </div>
